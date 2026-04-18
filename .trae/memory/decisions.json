@@ -1,0 +1,36 @@
+{
+  "decisions": [
+    {
+      "topic": "测试决策",
+      "decision": "选择测试方案",
+      "reasoning": "基于测试需求",
+      "made_by": "test-user",
+      "id": "decision_1776524996807",
+      "timestamp": "2026-04-18T15:09:56.807Z"
+    },
+    {
+      "topic": "框架选择",
+      "decision": "我决定使用 React 作为前端框架",
+      "reasoning": "用户决策",
+      "made_by": "user",
+      "id": "decision_1776525093395",
+      "timestamp": "2026-04-18T15:11:33.395Z"
+    },
+    {
+      "topic": "测试决策",
+      "decision": "选择测试方案",
+      "reasoning": "基于测试需求",
+      "made_by": "test-user",
+      "id": "decision_1776525093504",
+      "timestamp": "2026-04-18T15:11:33.504Z"
+    },
+    {
+      "topic": "决策",
+      "decision": "我决定使用 TypeScript 作为开发语言",
+      "reasoning": "用户决策",
+      "made_by": "user",
+      "id": "decision_1776525153499",
+      "timestamp": "2026-04-18T15:12:33.499Z"
+    }
+  ]
+}

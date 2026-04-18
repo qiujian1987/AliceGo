@@ -145,3 +145,15 @@ CREATE TABLE orders (
 - 🔔 数据模型设计完成
 - 🔔 数据库初始化完成
 - 🔔 数据模型变更已执行
+
+## 技能
+
+使用以下 Skills 执行任务：
+- **database-designer**：设计数据模型和表结构
+- **sql-optimizer**：优化 SQL 查询和索引
+
+## 记忆系统调用
+
+执行以下操作时，自动调用记忆系统：
+- **重要决策**：调用 `addDecision` 记录数据模型决策
+- **状态变更**：调用 `updateAgentState` 更新 Agent 状态

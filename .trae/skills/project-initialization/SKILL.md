@@ -21,67 +21,68 @@ description: "初始化新项目，包含目录结构创建、依赖安装、Git
 | 全栈 | 前后端分离 + 共享代码 |
 | 工具 | CLI脚本、脚本、命令行工具 |
 
-## 2. 创建目录结构
+## 2. 创建 TRAE 项目结构
 
-### 前端项目
+### 标准 TRAE 项目
+```
+project-name/
+├── .trae/
+│   ├── agents/                  # Agent 配置
+│   ├── skills/                  # Skills 定义
+│   ├── mailbox/                 # 消息队列
+│   ├── rules/                  # 规则配置
+│   ├── memory/                  # 记忆系统
+│   ├── init/                   # 初始化脚本
+│   ├── team-config.json         # 团队配置
+│   ├── tasks.md                 # 任务看板
+│   ├── tech-stack.md            # 技术栈清单
+│   └── data-model.md           # 数据模型设计
+├── src/
+│   ├── client/                  # 前端代码（可选）
+│   └── server/                  # 后端代码（可选）
+├── database/
+│   ├── schema.sql              # 数据库结构
+│   ├── migrations/             # 数据库迁移
+│   └── seeds/                  # 种子数据
+├── infra/                      # 基础设施（可选）
+├── tests/                      # 测试代码
+├── package.json
+├── tsconfig.json
+├── README.md
+└── .gitignore
+```
+
+### 根据项目类型调整
+
+#### 纯前端项目
 ```
 project-name/
 ├── src/
-│   ├── assets/
-│   ├── components/
-│   ├── pages/
-│   ├── hooks/
-│   ├── services/
-│   ├── stores/
-│   ├── utils/
-│   ├── types/
-│   └── App.tsx
-├── public/
-├── tests/
-├── docs/
-└── package.json
+│   └── client/                  # 前端代码
+├── tests/                       # 测试代码
+└── ...（省略 .trae/ 和 database/）
 ```
 
-### 后端项目
+#### 纯后端项目
 ```
 project-name/
 ├── src/
-│   ├── controllers/
-│   ├── services/
-│   ├── models/
-│   ├── routes/
-│   ├── middlewares/
-│   ├── utils/
-│   ├── config/
-│   └── index.ts
-├── tests/
-├── docs/
-└── package.json
+│   └── server/                  # 后端代码
+├── database/
+│   └── ...（保留）
+└── ...（省略 client/）
 ```
 
-### 全栈项目
-```
-project-name/
-├── client/
-│   ├── src/
-│   ├── public/
-│   └── package.json
-├── server/
-│   ├── src/
-│   └── package.json
-├── shared/
-├── docs/
-└── README.md
-```
-
-## 3. 初始化配置
+## 3. 初始化 TRAE 配置
 
 ### 必须文件
-- `package.json` - 项目配置
-- `tsconfig.json` - TypeScript配置
-- `eslint.config.js` - ESLint配置
-- `.gitignore` - Git忽略规则
-- `README.md` - 项目说明
+- `.trae/team-config.json` - 团队配置
+- `.trae/rules/project_rules.md` - 核心规范
+- `.trae/rules/code_standards.md` - 代码标准
+- `.trae/rules/engineering_standards.md` - 工程标准
+- `.trae/agents/*.md` - Agent 配置
+- `.trae/tasks.md` - 任务看板
+- `.trae/tech-stack.md` - 技术栈清单
 
 ### .gitignore 标准内容
 ```
@@ -90,23 +91,29 @@ dist/
 build/
 *.log
 .env
+.env.*
 .DS_Store
+.vscode/
+.idea/
 ```
 
 ## 4. 安装依赖
 
-### 前端基础依赖
+### 基础依赖
 ```bash
-npm install react react-dom
-npm install -D typescript @types/react @types/react-dom
-npm install -D eslint prettier
+npm install
 ```
 
-### 后端基础依赖
+### 前端依赖（可选）
 ```bash
-npm install express cors
-npm install -D typescript @types/express @types/cors
-npm install -D eslint prettier
+npm install react react-dom
+npm install -D typescript @types/react @types/react-dom eslint prettier
+```
+
+### 后端依赖（可选）
+```bash
+npm install express cors pg
+npm install -D typescript @types/express @types/cors @types/pg eslint prettier jest
 ```
 
 ## 5. Git初始化
@@ -133,5 +140,6 @@ git commit -m "feat: initial project structure"
 - 目录结构：已创建
 - 依赖：已安装
 - Git：已初始化
+- TRAE配置：已创建
 - 下一步：开始开发
 ```

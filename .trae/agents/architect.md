@@ -122,3 +122,15 @@ description: "架构师。职责：系统设计、API合同设计、技术选型
 - 🔔 API合同设计完成
 - 🔔 架构设计完成
 - 🔔 需要Team Lead确认
+
+## 技能
+
+使用以下 Skills 执行任务：
+- **architecture-planner**：设计系统整体架构
+- **api-designer**：设计 API 合同和文档
+
+## 记忆系统调用
+
+执行以下操作时，自动调用记忆系统：
+- **重要决策**：调用 `addDecision` 记录技术决策
+- **状态变更**：调用 `updateAgentState` 更新 Agent 状态

@@ -174,3 +174,16 @@ describe('Button', () => {
 - 🔔 页面开发完成
 - 🔔 需要API支持
 - 🔔 需要数据模型支持
+
+## 技能
+
+使用以下 Skills 执行任务：
+- **code-generator**：生成规范代码和组件
+- **test-generator**：遵循 TDD 流程编写测试用例
+
+## 记忆系统调用
+
+执行以下操作时，自动调用记忆系统：
+- **任务状态变更**：调用 `updateTaskStatus` 更新任务状态
+- **重要决策**：调用 `addDecision` 记录决策
+- **状态变更**：调用 `updateAgentState` 更新 Agent 状态

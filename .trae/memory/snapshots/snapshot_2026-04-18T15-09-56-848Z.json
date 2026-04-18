@@ -1,0 +1,48 @@
+{
+  "timestamp": "2026-04-18T15:09:56.848Z",
+  "project_state": {
+    "project_name": "测试项目",
+    "project_description": "这是一个测试项目",
+    "current_phase": "Phase 1",
+    "key_metrics": {
+      "tasks_completed": 0,
+      "tasks_in_progress": 1,
+      "total_tasks": 3
+    },
+    "last_updated": "2026-04-18T15:09:56.759Z"
+  },
+  "task_history": {
+    "tasks": [
+      {
+        "content": "测试任务",
+        "assignee": "test-agent",
+        "status": "completed",
+        "priority": "high",
+        "id": "task_1776524996775",
+        "created_at": "2026-04-18T15:09:56.775Z",
+        "completed_at": "2026-04-18T15:09:56.792Z"
+      }
+    ]
+  },
+  "decisions": {
+    "decisions": [
+      {
+        "topic": "测试决策",
+        "decision": "选择测试方案",
+        "reasoning": "基于测试需求",
+        "made_by": "test-user",
+        "id": "decision_1776524996807",
+        "timestamp": "2026-04-18T15:09:56.807Z"
+      }
+    ]
+  },
+  "agent_states": {
+    "agents": {
+      "test-agent": {
+        "current_task": "测试任务",
+        "status": "active",
+        "last_activity": "2026-04-18T15:09:56.832Z"
+      }
+    }
+  }
+}

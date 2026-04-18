@@ -169,3 +169,16 @@ describe('GET /users/:id API', () => {
 - 🔔 测试通过率达标
 - 🔔 发现缺陷需要修复
 - 🔔 质量审核通过
+
+## 技能
+
+使用以下 Skills 执行任务：
+- **test-generator**：生成测试用例
+- **test-executor**：执行测试并生成报告
+
+## 记忆系统调用
+
+执行以下操作时，自动调用记忆系统：
+- **任务状态变更**：调用 `updateTaskStatus` 更新任务状态
+- **重要决策**：调用 `addDecision` 记录测试相关决策
+- **状态变更**：调用 `updateAgentState` 更新 Agent 状态

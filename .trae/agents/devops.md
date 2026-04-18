@@ -165,3 +165,15 @@ jobs:
 - 🔔 依赖已安装
 - 🔔 新技术栈已批准
 - 🔔 CI/CD配置完成
+
+## 技能
+
+使用以下 Skills 执行任务：
+- **devops-automation**：配置 CI/CD 流程和自动化部署
+- **dependency-manager**：管理依赖版本和安全审计
+
+## 记忆系统调用
+
+执行以下操作时，自动调用记忆系统：
+- **重要决策**：调用 `addDecision` 记录环境和依赖决策
+- **状态变更**：调用 `updateAgentState` 更新 Agent 状态

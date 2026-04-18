@@ -1,0 +1,82 @@
+{
+  "tasks": [
+    {
+      "id": "task_1776525045000_6ju5xs414",
+      "content": "Phase 1: 架构与MVP设计",
+      "status": "pending",
+      "created_at": "2026-04-18T15:10:45.000Z"
+    },
+    {
+      "id": "task_1776525045000_6xhd10r9p",
+      "content": "Phase 2: 并行开发",
+      "status": "pending",
+      "created_at": "2026-04-18T15:10:45.000Z"
+    },
+    {
+      "id": "task_1776525045000_ba7mfm2xt",
+      "content": "Phase 3: 测试与验收 --- ## 检查点 | 检查点 | 状态 | 完成时间 | 说明 | |--------|------|---------|------| | 检查点0: 数据模型完成 | ⬜ | - | - | | 检查点1: MVP环境冒烟 | ⬜ | - | - | | 检查点2: 集成测试通过 | ⬜ | - | - | | 检查点3: 上线准备就绪 | ⬜ | - | - | --- ## Agent状态 | Agent | 当前任务 | 进度 | 状态 | 最后更新 | |-------|---------|------|------|---------| | Team Lead | - | - | - | - | | Architect | - | - | - | - | | DBA | - | - | - | - | | Frontend Dev | - | - | - | - | | Backend Dev | - | - | - | - | | DevOps | - | - | - | - | | QA | - | - | - | - | --- ## 任务列表 ### 待办 (Backlog) | 任务 | 负责人 | 优先级 | 状态 | |------|-------|--------|------| | - | - | - | - | ### 进行中 (In Progress) | 任务 | 负责人 | 进度 | 状态 | |------|-------|------|------| | - | - | - | - | ### 已完成 (Done) | 任务 | 负责人 | 完成时间 | |------|-------|---------| | - | - | - | --- ## 里程碑通知 ```markdown 🔔 [Agent] 里程碑消息 ``` --- ## 使用说明 1. Team Lead 负责维护任务看板 2. 各Agent定期更新自己的任务状态 3. 里程碑完成时添加🔔通知 4. 任务完成后移动到已完成区域",
+      "status": "pending",
+      "created_at": "2026-04-18T15:10:45.000Z"
+    },
+    {
+      "id": "task_1776525045000_ax2bdzblr",
+      "content": "测试任务1",
+      "status": "pending",
+      "created_at": "2026-04-18T15:10:45.000Z"
+    },
+    {
+      "id": "task_1776525045000_nal6xkxuf",
+      "content": "测试任务2",
+      "status": "pending",
+      "created_at": "2026-04-18T15:10:45.000Z"
+    },
+    {
+      "content": "测试任务",
+      "assignee": "test-agent",
+      "status": "in_progress",
+      "priority": "high",
+      "id": "task_1776525093487",
+      "created_at": "2026-04-18T15:11:33.487Z"
+    },
+    {
+      "id": "task_1776525153469",
+      "content": "开发登录页面",
+      "assignee": "frontend-dev",
+      "status": "pending",
+      "priority": "high",
+      "created_at": "2026-04-18T15:12:33.469Z"
+    },
+    {
+      "id": "task_1776525153495",
+      "content": "开发用户API",
+      "assignee": "backend-dev",
+      "status": "pending",
+      "priority": "high",
+      "created_at": "2026-04-18T15:12:33.495Z"
+    },
+    {
+      "content": "并发测试任务 0",
+      "assignee": "test-agent",
+      "status": "pending",
+      "priority": "medium",
+      "id": "task_1776525153576",
+      "created_at": "2026-04-18T15:12:33.576Z"
+    },
+    {
+      "content": "并发测试任务 1",
+      "assignee": "test-agent",
+      "status": "pending",
+      "priority": "medium",
+      "id": "task_1776525153594",
+      "created_at": "2026-04-18T15:12:33.594Z"
+    },
+    {
+      "content": "并发测试任务 2",
+      "assignee": "test-agent",
+      "status": "pending",
+      "priority": "medium",
+      "id": "task_1776525153611",
+      "created_at": "2026-04-18T15:12:33.611Z"
+    }
+  ]
+}
