@@ -68,7 +68,6 @@
   },
   "code_generation": {
     "language_preference": ["typescript", "javascript", "python"],
-    "framework_preference": ["react", "nextjs", "nodejs"],
     "style": "modern",
     "strict_mode": true
   },
