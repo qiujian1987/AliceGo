@@ -1,0 +1,81 @@
+{
+  "mode": "TEAM",
+  "version": "1.0.0",
+  "description": "TRAE 团队模式配置 - 多Agent协同开发环境",
+  "agents": {
+    "team-lead": {
+      "name": "Team Lead",
+      "model": "opus",
+      "role": "需求分析、任务拆解、全局协调、最终验收",
+      "领地": "全局协调"
+    },
+    "architect": {
+      "name": "Architect",
+      "model": "opus",
+      "role": "系统设计、API合同、技术选型",
+      "领地": "design/"
+    },
+    "dba": {
+      "name": "DBA",
+      "model": "opus",
+      "role": "数据模型设计、数据库管理",
+      "领地": "database/"
+    },
+    "frontend-dev": {
+      "name": "Frontend Dev",
+      "model": "sonnet",
+      "role": "前端业务逻辑开发",
+      "领地": "src/client/"
+    },
+    "backend-dev": {
+      "name": "Backend Dev",
+      "model": "sonnet",
+      "role": "后端业务逻辑开发",
+      "领地": "src/server/"
+    },
+    "devops": {
+      "name": "DevOps",
+      "model": "sonnet",
+      "role": "环境搭建、CI/CD、依赖管理",
+      "领地": "infra/"
+    },
+    "qa": {
+      "name": "QA",
+      "model": "sonnet",
+      "role": "测试策略、测试用例、质量把控",
+      "领地": "tests/"
+    }
+  },
+  "rules": {
+    "priority": "user_instructions",
+    "decision_making": "auto_with_confirmation",
+    "error_handling": "auto_recover_with_report"
+  },
+  "automation": {
+    "enabled": true,
+    "triggers": [
+      "on_file_save",
+      "on_dependency_install",
+      "on_test_complete"
+    ],
+    "requires_confirmation": [
+      "delete_operation",
+      "config_change",
+      "batch_refactor",
+      "tech_stack_change",
+      "data_model_change"
+    ]
+  },
+  "code_generation": {
+    "language_preference": ["typescript", "javascript", "python"],
+    "framework_preference": ["react", "nextjs", "nodejs"],
+    "style": "modern",
+    "strict_mode": true
+  },
+  "response": {
+    "format": "structured",
+    "language": "中文",
+    "include_context": true,
+    "show_progress": true
+  }
+}
