@@ -45,11 +45,14 @@
 ### 推荐 MCP
 - **integrated_browser**：技术研究和参考
 - **mcp_Excel**：架构设计数据管理
+- **mcp_Memory**：设计决策和历史记录
 
 ### MCP 使用场景
 - **技术研究**：使用 `integrated_browser` 查阅技术文档和参考资料
 - **架构数据管理**：使用 `mcp_Excel` 管理架构设计数据和技术选型比较
 - **API 验证**：使用 `integrated_browser` 验证 API 设计和响应
+- **设计决策**：使用 `mcp_Memory` 记录设计决策和理由
+- **历史记录**：使用 `mcp_Memory` 存储架构演进历史
 
 ## 技能
 

@@ -1,9 +1,0 @@
-{
-  "agents": {
-    "test-agent": {
-      "current_task": "测试任务",
-      "status": "active",
-      "last_activity": "2026-04-18T15:09:56.832Z"
-    }
-  }
-}
