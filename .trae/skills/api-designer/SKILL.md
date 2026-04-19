@@ -7,7 +7,10 @@ description: "API设计，设计RESTful API接口和文档。触发场景：'API
 
 ## 功能描述
 
-根据系统架构和业务需求，设计RESTful API接口，生成API文档和契约。
+根据系统架构和业务需求，设计RESTful API接口，生成API文档和契约，并按模块和功能拆分API文档。
+
+## 执行文件
+- 执行文件：`scripts/design.js`
 
 ## 输入参数
 
@@ -58,7 +61,8 @@ description: "API设计，设计RESTful API接口和文档。触发场景：'API
 3. 定义请求和响应格式
 4. 设计认证和授权机制
 5. 制定错误处理和限流策略
-6. 生成API文档
+6. 按模块和功能拆分API文档
+7. 生成API总文档和拆分的API文件
 
 ## 使用示例
 

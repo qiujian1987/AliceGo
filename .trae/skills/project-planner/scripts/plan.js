@@ -211,13 +211,31 @@ class ProjectPlanner {
    */
   saveProjectPlan(projectPlan, filename) {
     try {
-      const outputDir = path.join(process.cwd(), 'design');
+      const outputDir = path.join(process.cwd(), 'design', 'project_overview');
       if (!fs.existsSync(outputDir)) {
         fs.mkdirSync(outputDir, { recursive: true });
       }
 
+      // 创建特性目录和任务文件目录
+      const featuresDir = path.join(process.cwd(), 'design', 'features');
+      if (!fs.existsSync(featuresDir)) {
+        fs.mkdirSync(featuresDir, { recursive: true });
+      }
+
+      // 创建示例特性目录和任务子目录
+      const exampleFeatureDir = path.join(featuresDir, 'example_feature');
+      if (!fs.existsSync(exampleFeatureDir)) {
+        fs.mkdirSync(exampleFeatureDir, { recursive: true });
+      }
+
+      const tasksDir = path.join(exampleFeatureDir, 'tasks');
+      if (!fs.existsSync(tasksDir)) {
+        fs.mkdirSync(tasksDir, { recursive: true });
+      }
+
       const { milestones, tasks, timeline } = projectPlan;
 
+      // 生成总项目计划文件
       let document = `# 项目计划\n\n`;
 
       document += `## 时间线\n${timeline}\n\n`;
@@ -235,12 +253,67 @@ class ProjectPlanner {
         document += `- 负责人: ${task.assignee}\n`;
         document += `- 优先级: ${task.priority}\n`;
         document += `- 预计工时: ${task.estimated_hours} 小时\n`;
-        document += `- 依赖: ${task.dependencies.length > 0 ? task.dependencies.join(', ') : '无'}\n\n`;
+        document += `- 依赖: ${task.dependencies.length > 0 ? task.dependencies.join(', ') : '无'}\n`;
+        // 添加依赖任务的详细信息
+        if (task.dependencies.length > 0) {
+          document += `- 依赖任务详情:\n`;
+          task.dependencies.forEach(depId => {
+            const depTask = tasks.find(t => t.id === depId);
+            if (depTask) {
+              document += `  - ${depId}. ${depTask.name} (负责人: ${depTask.assignee})\n`;
+            }
+          });
+        }
+        document += `\n`;
       });
 
+      // 保存总项目计划文件
       const filePath = path.join(outputDir, filename);
       fs.writeFileSync(filePath, document, 'utf-8');
       console.log(`项目计划已保存到: ${filePath}`);
+
+      // 为每个任务生成单独的文件
+      tasks.forEach(task => {
+        const taskFilename = `${task.id}_${task.name.toLowerCase().replace(/\s+/g, '_')}.md`;
+        const taskFilePath = path.join(tasksDir, taskFilename);
+
+        let taskDocument = `# 任务详情\n\n`;
+        taskDocument += `## 基本信息\n`;
+        taskDocument += `- 任务ID: ${task.id}\n`;
+        taskDocument += `- 任务名称: ${task.name}\n`;
+        taskDocument += `- 负责人: ${task.assignee}\n`;
+        taskDocument += `- 优先级: ${task.priority}\n`;
+        taskDocument += `- 预计工时: ${task.estimated_hours} 小时\n`;
+        taskDocument += `- 任务状态: 待执行\n`;
+        taskDocument += `- 进度: 0%\n\n`;
+
+        taskDocument += `## 任务描述\n详细描述任务内容和目标...\n\n`;
+
+        taskDocument += `## 依赖关系\n`;
+        if (task.dependencies.length > 0) {
+          taskDocument += `- 依赖任务: ${task.dependencies.join(', ')}\n`;
+          taskDocument += `- 依赖任务详情:\n`;
+          task.dependencies.forEach(depId => {
+            const depTask = tasks.find(t => t.id === depId);
+            if (depTask) {
+              taskDocument += `  - ${depId}. ${depTask.name} (负责人: ${depTask.assignee})\n`;
+            }
+          });
+        } else {
+          taskDocument += `- 依赖任务: 无\n`;
+        }
+        taskDocument += `\n`;
+
+        taskDocument += `## 验收标准\n- 标准1: ...\n- 标准2: ...\n\n`;
+
+        taskDocument += `## 相关文档\n- 文档1: ...\n- 文档2: ...\n\n`;
+
+        taskDocument += `## 变更记录\n| 日期 | 变更内容 | 变更人 |\n|------|----------|--------|\n| ${new Date().toISOString().split('T')[0]} | 任务创建 | System |\n`;
+
+        fs.writeFileSync(taskFilePath, taskDocument, 'utf-8');
+        console.log(`任务文件已保存到: ${taskFilePath}`);
+      });
+
     } catch (error) {
       console.error('保存项目计划失败:', error);
     }
