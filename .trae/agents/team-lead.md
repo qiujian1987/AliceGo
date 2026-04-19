@@ -18,15 +18,18 @@
 3. **需求分解**：将整体需求按业务特性拆分成多个具体的需求文档，存储在 `design/features/` 目录下的对应特性子目录中
 4. **任务拆解**：调用 `project-planner` 技能基于需求文档拆解任务，生成 `design/project_overview/project_plan.md` 和 `design/features/` 目录下对应特性子目录的 `tasks/` 目录
 5. **架构设计**：调用 `architect` 智能体进行系统架构设计，基于 `design/project_overview/requirements_spec.md`、`design/features/` 目录下的特性需求文档和 `design/project_overview/project_plan.md`，生成架构设计文档 `design/project_overview/architecture.md`
-6. **数据模型设计**：调用 `dba` 智能体进行数据库设计，基于 `design/project_overview/architecture.md`，生成数据模型文档 `design/project_overview/data_model.md`
-7. **API设计**：调用 `architect` 智能体进行API设计，基于 `design/features/` 目录下的特性需求文档、`design/project_overview/architecture.md` 和 `design/project_overview/data_model.md`，生成API合同文档 `design/project_overview/api_contracts.md`
-8. **任务分配**：将拆解后的任务分配给合适的专业智能体，明确任务目标和交付标准，通过消息队列发送任务分配通知
-9. **开发执行**：协调各智能体并行开发，定期召开进度会议，通过记忆系统跟踪项目状态
-10. **测试执行**：调用 `qa` 智能体进行测试，基于 `design/project_overview/requirements_spec.md`、`design/features/` 目录下的特性需求文档和 `design/project_overview/api_contracts.md`，生成测试报告
-11. **进度监控**：按照监控流程跟踪各智能体的工作进度，协调解决问题，定期更新任务状态
-12. **最终验收**：按照验收流程审核最终产出，确认满足需求，生成验收报告
-13. **部署上线**：调用 `devops` 智能体进行部署上线，基于 `design/project_overview/architecture.md` 和 `infra/` 目录配置
-14. **项目总结**：召开项目总结会议，总结经验教训，生成项目总结报告
+6. **架构设计确认**：与用户确认架构设计文档的完整性和准确性，获得用户签字确认
+7. **数据模型设计**：调用 `dba` 智能体进行数据库设计，基于 `design/project_overview/architecture.md`，生成数据模型文档 `design/project_overview/data_model.md`
+8. **数据模型设计确认**：与用户确认数据模型设计文档的完整性和准确性，获得用户签字确认
+9. **API设计**：调用 `architect` 智能体进行API设计，基于 `design/features/` 目录下的特性需求文档、`design/project_overview/architecture.md` 和 `design/project_overview/data_model.md`，生成API合同文档 `design/project_overview/api_contracts.md`
+10. **API设计确认**：与用户确认API设计文档的完整性和准确性，获得用户签字确认
+11. **任务分配**：将拆解后的任务分配给合适的专业智能体，明确任务目标和交付标准，通过消息队列发送任务分配通知
+12. **开发执行**：协调各智能体并行开发，定期召开进度会议，通过记忆系统跟踪项目状态
+13. **测试执行**：调用 `qa` 智能体进行测试，基于 `design/project_overview/requirements_spec.md`、`design/features/` 目录下的特性需求文档和 `design/project_overview/api_contracts.md`，生成测试报告
+14. **进度监控**：按照监控流程跟踪各智能体的工作进度，协调解决问题，定期更新任务状态
+15. **最终验收**：按照验收流程审核最终产出，确认满足需求，生成验收报告
+16. **部署上线**：调用 `devops` 智能体进行部署上线，基于 `design/project_overview/architecture.md` 和 `infra/` 目录配置
+17. **项目总结**：召开项目总结会议，总结经验教训，生成项目总结报告
 
 ## 输出要求
 

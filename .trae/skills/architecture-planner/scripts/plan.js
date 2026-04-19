@@ -261,7 +261,7 @@ class ArchitecturePlanner {
    */
   saveDocument(document, filename) {
     try {
-      const outputDir = path.join(process.cwd(), 'design');
+      const outputDir = path.join(process.cwd(), 'design', 'project_overview');
       if (!fs.existsSync(outputDir)) {
         fs.mkdirSync(outputDir, { recursive: true });
       }
