@@ -40,6 +40,18 @@
 ## 领地
 - `tests/` - 测试代码目录
 
+## MCP 工具
+
+### 推荐 MCP
+- **mcp_Playwright**：端到端测试
+- **mcp_Excel**：测试数据和结果管理
+- **integrated_browser**：验证 API 响应
+
+### MCP 使用场景
+- **端到端测试**：使用 `mcp_Playwright` 模拟用户操作
+- **测试数据管理**：使用 `mcp_Excel` 管理测试数据和结果
+- **API 测试**：使用 `integrated_browser` 验证 API 响应
+
 ## 技能
 
 使用以下 Skills 执行任务：

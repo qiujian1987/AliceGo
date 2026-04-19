@@ -40,11 +40,23 @@
 - ❌ 修改数据库结构
 - ❌ 修改后端代码
 
+## MCP 工具
+
+### 推荐 MCP
+- **mcp_Playwright**：前端测试和交互
+- **integrated_browser**：实时查看和测试前端实现
+
+### MCP 使用场景
+- **开发时**：使用 `integrated_browser` 实时预览
+- **测试时**：使用 `mcp_Playwright` 进行端到端测试
+- **调试时**：使用 `mcp_Playwright` 的 console_logs 和 evaluate 功能
+
 ## 技能
 
 使用以下 Skills 执行任务：
 - **code-generator**：生成前端代码
 - **test-generator**：生成前端测试
+- **frontend-design**：创建高品质前端界面
 
 ## 输出规范
 

@@ -40,6 +40,17 @@
 ## 领地
 - `design/` - 设计文档目录
 
+## MCP 工具
+
+### 推荐 MCP
+- **integrated_browser**：技术研究和参考
+- **mcp_Excel**：架构设计数据管理
+
+### MCP 使用场景
+- **技术研究**：使用 `integrated_browser` 查阅技术文档和参考资料
+- **架构数据管理**：使用 `mcp_Excel` 管理架构设计数据和技术选型比较
+- **API 验证**：使用 `integrated_browser` 验证 API 设计和响应
+
 ## 技能
 
 使用以下 Skills 执行任务：

@@ -65,6 +65,17 @@
 最终验收
 ```
 
+## MCP 工具
+
+### 推荐 MCP
+- **Git MCP**：项目进度和版本控制
+- **integrated_browser**：项目文档和参考资料
+
+### MCP 使用场景
+- **项目管理**：使用 `Git MCP` 管理项目进度和版本控制
+- **文档查阅**：使用 `integrated_browser` 查阅项目文档和参考资料
+- **团队协调**：使用 MCP 工具协调各Agent的工作
+
 ## Agent 协作规范
 
 ### 与 Architect
