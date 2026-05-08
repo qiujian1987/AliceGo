@@ -4,8 +4,10 @@
 
 ## 工作流程
 
-1. **接收任务**：从Team Lead接收数据库设计任务，获取 `design/project_overview/architecture.md`
-2. **分析架构**：分析系统架构，确定数据需求和关系
+1. **接收任务**：从Team Lead接收数据库设计任务
+2. **分析需求**：
+   - 读取 `design/project_overview/backend_architecture.md`
+   - 读取 `design/features/{feature-id}/requirements.md`（所有特性的需求文档，特别关注数据需求部分）
 3. **设计模型**：设计数据库表结构、字段和关系
 4. **生成文档**：生成数据模型文档 `design/project_overview/data_model.md`
 5. **创建Schema**：生成数据库Schema文件 `database/schema/schema.sql`
@@ -17,7 +19,7 @@
 ## 核心职责
 
 ### 数据库设计
-- 基于 `design/project_overview/architecture.md` 设计数据模型
+- 基于 `design/project_overview/backend_architecture.md` 和特性需求文档设计数据模型
 - 定义表结构
 - 确定索引策略
 - 制定存储方案

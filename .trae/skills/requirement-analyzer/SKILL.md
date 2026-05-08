@@ -7,33 +7,28 @@ description: "需求分析，将用户需求转换为明确的规约文档。触
 
 ## 功能描述
 
-将用户的需求描述转换为结构化的需求规约文档，明确需求边界、功能点和验收标准。
+将用户的需求描述转换为结构化的需求规约文档，明确需求边界、功能点和验收标准，并将文档保存到 `design/project_overview/requirements_spec.md`。
 
 ## 输入参数
 
 | 参数 | 类型 | 描述 | 必需 |
 |------|------|------|------|
 | user_input | string | 用户的需求描述 | 是 |
+| output_path | string | 输出文件路径，默认为 `design/project_overview/requirements_spec.md` | 否 |
 | context | string | 项目背景信息 | 否 |
 | priority | string | 优先级（high/medium/low） | 否 |
 
 ## 输出格式
 
+### 主要输出：Markdown文档
+直接将需求规约文档保存到指定路径 `design/project_overview/requirements_spec.md`
+
+### 辅助输出：JSON状态
 ```json
 {
   "status": "success",
-  "data": {
-    "requirements": {
-      "business_needs": ["..."],
-      "functional_requirements": ["..."],
-      "non_functional_requirements": ["..."],
-      "scope": "...",
-      "acceptance_criteria": ["..."],
-      "risks": ["..."]
-    },
-    "document": "生成的需求规约文档内容"
-  },
-  "message": "需求分析完成"
+  "output_files": ["design/project_overview/requirements_spec.md"],
+  "message": "需求分析完成，文档已保存"
 }
 ```
 
@@ -45,10 +40,51 @@ description: "需求分析，将用户需求转换为明确的规约文档。触
 4. 明确需求范围和边界
 5. 制定验收标准
 6. 识别潜在风险
-7. 生成结构化的需求规约文档
-8. 与用户进行需求澄清和确认
-9. 根据用户反馈更新需求规约文档
-10. 获得用户对需求文档的最终确认
+7. 按照标准格式生成需求规约Markdown文档
+8. 将文档保存到 `design/project_overview/requirements_spec.md`
+9. 返回成功状态和输出文件路径
+
+## 文档格式规范
+
+生成的Markdown文档应遵循以下格式：
+
+```markdown
+# 项目需求规约
+
+## 1. 项目概述
+- 项目名称：xxx
+- 项目目标：xxx
+- 目标用户：xxx
+
+## 2. 业务需求
+- 需求1：xxx
+- 需求2：xxx
+
+## 3. 功能需求
+- 功能1：xxx
+- 功能2：xxx
+
+## 4. 非功能需求
+- 性能：xxx
+- 安全：xxx
+- 可用性：xxx
+
+## 5. 范围
+- 包含：xxx
+- 不包含：xxx
+
+## 6. 验收标准
+- 标准1：xxx
+- 标准2：xxx
+
+## 7. 风险
+- 风险1：xxx
+- 风险2：xxx
+
+## 8. 假设与约束
+- 假设：xxx
+- 约束：xxx
+```
 
 ## 使用示例
 
@@ -61,23 +97,47 @@ description: "需求分析，将用户需求转换为明确的规约文档。触
 }
 ```
 
-### 输出
-```json
-{
-  "status": "success",
-  "data": {
-    "requirements": {
-      "business_needs": ["创建电商平台", "吸引年轻用户"],
-      "functional_requirements": ["用户注册登录", "商品浏览搜索", "购物车管理", "在线支付"],
-      "non_functional_requirements": ["响应速度快", "界面美观", "移动端适配"],
-      "scope": "电商网站的核心功能，不包括物流管理",
-      "acceptance_criteria": ["用户能成功注册", "能正常浏览商品", "购物车功能正常", "支付流程顺畅"],
-      "risks": ["支付安全", "用户体验"],
-      "document": "# 电商网站需求规约\n\n## 1. 业务需求\n- 创建电商平台\n- 吸引年轻用户\n\n## 2. 功能需求\n- 用户注册登录\n- 商品浏览搜索\n- 购物车管理\n- 在线支付\n\n## 3. 非功能需求\n- 响应速度快\n- 界面美观\n- 移动端适配\n\n## 4. 范围\n电商网站的核心功能，不包括物流管理\n\n## 5. 验收标准\n- 用户能成功注册\n- 能正常浏览商品\n- 购物车功能正常\n- 支付流程顺畅\n\n## 6. 风险\n- 支付安全\n- 用户体验"
-    }
-  },
-  "message": "需求分析完成"
-}
+### 输出（Markdown文档内容）
+```markdown
+# 电商网站需求规约
+
+## 1. 项目概述
+- 项目名称：电商网站
+- 项目目标：创建电商平台，吸引年轻用户
+- 目标用户：年轻人
+
+## 2. 业务需求
+- 创建电商平台
+- 吸引年轻用户
+
+## 3. 功能需求
+- 用户注册登录
+- 商品浏览搜索
+- 购物车管理
+- 在线支付
+
+## 4. 非功能需求
+- 响应速度快
+- 界面美观
+- 移动端适配
+
+## 5. 范围
+包含：电商网站的核心功能
+不包含：物流管理
+
+## 6. 验收标准
+- 用户能成功注册
+- 能正常浏览商品
+- 购物车功能正常
+- 支付流程顺畅
+
+## 7. 风险
+- 支付安全
+- 用户体验
+
+## 8. 假设与约束
+- 假设：目标用户熟悉移动设备操作
+- 约束：需要支持主流浏览器
 ```
 
 ## 最佳实践

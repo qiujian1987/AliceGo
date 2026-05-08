@@ -7,117 +7,146 @@ description: "项目规划，将需求拆解为具体的任务和里程碑。触
 
 ## 功能描述
 
-根据需求规约，将项目拆解为具体的任务和里程碑，制定合理的项目计划。
+根据需求规约，将项目拆解为具体的任务和里程碑，制定合理的项目计划，并生成项目计划文档和各特性的任务文档。
 
 ## 输入参数
 
 | 参数 | 类型 | 描述 | 必需 |
 |------|------|------|------|
-| requirements | object | 需求规约文档 | 是 |
+| requirements_doc | string | 需求规约文档路径，默认为 `design/project_overview/requirements_spec.md` | 否 |
+| features_dir | string | 特性目录路径，默认为 `design/features/` | 否 |
 | team_size | number | 团队规模 | 否 |
 | deadline | string | 截止日期 | 否 |
 
 ## 输出格式
 
+### 主要输出：Markdown文档
+- 项目计划文档：`design/project_overview/project_plan.md`
+- 特性任务文档：为每个特性在 `design/features/{feature}/tasks/` 目录下生成任务文档
+
+### 辅助输出：JSON状态
 ```json
 {
   "status": "success",
-  "data": {
-    "project_plan": {
-      "milestones": [
-        {
-          "name": "...",
-          "date": "...",
-          "tasks": ["..."]
-        }
-      ],
-      "tasks": [
-        {
-          "id": "...",
-          "name": "...",
-          "assignee": "...",
-          "priority": "...",
-          "estimated_hours": "...",
-          "dependencies": ["..."]
-        }
-      ],
-      "timeline": "..."
-    }
-  },
-  "message": "项目规划完成"
+  "output_files": [
+    "design/project_overview/project_plan.md",
+    "design/features/feature1/tasks/task1.md",
+    "design/features/feature1/tasks/task2.md"
+  ],
+  "message": "项目规划完成，文档已保存"
 }
 ```
 
 ## 执行流程
 
-1. 分析需求规约文档
+1. 读取需求规约文档和特性需求文档
 2. 识别关键功能模块
 3. 拆解为具体任务
 4. 确定任务依赖关系
 5. 分配任务给合适的Agent
 6. 制定里程碑和时间线
-7. 生成项目计划文档
+7. 生成项目计划文档 `design/project_overview/project_plan.md`
+8. 为每个特性在 `design/features/{feature}/tasks/` 目录下生成任务文档
+9. 返回成功状态和输出文件路径
+
+## 文档格式规范
+
+### 项目计划文档格式 (`design/project_overview/project_plan.md`)
+```markdown
+# 项目计划
+
+## 1. 里程碑
+| 里程碑 | 时间 | 交付物 |
+|--------|------|--------|
+| M1: 设计完成 | 2026-05-15 | 设计文档 |
+| M2: 开发完成 | 2026-06-15 | 代码 |
+| M3: 上线 | 2026-06-30 | 上线 |
+
+## 2. 任务清单
+- T1: 需求分析 (Team Lead)
+- T2: 架构设计 (Architect)
+- ...
+
+## 3. 依赖关系
+- T2 依赖 T1
+- T3 依赖 T2
+
+## 4. 资源分配
+- Team Lead: 1人
+- Architect: 1人
+- ...
+```
+
+### 特性任务文档格式 (`design/features/{feature}/tasks/{task}.md`)
+```markdown
+# 任务：{任务名称}
+
+## 1. 基本信息
+- 任务ID：{task-id}
+- 所属特性：{feature-id}
+- 优先级：高/中/低
+- 预估工时：x小时
+- 负责人：{Agent名称}
+
+## 2. 任务描述
+- 详细描述：xxx
+- 验收标准：xxx
+
+## 3. 依赖关系
+- 前置任务：xxx
+- 后置任务：xxx
+
+## 4. 输入文档
+- 文档1：xxx
+- 文档2：xxx
+
+## 5. 输出文档
+- 文档1：xxx
+- 文档2：xxx
+```
 
 ## 使用示例
 
 ### 输入
 ```json
 {
-  "requirements": {
-    "business_needs": ["创建电商平台"],
-    "functional_requirements": ["用户注册登录", "商品浏览搜索", "购物车管理", "在线支付"]
-  },
+  "requirements_doc": "design/project_overview/requirements_spec.md",
+  "features_dir": "design/features/",
   "team_size": 5,
   "deadline": "2026-06-30"
 }
 ```
 
-### 输出
-```json
-{
-  "status": "success",
-  "data": {
-    "project_plan": {
-      "milestones": [
-        {
-          "name": "需求分析与设计",
-          "date": "2026-05-15",
-          "tasks": ["需求分析", "架构设计", "数据模型设计"]
-        },
-        {
-          "name": "核心功能开发",
-          "date": "2026-06-15",
-          "tasks": ["用户系统", "商品系统", "购物车", "支付系统"]
-        },
-        {
-          "name": "测试与上线",
-          "date": "2026-06-30",
-          "tasks": ["集成测试", "性能测试", "部署上线"]
-        }
-      ],
-      "tasks": [
-        {
-          "id": "T001",
-          "name": "需求分析",
-          "assignee": "Team Lead",
-          "priority": "high",
-          "estimated_hours": "8",
-          "dependencies": []
-        },
-        {
-          "id": "T002",
-          "name": "架构设计",
-          "assignee": "Architect",
-          "priority": "high",
-          "estimated_hours": "16",
-          "dependencies": ["T001"]
-        }
-      ],
-      "timeline": "2026-05-01 至 2026-06-30"
-    }
-  },
-  "message": "项目规划完成"
-}
+### 输出（项目计划文档内容）
+```markdown
+# 电商网站项目计划
+
+## 1. 里程碑
+| 里程碑 | 时间 | 交付物 |
+|--------|------|--------|
+| M1: 需求分析与设计 | 2026-05-15 | 设计文档 |
+| M2: 核心功能开发 | 2026-06-15 | 代码 |
+| M3: 测试与上线 | 2026-06-30 | 上线 |
+
+## 2. 任务清单
+- T001: 需求分析 (Team Lead)
+- T002: 架构设计 (Architect)
+- T003: 数据模型设计 (DBA)
+- T004: API设计 (Architect)
+
+## 3. 依赖关系
+- T002 依赖 T001
+- T003 依赖 T002
+- T004 依赖 T003
+
+## 4. 资源分配
+- Team Lead: 1人
+- Architect: 1人
+- DBA: 1人
+- Backend Dev: 2人
+- Frontend Dev: 2人
+- QA: 1人
+- DevOps: 1人
 ```
 
 ## 最佳实践

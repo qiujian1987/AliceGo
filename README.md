@@ -6,7 +6,7 @@ TRAE (Team-based Robust AI Engineering) 是一个基于 Claude Code Agent Teams 
 
 ### 核心特性
 
-- **多 Agent 协同**：7 个专业 Agent 分工协作
+- **多 Agent 协同**：14 个专业 Agent 分工协作
 - **记忆系统**：持久化项目状态，支持断点恢复
 - **工程标准**：确保代码质量和可维护性
 - **快速初始化**：支持从 0-1 快速构建项目
@@ -26,24 +26,92 @@ TRAE (Team-based Robust AI Engineering) 是一个基于 Claude Code Agent Teams 
 AliceGo/
 ├── .trae/
 │   ├── team-config.json          # 团队配置
-│   ├── rules/
-│   │   ├── project_rules.md     # 核心规范
-│   │   ├── code_standards.md    # 代码标准
-│   │   └── engineering_standards.md  # 工程标准
-│   ├── agents/                  # Agent 配置
-│   ├── skills/                  # 技能定义
-│   ├── mailbox/                 # 消息队列
-│   ├── memory/                  # 记忆系统
-│   ├── init/                    # 初始化脚本
-│   ├── tasks.md                 # 任务看板
-│   ├── tech-stack.md            # 技术栈清单
-│   └── data-model.md            # 数据模型设计
+│   ├── rules/                    # 规则体系（7个文件）
+│   │   ├── 01_security-constraints.md   # 安全约束
+│   │   ├── 02_agent-territory.md        # Agent领地
+│   │   ├── 03_coding-conventions.md     # 编码规范
+│   │   ├── 04_quality-standards.md      # 质量标准
+│   │   ├── 05_mandatory-behaviors.md    # 强制行为
+│   │   ├── 06_code-quality.md            # 代码质量
+│   │   └── 07_workflow-standards.md     # 工作流程
+│   ├── agents/                  # Agent配置（14个）
+│   │   ├── team-lead.md         # 项目总协调
+│   │   ├── architect.md          # 系统架构师
+│   │   ├── dba.md               # 数据库设计师
+│   │   ├── feature-analyst.md   # 特性需求分析师
+│   │   ├── frontend-designer.md  # 前端设计师
+│   │   ├── frontend-dev.md      # 前端开发
+│   │   ├── backend-dev.md        # 后端开发
+│   │   ├── devops.md            # 运维工程师
+│   │   ├── qa.md                # 质量保证
+│   │   ├── req-reviewer.md      # 需求评审
+│   │   ├── design-reviewer.md   # 设计评审
+│   │   ├── test-reviewer.md     # 测试评审
+│   │   └── code-reviewer.md     # 代码评审
+│   ├── skills/                  # 技能定义（13个）
+│   │   ├── requirement-analyzer/
+│   │   ├── project-planner/
+│   │   ├── architecture-planner/
+│   │   ├── api-designer/
+│   │   ├── database-designer/
+│   │   ├── frontend-design/
+│   │   ├── test-generator/
+│   │   ├── test-executor/
+│   │   ├── code-generator/
+│   │   ├── code-review/
+│   │   ├── sql-optimizer/
+│   │   ├── dependency-manager/
+│   │   ├── devops-automation/
+│   │   └── file-operation/
+│   ├── docs/                    # 规范文档
+│   │   ├── skill-invocation.md   # Skill调用规范
+│   │   ├── review-feedback.md    # 评审反馈机制
+│   │   ├── memory-usage.md       # 记忆系统使用
+│   │   ├── file-ownership.md     # 文件所有权
+│   │   └── project-initialization.md  # 项目初始化
+│   ├── specs/                   # 分析文档
+│   │   └── workflow-end-to-end-analysis/
+│   ├── mcps/                    # MCP配置
+│   └── documents/               # 文档
 ├── database/                    # 数据库文件
-│   ├── schema.sql
-│   ├── migrations/
-│   └── seeds/
-└── README.md
+├── src/                        # 源代码
+├── tests/                      # 测试代码
+└── infra/                      # 基础设施
 ```
+
+## Agent角色配置
+
+| Agent | 职责 | 领地 |
+|-------|------|------|
+| **Team Lead** | 需求分析、任务拆解、全局协调 | 全局协调 |
+| **Feature Analyst** | 特性需求分析、文档编写 | design/features/ |
+| **Architect** | 系统设计、API合同、技术选型 | design/ |
+| **Frontend Designer** | 前端界面设计 | design/ |
+| **DBA** | 数据模型设计、数据库管理 | database/ |
+| **QA** | 测试策略、测试用例、质量把控 | tests/ |
+| **Frontend Dev** | 前端业务逻辑开发 | src/client/ |
+| **Backend Dev** | 后端业务逻辑开发 | src/server/ |
+| **DevOps** | 环境搭建、CI/CD、依赖管理 | infra/ |
+| **req-reviewer** | 需求文档评审 | 评审 |
+| **design-reviewer** | 设计文档评审 | 评审 |
+| **test-reviewer** | 测试文档评审 | 评审 |
+| **code-reviewer** | 代码评审 | 评审 |
+
+## 规则体系
+
+TRAE框架会自动加载 `.trae/rules/` 目录下的所有规则文件，这些规则对所有Agent生效。
+
+### 规则分层
+
+| 层级 | 文件 | 内容 |
+|------|------|------|
+| L1 | 01_security-constraints.md | 安全红线、禁止操作、输入验证 |
+| L1 | 05_mandatory-behaviors.md | 确认机制、迭代控制、响应规范 |
+| L2 | 02_agent-territory.md | Agent领地划分、权限边界 |
+| L3 | 03_coding-conventions.md | 命名规范、长度规范、注释规范 |
+| L3 | 04_quality-standards.md | 测试策略、覆盖率目标、CI/CD |
+| L3 | 06_code-quality.md | 类型安全、错误处理、性能标准 |
+| L3 | 07_workflow-standards.md | 开发流程、环境配置、分支策略 |
 
 ## 系统要求
 
@@ -61,18 +129,6 @@ cd my-project
 # 初始化 TRAE
 node .trae/init/init.js
 ```
-
-## Agent角色配置
-
-| Agent | 模型 | 职责 | 领地 |
-|-------|------|------|------|
-| **Team Lead** | Opus | 需求分析、任务拆解、全局协调 | 全局协调 |
-| **Architect** | Opus | 系统设计、API合同、技术选型 | design/ |
-| **DBA** | Opus | 数据模型设计、数据库管理 | database/ |
-| **Frontend Dev** | Sonnet | 前端业务逻辑开发 | src/client/ |
-| **Backend Dev** | Sonnet | 后端业务逻辑开发 | src/server/ |
-| **DevOps** | Sonnet | 环境搭建、CI/CD、依赖管理 | infra/ |
-| **QA** | Sonnet | 测试策略、测试用例、质量把控 | tests/ |
 
 ## 核心流程
 
@@ -112,37 +168,6 @@ node .trae/init/init.js
 [检查点3] 上线准备就绪
 ```
 
-## 强制约束机制
-
-### 领地划分
-- Frontend Dev **只能**操作 `src/client/`
-- Backend Dev **只能**操作 `src/server/`
-- DBA **只能**操作 `database/`
-- DevOps **只能**操作 `infra/` 和依赖配置
-- QA **只能**操作 `tests/`
-
-### 权限禁止
-- ❌ Frontend/Backend Dev **禁止**修改 package.json
-- ❌ Frontend/Backend Dev **禁止**执行 npm install/add
-- ❌ Frontend/Backend Dev **禁止**修改数据库结构
-- ❌ 只有 DevOps 可以管理依赖
-- ❌ 只有 DBA 可以修改数据库
-
-### 技术栈管控
-- 所有新技术栈必须通过 `mailbox/to-devops.md` 申请
-- 需要 Team Lead 审批
-- 只有 DevOps 可以安装新依赖
-
-## 常用命令
-
-| 命令 | 描述 |
-|------|------|
-| `npm install` | 安装依赖 |
-| `npm run dev` | 启动开发服务器 |
-| `npm run build` | 构建项目 |
-| `npm test` | 运行测试 |
-| `npm run lint` | 代码质量检查 |
-
 ## 常见问题
 
 ### 1. 对话轮次限制
@@ -167,26 +192,6 @@ TRAE 在 50 轮对话后建议新建对话，导致上下文丢失。
 **解决方案**：
 - 清理 npm 缓存：`npm cache clean --force`
 - 更换 npm 源：`npm config set registry https://registry.npmmirror.com`
-
-## 工程标准
-
-### 代码规范
-- 文件命名：kebab-case
-- 组件/类命名：PascalCase
-- 变量命名：camelCase
-- 常量命名：UPPER_SNAKE_CASE
-- 函数长度：不超过 50 行
-- 类/组件长度：不超过 300 行
-
-### 测试策略
-- **单元测试**：测试单个函数和组件，覆盖率目标 > 80%
-- **集成测试**：测试模块间的交互
-- **端到端测试**：测试完整的用户流程
-
-### CI/CD 流程
-1. 代码提交 → 质量检查 → 测试执行
-2. 构建验证 → 部署准备 → 环境检查
-3. 部署执行 → 健康检查 → 回滚机制
 
 ## 最佳实践
 
