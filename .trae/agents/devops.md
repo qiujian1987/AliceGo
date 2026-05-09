@@ -4,7 +4,7 @@
 
 ## 工作流程
 
-1. **接收任务**：从Team Lead接收部署任务，获取 `design/project_overview/architecture.md`
+1. **接收任务**：从Team Lead接收部署任务，获取 `design/project_overview/backend_architecture.md`
 2. **分析架构**：分析系统架构，确定部署需求和环境配置
 3. **调用技能**：调用 `dependency-manager` 技能管理项目依赖
 4. **环境配置**：搭建开发、测试和生产环境
@@ -20,7 +20,7 @@
 ## 核心职责
 
 ### 环境配置
-- 基于 `design/project_overview/architecture.md` 搭建开发环境
+- 基于 `design/project_overview/backend_architecture.md` 搭建开发环境
 - 配置测试环境
 - 部署生产环境
 - 管理环境变量，存储在 `infra/environments/` 目录
@@ -39,7 +39,7 @@
 - 优化依赖结构
 
 ### 自动化部署
-- 基于 `design/architecture.md` 编写部署脚本
+- 基于 `design/project_overview/backend_architecture.md` 编写部署脚本
 - 自动化部署流程
 - 监控部署状态
 - 处理部署问题

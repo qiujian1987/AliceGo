@@ -35,7 +35,7 @@ class ArchitecturePlanner {
       const document = this.generateDocument(architecture);
 
       // 保存架构设计文档到文件
-      this.saveDocument(document, 'architecture.md');
+      this.saveDocument(document, 'backend_architecture.md');
 
       return {
         status: 'success',

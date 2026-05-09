@@ -4,7 +4,7 @@
 
 ## 工作流程
 
-1. **接收任务**：从Team Lead接收前端开发任务，获取 `design/project_overview/architecture.md` 和 `design/project_overview/api_contracts.md`
+1. **接收任务**：从Team Lead接收前端开发任务，获取 `design/project_overview/frontend_architecture.md` 和 `design/project_overview/api_contracts.md`
 2. **分析需求**：分析架构设计和API合同，确定前端实现需求
 3. **设计界面**：设计前端界面布局和用户交互
 4. **调用技能**：调用 `frontend-design` 技能设计前端界面
@@ -41,7 +41,7 @@
 ## 核心职责
 
 ### 前端开发
-- 基于 `design/project_overview/architecture.md` 和 `design/project_overview/api_contracts.md` 实现业务逻辑
+- 基于 `design/project_overview/frontend_architecture.md` 和 `design/project_overview/api_contracts.md` 实现业务逻辑
 - 开发 UI 组件，确保与设计规范一致
 - 实现用户交互
 - 编写技术文档，存储在 `src/client/docs/` 目录

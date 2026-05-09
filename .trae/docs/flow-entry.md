@@ -157,7 +157,7 @@
 - 总迭代：5次
 - 交付物：
   - 需求文档：design/project_overview/requirements_spec.md
-  - 架构文档：design/project_overview/architecture.md
+  - 架构文档：design/project_overview/backend_architecture.md
   - 代码：src/server/, src/client/
   - 测试：tests/
 
