@@ -114,3 +114,106 @@ mcp_memory_read path="project/{project_id}/tasks"
 2. 确定当前步骤
 3. 检查前置步骤是否完成
 4. 从当前步骤继续
+
+---
+
+## 6. 阶段检测规则
+
+### 6.1 步骤完成验证机制
+
+每个步骤完成后**必须**记录到mcp_Memory，**不依赖文件存在性判断**：
+
+```json
+{
+  "step_id": 4,
+  "step_name": "需求评审",
+  "status": "completed",
+  "completed_at": "2026-05-09T10:00:00Z",
+  "output_files": [
+    "design/project_overview/reviews/requirements-20260509.md"
+  ],
+  "verified_by": "@req-reviewer"
+}
+```
+
+### 6.2 阶段检测流程
+
+**步骤1：读取项目状态**
+```bash
+mcp_memory_read path="project/{project_id}/state"
+```
+
+**步骤2：验证前置步骤**
+对于任何步骤N，必须验证步骤1到N-1的状态都是`completed`或`approved`
+
+**步骤3：确定当前阶段**
+```
+阶段一（1-7）：项目初始化与需求分析
+阶段二（8-18）：系统设计
+阶段三（19-25）：任务规划与开发
+阶段四（26-29）：验收与交付
+```
+
+### 6.3 阶段检测输出格式
+
+```json
+{
+  "current_phase": "需求分析",
+  "current_step": 4,
+  "current_step_name": "需求评审",
+  "step_status": "pending",
+  "completed_steps": [1, 2, 3],
+  "pending_steps": [4, 5, 6, ...],
+  "recommendation": "调用 @req-reviewer 进行需求评审"
+}
+```
+
+### 6.4 状态优先原则
+
+| 判断依据 | 优先级 | 说明 |
+|---------|--------|------|
+| mcp_Memory记录 | 高 | 权威来源 |
+| 文件存在性 | 低 | 仅作为参考 |
+| 用户指示 | 最高 | 覆盖所有规则 |
+
+### 6.5 检测失败处理
+
+当检测到状态不一致时：
+1. 输出警告信息
+2. 显示当前状态和建议操作
+3. 询问用户确认后继续
+
+---
+
+## 7. 评审Agent调用强制规则
+
+### 7.1 必须调用Agent的步骤
+
+| 步骤 | Agent | 说明 |
+|------|-------|------|
+| 步骤4 | @req-reviewer | 需求评审 |
+| 步骤12 | @design-reviewer | 设计评审 |
+| 步骤21 | @test-reviewer | 测试评审 |
+| 步骤24 | @code-reviewer | 代码评审 |
+
+### 7.2 调用验证机制
+
+**前置检查**：
+1. 确认Agent存在
+2. 确认当前步骤需要调用Agent
+3. 确认没有跳过标记
+
+**调用格式**：
+```
+@agent-name [操作指令]
+```
+
+**示例**：
+```
+@req-reviewer 请对需求文档进行评审
+```
+
+**验证失败处理**：
+1. 如果未调用Agent而直接完成评审，标记步骤状态为`invalid`
+2. 输出错误信息
+3. 要求重新执行并正确调用Agent

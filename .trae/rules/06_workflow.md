@@ -44,15 +44,24 @@
 ---
 
 **步骤4：需求评审**
-- **执行者**：@req-reviewer
-- **触发条件**：特性需求分析完成
+- **执行者**：@req-reviewer（**必须调用，不得自行评审**）
+- **触发条件**：
+  1. 步骤3完成（状态=completed）
+  2. 迭代次数<3
+- **前置检查**：
+  1. 查询mcp_Memory确认步骤3状态
+  2. 验证输入文档存在
+  3. 确认@req-reviewer Agent可用
 - **输入**：`design/project_overview/requirements_spec.md` + `design/features/*/requirements.md`
 - **输出**：
   - 评审报告：`design/project_overview/reviews/requirements-{timestamp}.md`
   - 反馈JSON：`design/project_overview/feedback/req-review-{timestamp}.json`
   - 迭代次数更新（mcp_Memory）
+  - 步骤状态更新（mcp_Memory）
 - **迭代控制**：最多3次，通过mcp_Memory记录
-- **SOLO Coder操作**：调用 @req-reviewer
+- **强制规则**：必须调用 @req-reviewer，SOLO Coder不得自行执行评审
+- **验证机制**：评审完成后检查`verified_by`字段是否为`@req-reviewer`
+- **SOLO Coder操作**：调用 @req-reviewer 进行需求评审
 
 ---
 
@@ -118,14 +127,24 @@
 ---
 
 **步骤12：设计评审**
-- **执行者**：@design-reviewer
-- **触发条件**：架构设计完成
+- **执行者**：@design-reviewer（**必须调用，不得自行评审**）
+- **触发条件**：
+  1. 步骤8完成（状态=completed）
+  2. 步骤10完成（状态=completed）
+  3. 迭代次数<3
+- **前置检查**：
+  1. 查询mcp_Memory确认步骤8和10状态
+  2. 验证输入文档存在
+  3. 确认@design-reviewer Agent可用
 - **输入**：`design/project_overview/backend_architecture.md` + `design/project_overview/frontend_architecture.md`
 - **输出**：
   - 评审报告：`design/project_overview/reviews/design-{timestamp}.md`
   - 反馈JSON：`design/project_overview/feedback/design-review-{timestamp}.json`
-- **迭代控制**：最多3次
-- **SOLO Coder操作**：调用 @design-reviewer
+  - 步骤状态更新（mcp_Memory）
+- **迭代控制**：最多3次，通过mcp_Memory记录
+- **强制规则**：必须调用 @design-reviewer，SOLO Coder不得自行执行评审
+- **验证机制**：评审完成后检查`verified_by`字段是否为`@design-reviewer`
+- **SOLO Coder操作**：调用 @design-reviewer 进行设计评审
 
 ---
 
@@ -205,14 +224,23 @@
 ---
 
 **步骤21：测试评审**
-- **执行者**：@test-reviewer
-- **触发条件**：测试用例设计完成
+- **执行者**：@test-reviewer（**必须调用，不得自行评审**）
+- **触发条件**：
+  1. 步骤20完成（状态=completed）
+  2. 迭代次数<3
+- **前置检查**：
+  1. 查询mcp_Memory确认步骤20状态
+  2. 验证输入文档存在
+  3. 确认@test-reviewer Agent可用
 - **输入**：`design/features/*/test-cases.md`
 - **输出**：
   - 评审报告：`design/project_overview/reviews/test-{timestamp}.md`
   - 反馈JSON：`design/project_overview/feedback/test-review-{timestamp}.json`
-- **迭代控制**：最多3次
-- **SOLO Coder操作**：调用 @test-reviewer
+  - 步骤状态更新（mcp_Memory）
+- **迭代控制**：最多3次，通过mcp_Memory记录
+- **强制规则**：必须调用 @test-reviewer，SOLO Coder不得自行执行评审
+- **验证机制**：评审完成后检查`verified_by`字段是否为`@test-reviewer`
+- **SOLO Coder操作**：调用 @test-reviewer 进行测试评审
 
 ---
 
@@ -245,15 +273,24 @@
 ---
 
 **步骤24：代码评审（按任务）**
-- **触发条件**：单个任务开发完成后
-- **执行者**：@code-reviewer
+- **执行者**：@code-reviewer（**必须调用，不得自行评审**）
+- **触发条件**：
+  1. 单个任务开发完成（状态=done）
+  2. 迭代次数<3
+- **前置检查**：
+  1. 查询mcp_Memory确认任务状态
+  2. 验证代码文件存在
+  3. 确认@code-reviewer Agent可用
 - **输入**：`src/server/` 或 `src/client/` 中的相关代码
 - **输出**：
   - 评审报告：`design/project_overview/reviews/code-{task-id}-{timestamp}.md`
   - 反馈JSON：`design/project_overview/feedback/code-review-{task-id}-{timestamp}.json`
-- **迭代控制**：最多3次
+  - 步骤状态更新（mcp_Memory）
+- **迭代控制**：最多3次，通过mcp_Memory记录
 - **通过条件**：所有测试通过，代码符合规范
-- **SOLO Coder操作**：调用 @code-reviewer
+- **强制规则**：必须调用 @code-reviewer，SOLO Coder不得自行执行评审
+- **验证机制**：评审完成后检查`verified_by`字段是否为`@code-reviewer`
+- **SOLO Coder操作**：调用 @code-reviewer 进行代码评审
 
 ---
 
