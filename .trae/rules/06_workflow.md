@@ -171,16 +171,42 @@
 - **执行者**：@architect
 - **触发条件**：数据模型确认完成
 - **输入**：`design/project_overview/backend_architecture.md` + `design/project_overview/data_model.md` + `design/features/*/requirements.md`
-- **输出**：`design/project_overview/api_contracts.md` + `design/features/*/api.md`
-- **SOLO Coder操作**：调用 @architect
+- **输出**：`design/project_overview/api_contracts.md` + `design/features/*/api.md` + `design/project_overview/api_checklist.md`
+- **API完整性检查清单（必须完成）**：
+  1. **CRUD操作完整性**：每个主要实体必须有Create/Read/Update/Delete端点
+  2. **数据模型覆盖**：所有数据模型表必须有对应的API
+  3. **特性需求覆盖**：每个特性需求必须有对应的API实现
+  4. **输入验证**：所有API必须有输入参数验证规则
+  5. **错误处理**：所有API必须有错误响应格式定义
+  6. **认证授权**：所有API必须有认证/授权说明
+  7. **分页机制**：列表类API必须有分页说明
+  8. **速率限制**：所有API必须有速率限制说明
+  9. **文档完整性**：每个API必须有示例请求和响应
+  10. **版本管理**：API版本策略必须明确
+- **完整性验证文件**：生成 `design/project_overview/api_checklist.md`，记录每个检查项的完成状态
+- **验证机制**：
+  - API设计完成后，必须检查所有特性都有对应的API
+  - 必须检查所有数据模型都有对应的CRUD操作
+  - 完整性检查结果记录到mcp_Memory
+  - 只有完整性检查通过后才能进入步骤16
+- **SOLO Coder操作**：调用 @architect，并验证API完整性
 
 ---
 
 **步骤16：API确认**
 - **执行者**：SOLO Coder + 用户
-- **触发条件**：API设计完成
-- **输入**：`design/project_overview/api_contracts.md`
+- **触发条件**：API设计完成且完整性检查通过
+- **前置检查**：
+  1. 验证 `design/project_overview/api_checklist.md` 存在
+  2. 验证所有检查项状态为`completed`
+  3. 验证 `design/features/*/api.md` 存在
+  4. 验证每个特性都有对应的API
+- **输入**：
+  - `design/project_overview/api_contracts.md`
+  - `design/project_overview/api_checklist.md`
 - **输出**：用户确认记录（mcp_Memory）
+- **完整性确认提示**：向用户展示API覆盖情况，确认所有功能完整性
+- **SOLO Coder操作**：验证API完整性并等待用户确认
 
 ---
 
