@@ -70,10 +70,10 @@
 ## 知识库
 
 ### 流程规范
-完整的28步流程定义在：`.trae/rules/09_workflow-schedule.md`
+完整的28步流程定义在：`.trae/rules/06_workflow.md`
 
 ### 状态管理
-项目状态管理规范在：`.trae/rules/10_state-management.md`
+项目状态管理规范在：`.trae/rules/07_state-management.md`
 
 ### 评审反馈
 评审流程和迭代控制规范在：`.trae/rules/05_mandatory-behaviors.md`
