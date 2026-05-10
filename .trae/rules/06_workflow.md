@@ -207,11 +207,22 @@
 **步骤15：任务拆解**
 - **执行者**：@team-lead
 - **触发条件**：设计确认完成
-- **输入**：所有设计文档
-- **输出**：
-  - `design/project_overview/project_plan.md`
-  - `design/project_overview/tasks/{task-id}.md`（每个任务一个文件）
-- **SOLO Coder操作**：调用 @team-lead
+- **前置检查**：
+  1. 查询mcp_Memory确认步骤14状态为completed
+  2. 验证 `design/features/` 目录存在且包含特性文档
+  3. 统计特性数量，确定任务拆解范围
+- **输入**：所有设计文档（架构、数据模型、API、特性需求）
+- **输出**（必须全部完成才算步骤完成）：
+  1. `design/project_overview/project_plan.md` - 项目总体计划
+  2. `design/project_overview/tasks/{task-id}.md` - 每个任务一个文件（项目级任务）
+  3. `design/features/{feature-id}/tasks/{task-id}.md` - **每个特性下的任务文件**（特性级任务）
+- **完整性检查（必须全部通过）**：
+  1. ✅ `project_plan.md` 存在且内容不为空
+  2. ✅ `design/project_overview/tasks/` 目录存在且包含任务文件
+  3. ✅ **每个特性目录下都存在 `tasks/` 子目录**
+  4. ✅ **每个特性的 `tasks/` 目录下至少有一个任务文件**
+  5. ✅ 任务数量与特性需求相匹配
+- **SOLO Coder操作**：调用 @team-lead，并验证任务完整性
 
 ---
 
