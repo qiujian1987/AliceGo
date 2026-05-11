@@ -1,6 +1,7 @@
 ---
 name: "file-operation"
-description: "文件操作规范，包含创建、修改、删除的安全检查流程。触发场景：需要创建/修改/删除文件时。"
+description: "文件操作工具，提供创建、修改、删除、读取文件和目录的能力。触发场景：需要创建/修改/删除文件时。"
+entry: "scripts/operation.js"
 ---
 
 # 文件操作
@@ -71,6 +72,148 @@ description: "文件操作规范，包含创建、修改、删除的安全检查
 1. 检查是否为空
 2. 检查是否有重要文件
 3. 确认删除影响
+
+## 方法调用说明
+
+### createFile - 创建文件
+**参数**：
+- `filePath` (string) - 文件路径
+- `content` (string) - 文件内容
+- `overwrite` (boolean) - 是否覆盖已存在文件，默认false
+
+**返回**：
+```json
+{
+  "status": "success",
+  "message": "文件创建成功",
+  "data": {
+    "filePath": "/path/to/file",
+    "size": 1024,
+    "createdAt": "2026-05-10T10:00:00Z"
+  }
+}
+```
+
+### modifyFile - 修改文件
+**参数**：
+- `filePath` (string) - 文件路径
+- `oldContent` (string) - 要替换的旧内容（可选）
+- `newContent` (string) - 新内容
+- `replaceAll` (boolean) - 是否替换所有匹配，默认false
+
+**返回**：
+```json
+{
+  "status": "success",
+  "message": "文件修改成功",
+  "data": {
+    "filePath": "/path/to/file",
+    "changes": "部分替换",
+    "modifiedAt": "2026-05-10T10:00:00Z"
+  }
+}
+```
+
+### deleteFile - 删除文件
+**参数**：
+- `filePath` (string) - 文件路径
+- `force` (boolean) - 是否强制删除，默认false
+
+**返回**：
+```json
+{
+  "status": "success",
+  "message": "文件删除成功",
+  "data": {
+    "filePath": "/path/to/file",
+    "deletedAt": "2026-05-10T10:00:00Z"
+  }
+}
+```
+
+### createDirectory - 创建目录
+**参数**：
+- `dirPath` (string) - 目录路径
+
+**返回**：
+```json
+{
+  "status": "success",
+  "message": "目录创建成功",
+  "data": {
+    "dirPath": "/path/to/dir",
+    "createdAt": "2026-05-10T10:00:00Z"
+  }
+}
+```
+
+### deleteDirectory - 删除目录
+**参数**：
+- `dirPath` (string) - 目录路径
+- `force` (boolean) - 是否强制删除（包括非空目录），默认false
+
+**返回**：
+```json
+{
+  "status": "success",
+  "message": "目录删除成功",
+  "data": {
+    "dirPath": "/path/to/dir",
+    "deletedAt": "2026-05-10T10:00:00Z"
+  }
+}
+```
+
+### appendFile - 追加内容
+**参数**：
+- `filePath` (string) - 文件路径
+- `content` (string) - 追加内容
+
+**返回**：
+```json
+{
+  "status": "success",
+  "message": "内容追加成功",
+  "data": {
+    "filePath": "/path/to/file",
+    "appendedLength": 100,
+    "modifiedAt": "2026-05-10T10:00:00Z"
+  }
+}
+```
+
+### readFile - 读取文件
+**参数**：
+- `filePath` (string) - 文件路径
+
+**返回**：
+```json
+{
+  "status": "success",
+  "message": "文件读取成功",
+  "data": {
+    "filePath": "/path/to/file",
+    "content": "文件内容...",
+    "size": 1024
+  }
+}
+```
+
+### listDirectory - 列出目录内容
+**参数**：
+- `dirPath` (string) - 目录路径
+
+**返回**：
+```json
+{
+  "status": "success",
+  "message": "目录内容读取成功",
+  "data": {
+    "directories": [...],
+    "files": [...]
+  }
+}
+```
 
 ## 项目结构规范
 

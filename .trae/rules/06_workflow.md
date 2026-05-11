@@ -28,6 +28,8 @@
 - **输入**：用户需求描述
 - **输出**：`design/project_overview/requirements_spec.md`
 - **文档路径**：`design/project_overview/requirements_spec.md`
+- **文件操作要求**：必须通过 `file-operation.createFile()` 创建文档
+- **SOLO Coder操作**：调用 @team-lead，验证输出文件存在
 
 ---
 
@@ -38,7 +40,8 @@
 - **输出**：
   - `design/features/{feature-id}/requirements.md`（每个特性一个文件）
   - 特性列表：`design/project_overview/features_list.md`
-- **SOLO Coder操作**：调用 @feature-analyst
+- **文件操作要求**：必须通过 `file-operation.createFile()` 创建文档
+- **SOLO Coder操作**：调用 @feature-analyst，验证输出文件存在
 
 ---
 
@@ -95,7 +98,8 @@
 - **触发条件**：特性需求文档确认完成
 - **输入**：`design/project_overview/requirements_spec.md` + `design/features/*/requirements.md`
 - **输出**：`design/project_overview/backend_architecture.md`
-- **SOLO Coder操作**：调用 @architect
+- **文件操作要求**：必须通过 `file-operation.createFile()` 创建文档
+- **SOLO Coder操作**：调用 @architect，验证输出文件存在
 
 ---
 
@@ -104,7 +108,8 @@
 - **触发条件**：后端架构设计完成
 - **输入**：`design/project_overview/requirements_spec.md` + `design/features/*/requirements.md`
 - **输出**：`design/project_overview/frontend_architecture.md`
-- **SOLO Coder操作**：调用 @frontend-designer
+- **文件操作要求**：必须通过 `file-operation.createFile()` 创建文档
+- **SOLO Coder操作**：调用 @frontend-designer，验证输出文件存在
 
 ---
 
@@ -115,7 +120,8 @@
 - **输出**：
   - `design/project_overview/data_model.md`
   - `database/schema/schema.sql`
-- **SOLO Coder操作**：调用 @dba
+- **文件操作要求**：必须通过 `file-operation.createFile()` 创建文档
+- **SOLO Coder操作**：调用 @dba，验证输出文件存在
 
 ---
 
@@ -124,6 +130,7 @@
 - **触发条件**：数据模型设计完成
 - **输入**：`design/project_overview/backend_architecture.md` + `design/project_overview/data_model.md` + `design/features/*/requirements.md`
 - **输出**：`design/project_overview/api_contracts.md` + `design/features/*/api.md` + `design/project_overview/api_checklist.md`
+- **文件操作要求**：必须通过 `file-operation.createFile()` 创建文档
 - **API完整性检查清单（必须完成）**：
   1. **CRUD操作完整性**：每个主要实体必须有Create/Read/Update/Delete端点
   2. **数据模型覆盖**：所有数据模型表必须有对应的API
@@ -216,6 +223,7 @@
   1. `design/project_overview/project_plan.md` - 项目总体计划
   2. `design/project_overview/tasks/{task-id}.md` - 每个任务一个文件（项目级任务）
   3. `design/features/{feature-id}/tasks/{task-id}.md` - **每个特性下的任务文件**（特性级任务）
+- **文件操作要求**：必须通过 `file-operation.createFile()` 创建文档，通过 `file-operation.createDirectory()` 创建目录
 - **完整性检查（必须全部通过）**：
   1. ✅ `project_plan.md` 存在且内容不为空
   2. ✅ `design/project_overview/tasks/` 目录存在且包含任务文件
@@ -230,8 +238,20 @@
 - **执行者**：@qa
 - **触发条件**：任务拆解完成
 - **输入**：`design/project_overview/project_plan.md` + `design/features/*/requirements.md`
-- **输出**：`design/features/*/test-cases.md`（每个特性的测试用例）
-- **SOLO Coder操作**：调用 @qa
+- **输出**：
+  - `design/features/*/test-cases.md`（**每个特性的测试用例，缺一不可**）
+  - `design/project_overview/test-coverage-checklist.md`（测试用例完整性检查清单）
+- **文件操作要求**：必须通过 `file-operation.createFile()` 创建所有文档
+- **完整性验证要求**：
+  1. QA Agent 必须先列出所有特性
+  2. 为**每个特性**都生成测试用例
+  3. 生成完整性检查清单并保存
+  4. **SOLO Coder必须验证**所有特性都有对应的 `test-cases.md` 文件
+- **SOLO Coder操作**：
+  1. 调用 @qa 生成测试用例
+  2. 读取 `test-coverage-checklist.md` 验证完整性
+  3. 如果有特性缺少测试用例，必须让 QA 补充生成
+  4. 确认所有测试用例文件都存在后，再进入下一步
 
 ---
 
@@ -242,16 +262,23 @@
   2. 迭代次数<3
 - **前置检查**：
   1. 查询mcp_Memory确认步骤16状态
-  2. 验证输入文档存在
-  3. 确认@test-reviewer Agent可用
-- **输入**：`design/features/*/test-cases.md`
+  2. 验证所有特性的 `test-cases.md` 文件都存在
+  3. 验证 `test-coverage-checklist.md` 文件存在
+  4. 确认@test-reviewer Agent可用
+- **输入**：
+  - `design/features/*/test-cases.md`（所有特性的测试用例）
+  - `design/project_overview/test-coverage-checklist.md`
 - **输出**：
   - 评审报告：`design/project_overview/reviews/test-{timestamp}.md`
   - 反馈JSON：`design/project_overview/feedback/test-review-{timestamp}.json`
   - 步骤状态更新（mcp_Memory）
 - **迭代控制**：最多3次，通过mcp_Memory记录
-- **强制规则**：必须调用 @test-reviewer，SOLO Coder不得自行执行评审
-- **验证机制**：评审完成后检查`verified_by`字段是否为`@test-reviewer`
+- **强制规则**：
+  1. 必须调用 @test-reviewer，SOLO Coder不得自行执行评审
+  2. @test-reviewer 必须**首先检查完整性**，如果有特性缺少测试用例，必须标记为"不通过"
+- **验证机制**：
+  1. 评审完成后检查`verified_by`字段是否为`@test-reviewer`
+  2. 检查评审报告第一部分是否包含完整性检查结果
 - **SOLO Coder操作**：调用 @test-reviewer 进行测试评审
 
 ---
