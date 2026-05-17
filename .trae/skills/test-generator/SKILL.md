@@ -59,7 +59,7 @@ description: "测试生成，为项目生成全面的测试用例。触发场景
 {
   "project_path": ".",
   "test_types": ["unit", "integration"],
-  "coverage_target": 80,
+  "coverage_target": 95,
   "framework": "jest"
 }
 ```
@@ -73,12 +73,12 @@ description: "测试生成，为项目生成全面的测试用例。触发场景
       "unit": ["UserService.test.ts", "UserController.test.ts"],
       "integration": ["api.test.ts"],
       "e2e": [],
-      "coverage": "80% target"
+      "coverage": "95% target"
     },
     "files": [
       {
         "name": "jest.config.js",
-        "content": "module.exports = {\n  testEnvironment: 'node',\n  coverageDirectory: 'coverage',\n  collectCoverageFrom: [\n    'src/**/*.ts',\n    '!src/**/*.d.ts'\n  ],\n  coverageThreshold: {\n    global: {\n      branches: 80,\n      functions: 80,\n      lines: 80,\n      statements: 80\n    }\n  }\n};\n",
+        "content": "module.exports = {\n  testEnvironment: 'node',\n  coverageDirectory: 'coverage',\n  collectCoverageFrom: [\n    'src/**/*.ts',\n    '!src/**/*.d.ts'\n  ],\n  coverageThreshold: {\n    global: {\n      branches: 95,\n      functions: 95,\n      lines: 95,\n      statements: 95\n    }\n  }\n};\n",
         "path": "jest.config.js"
       },
       {

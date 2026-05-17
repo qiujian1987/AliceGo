@@ -27,6 +27,34 @@ Skills 层（按需加载）
 MCP 工具层
 ```
 
+### Agent 调用链路（强制规范）
+
+**SOLO Coder 的核心职责**：
+- **必须**通过调用专业 Agent 来执行任务
+- **禁止**直接调用 Skill 而不经过专业 Agent
+- **必须**等待专业 Agent 完成后再进入下一步
+
+**调用链路**（强制执行）：
+```
+SOLO Coder → 调用专业Agent（如@team-lead、@qa）→ Agent使用Skill执行任务
+```
+
+**违规示例**：
+```
+❌ SOLO Coder直接调用task-decomposition Skill
+✅ SOLO Coder调用@team-lead → @team-lead调用task-decomposition Skill
+```
+
+**正确示例**：
+```
+步骤15（任务拆解）：
+1. SOLO Coder识别需要任务拆解
+2. SOLO Coder调用@team-lead Agent
+3. @team-lead Agent调用task-decomposition Skill
+4. @team-lead Agent返回任务拆解结果
+5. SOLO Coder验证输出文件
+```
+
 ---
 
 ## 仓库结构

@@ -5,6 +5,24 @@ description: "代码审查，检查潜在bug、安全风险、测试缺口。触
 
 # 代码审查
 
+## 调用规范（强制要求）
+
+### 调用链路
+```
+SOLO Coder → 调用 @code-reviewer Agent → @code-reviewer Agent调用此Skill
+```
+
+### 约束规则
+- **SOLO Coder**：必须先调用@code-reviewer Agent，**禁止**直接调用此Skill
+- **@code-reviewer Agent**：负责调用此Skill执行代码评审流程
+- **Skill执行者**：@code-reviewer Agent
+
+### 错误示例
+```
+❌ SOLO Coder直接调用code-review Skill
+✅ SOLO Coder调用@code-reviewer Agent → @code-reviewer Agent调用code-review Skill
+```
+
 ## 1. 收集变更信息
 
 ### 获取变更文件

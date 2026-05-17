@@ -86,8 +86,8 @@ description: "测试执行，执行测试用例并生成测试报告。触发场
       "passed": 8,
       "failed": 2,
       "skipped": 0,
-      "coverage": "85%",
-      "report": "Tests completed in 2.5 seconds.\nCoverage: 85% (branches: 80%, functions: 90%, lines: 85%)"
+      "coverage": "96%",
+      "report": "Tests completed in 2.5 seconds.\nCoverage: 96% (branches: 94%, functions: 98%, lines: 96%)"
     },
     "issues": [
       {

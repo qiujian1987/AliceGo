@@ -9,9 +9,27 @@ description: "测试用例设计Skill，为项目生成全面的测试用例。�
 
 为项目生成全面的测试用例，包括单元测试、集成测试和端到端测试，支持TDD开发方法，确保项目质量。
 
+## 调用规范（强制要求）
+
+### 调用链路
+```
+SOLO Coder → 调用 @qa Agent → @qa Agent调用此Skill
+```
+
+### 约束规则
+- **SOLO Coder**：必须先调用@qa Agent，**禁止**直接调用此Skill
+- **@qa Agent**：负责调用此Skill执行测试用例设计流程
+- **Skill执行者**：@qa Agent
+
+### 错误示例
+```
+❌ SOLO Coder直接调用test-case-design Skill
+✅ SOLO Coder调用@qa Agent → @qa Agent调用test-case-design Skill
+```
+
 ## WHEN
 
-当需要设计测试用例时调用此Skill。
+当需要设计测试用例时，SOLO Coder必须先调用@qa Agent，再由@qa Agent调用此Skill。
 
 ## 输入参数
 

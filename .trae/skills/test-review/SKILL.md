@@ -9,9 +9,27 @@ description: "测试评审Skill，审查测试用例文档的质量。触发场�
 
 审查测试用例文档的质量，评估测试覆盖率，生成规范的评审报告，支持最多3次评审迭代。
 
+## 调用规范（强制要求）
+
+### 调用链路
+```
+SOLO Coder → 调用 @test-reviewer Agent → @test-reviewer Agent调用此Skill
+```
+
+### 约束规则
+- **SOLO Coder**：必须先调用@test-reviewer Agent，**禁止**直接调用此Skill
+- **@test-reviewer Agent**：负责调用此Skill执行测试评审流程
+- **Skill执行者**：@test-reviewer Agent
+
+### 错误示例
+```
+❌ SOLO Coder直接调用test-review Skill
+✅ SOLO Coder调用@test-reviewer Agent → @test-reviewer Agent调用test-review Skill
+```
+
 ## WHEN
 
-当需要进行测试评审时调用此Skill。
+当需要进行测试评审时，SOLO Coder必须先调用@test-reviewer Agent，再由@test-reviewer Agent调用此Skill。
 
 ## 输入参数
 
@@ -67,7 +85,7 @@ description: "测试评审Skill，审查测试用例文档的质量。触发场�
 - [ ] 测试用例独立，不依赖其他测试用例的执行结果
 
 #### 3.2 测试覆盖率审查
-- [ ] 代码覆盖率达标（≥80%）
+- [ ] 代码覆盖率达标（≥95%）
 - [ ] 覆盖了关键业务路径
 - [ ] 覆盖了错误处理和异常情况
 - [ ] 覆盖了边界条件和极端值

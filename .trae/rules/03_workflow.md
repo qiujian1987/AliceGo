@@ -4,6 +4,34 @@
 
 本规则定义SOLO Coder在项目开发过程中的28步标准流程。SOLO Coder作为主控，协调各专业Agent完成项目开发。
 
+## 1.1 Agent调用规范（强制要求）
+
+**SOLO Coder的职责**：
+- **必须**通过调用专业Agent来执行任务
+- **禁止**直接调用Skill而不经过专业Agent
+- **必须**等待专业Agent完成后再进入下一步
+
+**调用链路**（强制执行）：
+```
+SOLO Coder → 调用专业Agent（如@team-lead、@qa）→ Agent使用Skill执行任务
+```
+
+**违规示例**：
+```
+❌ SOLO Coder直接调用task-decomposition Skill
+✅ SOLO Coder调用@team-lead → @team-lead调用task-decomposition Skill
+```
+
+**正确示例**：
+```
+步骤15（任务拆解）：
+1. SOLO Coder识别需要任务拆解
+2. SOLO Coder调用@team-lead Agent
+3. @team-lead Agent调用task-decomposition Skill
+4. @team-lead Agent返回任务拆解结果
+5. SOLO Coder验证输出文件
+```
+
 ---
 
 ## 2. 完整流程定义
@@ -23,30 +51,39 @@
 ---
 
 **步骤2：需求分析**
-- **执行者**：@team-lead（需求分析指导）
+- **SOLO Coder职责**：调用 @team-lead Agent指导需求分析
+- **专业Agent职责**：@team-lead 调用 `requirement-analyzer` Skill 执行需求分析
 - **触发条件**：项目初始化完成
 - **输入**：用户需求描述
 - **输出**：`design/project_overview/requirements_spec.md`
 - **文档路径**：`design/project_overview/requirements_spec.md`
 - **文件操作要求**：必须通过 `file-operation.createFile()` 创建文档
-- **SOLO Coder操作**：调用 @team-lead，验证输出文件存在
+- **SOLO Coder操作**：
+  1. **调用 @team-lead Agent**（必须）
+  2. 等待@team-lead Agent完成需求分析
+  3. 验证输出文件存在
 
 ---
 
 **步骤3：特性需求分析**
-- **执行者**：@feature-analyst
+- **SOLO Coder职责**：调用 @feature-analyst Agent执行特性需求分析
+- **专业Agent职责**：@feature-analyst 调用 `requirement-analyzer` Skill 执行特性需求分析
 - **触发条件**：需求分析完成
 - **输入**：`design/project_overview/requirements_spec.md`
 - **输出**：
   - `design/features/{feature-id}/requirements.md`（每个特性一个文件）
   - 特性列表：`design/project_overview/features_list.md`
 - **文件操作要求**：必须通过 `file-operation.createFile()` 创建文档
-- **SOLO Coder操作**：调用 @feature-analyst，验证输出文件存在
+- **SOLO Coder操作**：
+  1. **调用 @feature-analyst Agent**（必须）
+  2. 等待@feature-analyst Agent完成特性需求分析
+  3. 验证输出文件存在
 
 ---
 
 **步骤4：需求评审**
-- **执行者**：@req-reviewer（**必须调用，不得自行评审**）
+- **SOLO Coder职责**：调用 @req-reviewer Agent执行需求评审
+- **专业Agent职责**：@req-reviewer 执行需求评审
 - **触发条件**：
   1. 步骤3完成（状态=completed）
   2. 迭代次数<3
@@ -61,9 +98,17 @@
   - 迭代次数更新（mcp_Memory）
   - 步骤状态更新（mcp_Memory）
 - **迭代控制**：最多3次，通过mcp_Memory记录
-- **强制规则**：必须调用 @req-reviewer，SOLO Coder不得自行执行评审
+- **强制规则**：
+  1. **必须调用 @req-reviewer Agent**（强制）
+  2. SOLO Coder不得自行执行评审
+  3. 必须等待@req-reviewer Agent完成评审
 - **验证机制**：评审完成后检查`verified_by`字段是否为`@req-reviewer`
-- **SOLO Coder操作**：调用 @req-reviewer 进行需求评审
+- **SOLO Coder操作**：
+  1. **调用 @req-reviewer Agent**（必须）
+  2. 等待@req-reviewer Agent完成评审
+  3. 检查评审结果
+  4. 如果不通过且迭代<3次，反馈给前置Agent优化
+  5. 如果不通过且迭代=3次，升级给用户决策
 
 ---
 
@@ -94,39 +139,52 @@
 ---
 
 **步骤8：后端架构设计**
-- **执行者**：@architect
+- **SOLO Coder职责**：调用 @architect Agent执行后端架构设计
+- **专业Agent职责**：@architect 调用 `architecture-planner` Skill 执行架构设计
 - **触发条件**：特性需求文档确认完成
 - **输入**：`design/project_overview/requirements_spec.md` + `design/features/*/requirements.md`
 - **输出**：`design/project_overview/backend_architecture.md`
 - **文件操作要求**：必须通过 `file-operation.createFile()` 创建文档
-- **SOLO Coder操作**：调用 @architect，验证输出文件存在
+- **SOLO Coder操作**：
+  1. **调用 @architect Agent**（必须）
+  2. 等待@architect Agent完成架构设计
+  3. 验证输出文件存在
 
 ---
 
 **步骤9：前端架构设计**
-- **执行者**：@frontend-designer
+- **SOLO Coder职责**：调用 @frontend-designer Agent执行前端架构设计
+- **专业Agent职责**：@frontend-designer 调用 `frontend-design` Skill 执行前端架构设计
 - **触发条件**：后端架构设计完成
 - **输入**：`design/project_overview/requirements_spec.md` + `design/features/*/requirements.md`
 - **输出**：`design/project_overview/frontend_architecture.md`
 - **文件操作要求**：必须通过 `file-operation.createFile()` 创建文档
-- **SOLO Coder操作**：调用 @frontend-designer，验证输出文件存在
+- **SOLO Coder操作**：
+  1. **调用 @frontend-designer Agent**（必须）
+  2. 等待@frontend-designer Agent完成前端架构设计
+  3. 验证输出文件存在
 
 ---
 
 **步骤10：数据模型设计**
-- **执行者**：@dba
+- **SOLO Coder职责**：调用 @dba Agent执行数据模型设计
+- **专业Agent职责**：@dba 调用 `database-designer` Skill 执行数据模型设计
 - **触发条件**：前端架构设计完成
 - **输入**：`design/project_overview/backend_architecture.md` + `design/features/*/requirements.md`
 - **输出**：
   - `design/project_overview/data_model.md`
   - `database/schema/schema.sql`
 - **文件操作要求**：必须通过 `file-operation.createFile()` 创建文档
-- **SOLO Coder操作**：调用 @dba，验证输出文件存在
+- **SOLO Coder操作**：
+  1. **调用 @dba Agent**（必须）
+  2. 等待@dba Agent完成数据模型设计
+  3. 验证输出文件存在
 
 ---
 
 **步骤11：API设计**
-- **执行者**：@architect
+- **SOLO Coder职责**：调用 @architect Agent执行API设计
+- **专业Agent职责**：@architect 调用 `api-designer` Skill 执行API设计
 - **触发条件**：数据模型设计完成
 - **输入**：`design/project_overview/backend_architecture.md` + `design/project_overview/data_model.md` + `design/features/*/requirements.md`
 - **输出**：`design/project_overview/api_contracts.md` + `design/features/*/api.md` + `design/project_overview/api_checklist.md`
@@ -148,12 +206,17 @@
   - 必须检查所有数据模型都有对应的CRUD操作
   - 完整性检查结果记录到mcp_Memory
   - 只有完整性检查通过后才能进入设计评审
-- **SOLO Coder操作**：调用 @architect，并验证API完整性
+- **SOLO Coder操作**：
+  1. **调用 @architect Agent**（必须）
+  2. 等待@architect Agent完成API设计
+  3. 验证API完整性检查通过
+  4. 确认所有检查项都已完成
 
 ---
 
 **步骤12：设计评审**
-- **执行者**：@design-reviewer（**必须调用，不得自行评审**）
+- **SOLO Coder职责**：调用 @design-reviewer Agent执行设计评审
+- **专业Agent职责**：@design-reviewer 执行设计评审
 - **触发条件**：
   1. 步骤8完成（状态=completed）
   2. 步骤9完成（状态=completed）
@@ -181,9 +244,17 @@
   - 反馈JSON：`design/project_overview/feedback/design-review-{timestamp}.json`
   - 步骤状态更新（mcp_Memory）
 - **迭代控制**：最多3次，通过mcp_Memory记录
-- **强制规则**：必须调用 @design-reviewer，SOLO Coder不得自行执行评审
+- **强制规则**：
+  1. **必须调用 @design-reviewer Agent**（强制）
+  2. SOLO Coder不得自行执行评审
+  3. 必须等待@design-reviewer Agent完成评审
 - **验证机制**：评审完成后检查`verified_by`字段是否为`@design-reviewer`
-- **SOLO Coder操作**：调用 @design-reviewer 进行设计评审
+- **SOLO Coder操作**：
+  1. **调用 @design-reviewer Agent**（必须）
+  2. 等待@design-reviewer Agent完成评审
+  3. 检查评审结果
+  4. 如果不通过且迭代<3次，反馈给相关设计Agent优化
+  5. 如果不通过且迭代=3次，升级给用户决策
 
 ---
 
@@ -210,7 +281,8 @@
 ---
 
 **步骤15：任务拆解**
-- **执行者**：@team-lead
+- **SOLO Coder职责**：调用 @team-lead Agent执行任务拆解
+- **专业Agent职责**：@team-lead 调用 `task-decomposition` Skill 执行具体任务拆解流程
 - **触发条件**：设计确认完成
 - **前置检查**：
   1. 查询mcp_Memory确认步骤14状态为completed
@@ -221,7 +293,7 @@
   1. `design/project_overview/project_plan.md` - 项目总体计划
   2. `design/project_overview/tasks/{task-id}.md` - 每个任务一个文件（项目级任务）
   3. `design/features/{feature-id}/tasks/{task-id}.md` - **每个特性下的任务文件**（特性级任务）
-- **Skill调用**：`task-decomposition` - 任务拆解Skill，执行具体的任务拆解流程
+- **Skill调用**：`task-decomposition` - 任务拆解Skill，**由@team-lead Agent调用**
 - **文件操作要求**：必须通过 `file-operation.createFile()` 创建文档，通过 `file-operation.createDirectory()` 创建目录
 - **完整性检查（必须全部通过）**：
   1. ✅ `project_plan.md` 存在且内容不为空
@@ -229,18 +301,23 @@
   3. ✅ **每个特性目录下都存在 `tasks/` 子目录**
   4. ✅ **每个特性的 `tasks/` 目录下至少有一个任务文件**
   5. ✅ 任务数量与特性需求相匹配
-- **SOLO Coder操作**：调用 `task-decomposition` Skill，由 @team-lead 执行，并验证任务完整性
+- **SOLO Coder操作**：
+  1. **调用 @team-lead Agent**（必须）
+  2. 等待@team-lead Agent完成任务拆解
+  3. 验证输出文件存在
+  4. 验证任务完整性
 
 ---
 
 **步骤16：测试用例设计**
-- **执行者**：@qa
+- **SOLO Coder职责**：调用 @qa Agent执行测试用例设计
+- **专业Agent职责**：@qa 调用 `test-case-design` Skill 执行具体测试用例生成流程
 - **触发条件**：任务拆解完成
 - **输入**：`design/project_overview/project_plan.md` + `design/features/*/requirements.md`
 - **输出**：
   - `design/features/*/test-cases.md`（**每个特性的测试用例，缺一不可**）
   - `design/project_overview/test-coverage-checklist.md`（测试用例完整性检查清单）
-- **Skill调用**：`test-case-design` - 测试用例设计Skill，执行具体的测试用例生成流程
+- **Skill调用**：`test-case-design` - 测试用例设计Skill，**由@qa Agent调用**
 - **文件操作要求**：必须通过 `file-operation.createFile()` 创建所有文档
 - **完整性验证要求**：
   1. QA Agent 必须先列出所有特性
@@ -248,15 +325,17 @@
   3. 生成完整性检查清单并保存
   4. **SOLO Coder必须验证**所有特性都有对应的 `test-cases.md` 文件
 - **SOLO Coder操作**：
-  1. 调用 `test-case-design` Skill，由 @qa 执行
-  2. 读取 `test-coverage-checklist.md` 验证完整性
-  3. 如果有特性缺少测试用例，必须让 QA 补充生成
-  4. 确认所有测试用例文件都存在后，再进入下一步
+  1. **调用 @qa Agent**（必须）
+  2. 等待@qa Agent完成测试用例设计
+  3. 读取 `test-coverage-checklist.md` 验证完整性
+  4. 如果有特性缺少测试用例，**再次调用@qa Agent补充生成**
+  5. 确认所有测试用例文件都存在后，再进入下一步
 
 ---
 
 **步骤17：测试评审**
-- **执行者**：@test-reviewer（**必须调用，不得自行评审**）
+- **SOLO Coder职责**：调用 @test-reviewer Agent执行测试评审
+- **专业Agent职责**：@test-reviewer 调用 `test-review` Skill 执行测试评审
 - **触发条件**：
   1. 步骤16完成（状态=completed）
   2. 迭代次数<3
@@ -272,15 +351,22 @@
   - 评审报告：`design/project_overview/reviews/test-{timestamp}.md`
   - 反馈JSON：`design/project_overview/feedback/test-review-{timestamp}.json`
   - 步骤状态更新（mcp_Memory）
-- **Skill调用**：`test-review` - 测试评审Skill，执行具体的评审流程
+- **Skill调用**：`test-review` - 测试评审Skill，**由@test-reviewer Agent调用**
 - **迭代控制**：最多3次，通过mcp_Memory记录
 - **强制规则**：
-  1. 必须调用 `test-review` Skill，由 @test-reviewer 执行，SOLO Coder不得自行执行评审
-  2. @test-reviewer 必须**首先检查完整性**，如果有特性缺少测试用例，必须标记为"不通过"
+  1. **必须调用 @test-reviewer Agent**（强制）
+  2. SOLO Coder不得自行执行评审
+  3. 必须等待@test-reviewer Agent完成评审
+  4. @test-reviewer 必须**首先检查完整性**，如果有特性缺少测试用例，必须标记为"不通过"
 - **验证机制**：
   1. 评审完成后检查`verified_by`字段是否为`@test-reviewer`
   2. 检查评审报告第一部分是否包含完整性检查结果
-- **SOLO Coder操作**：调用 `test-review` Skill，由 @test-reviewer 执行测试评审
+- **SOLO Coder操作**：
+  1. **调用 @test-reviewer Agent**（必须）
+  2. 等待@test-reviewer Agent完成测试评审
+  3. 检查评审结果
+  4. 如果不通过且迭代<3次，反馈给@qa Agent优化
+  5. 如果不通过且迭代=3次，升级给用户决策
 
 ---
 
@@ -302,7 +388,8 @@
 ---
 
 **步骤20：TDD开发执行（按任务）**
-- **执行者**：@backend-dev 或 @frontend-dev
+- **SOLO Coder职责**：调用开发Agent（@backend-dev 或 @frontend-dev）执行TDD开发
+- **专业Agent职责**：开发Agent调用 `code-generator` Skill 执行TDD开发
 - **触发条件**：任务分配完成
 - **输入**：
   - 任务文档：`design/project_overview/tasks/{task-id}.md`
@@ -316,12 +403,18 @@
   2. 编写测试代码（初始状态为失败）
   3. 实现业务代码使测试通过
   4. 验证测试覆盖率
-- **SOLO Coder操作**：调用对应开发Agent执行开发任务
+- **Skill调用**：`code-generator` - 代码生成Skill，**由开发Agent调用**
+- **SOLO Coder操作**：
+  1. **调用 @backend-dev 或 @frontend-dev Agent**（必须）
+  2. 等待开发Agent完成任务开发
+  3. 验证输出文件存在
+  4. 进入代码评审
 
 ---
 
 **步骤21：代码评审（按任务）**
-- **执行者**：@code-reviewer（**必须调用，不得自行评审**）
+- **SOLO Coder职责**：调用 @code-reviewer Agent执行代码评审
+- **专业Agent职责**：@code-reviewer 调用 `code-review` Skill 执行代码评审
 - **触发条件**：
   1. 单个任务开发完成（状态=done）
   2. 迭代次数<3
@@ -334,11 +427,20 @@
   - 评审报告：`design/project_overview/reviews/code-{task-id}-{timestamp}.md`
   - 反馈JSON：`design/project_overview/feedback/code-review-{task-id}-{timestamp}.json`
   - 步骤状态更新（mcp_Memory）
+- **Skill调用**：`code-review` - 代码评审Skill，**由@code-reviewer Agent调用**
 - **迭代控制**：最多3次，通过mcp_Memory记录
 - **通过条件**：所有测试通过，代码符合规范
-- **强制规则**：必须调用 @code-reviewer，SOLO Coder不得自行执行评审
+- **强制规则**：
+  1. **必须调用 @code-reviewer Agent**（强制）
+  2. SOLO Coder不得自行执行评审
+  3. 必须等待@code-reviewer Agent完成评审
 - **验证机制**：评审完成后检查`verified_by`字段是否为`@code-reviewer`
-- **SOLO Coder操作**：调用 @code-reviewer 进行代码评审
+- **SOLO Coder操作**：
+  1. **调用 @code-reviewer Agent**（必须）
+  2. 等待@code-reviewer Agent完成代码评审
+  3. 检查评审结果
+  4. 如果不通过且迭代<3次，反馈给开发Agent修改
+  5. 如果不通过且迭代=3次，升级给用户决策
 
 ---
 

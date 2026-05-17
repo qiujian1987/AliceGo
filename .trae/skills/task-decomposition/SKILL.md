@@ -9,9 +9,27 @@ description: "任务拆解Skill，将项目需求拆解为可执行的任务。�
 
 将项目需求拆解为可执行的任务，包括项目级任务和特性级任务，支持多Agent并行开发。
 
+## 调用规范（强制要求）
+
+### 调用链路
+```
+SOLO Coder → 调用 @team-lead Agent → @team-lead Agent调用此Skill
+```
+
+### 约束规则
+- **SOLO Coder**：必须先调用@team-lead Agent，**禁止**直接调用此Skill
+- **@team-lead Agent**：负责调用此Skill执行任务拆解流程
+- **Skill执行者**：@team-lead Agent
+
+### 错误示例
+```
+❌ SOLO Coder直接调用task-decomposition Skill
+✅ SOLO Coder调用@team-lead Agent → @team-lead Agent调用task-decomposition Skill
+```
+
 ## WHEN
 
-当需要进行任务拆解时调用此Skill。
+当需要进行任务拆解时，SOLO Coder必须先调用@team-lead Agent，再由@team-lead Agent调用此Skill。
 
 ## 输入参数
 
