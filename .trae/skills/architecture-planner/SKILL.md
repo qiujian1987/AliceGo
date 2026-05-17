@@ -1,6 +1,6 @@
 ---
 name: "architecture-planner"
-description: "架构设计，制定系统的整体架构和技术选型。触发场景：'架构设计'、'技术选型'。"
+description: "架构设计，制定系统的整体架构和技术选型。触发场景：'架构设计'、'技术选型'、'系统设计'、'设计架构'。输入参数：requirements(必需)，constraints(可选)。输出：design/project_overview/backend_architecture.md。"
 ---
 
 # 架构设计 Skill

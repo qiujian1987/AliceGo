@@ -1,203 +1,346 @@
-# TRAE 团队模式 - 多Agent协同开发环境
+# AliceGo - TRAE IDE 多 Agent 协同 Harness 工程
 
-## 概述
+## 项目介绍
 
-TRAE (Team-based Robust AI Engineering) 是一个基于 Claude Code Agent Teams & Harness 工程最佳实践的多 Agent 协同开发框架，专为从 0-1 的大型项目开发设计。
+AliceGo 是一个面向企业级 B 端系统的多 Agent 协同开发框架，基于 TRAE IDE 和 SOLO Coder 实现端到端交付，提高代码质量和开发效率。
 
 ### 核心特性
 
-- **多 Agent 协同**：14 个专业 Agent 分工协作
-- **记忆系统**：持久化项目状态，支持断点恢复
-- **工程标准**：确保代码质量和可维护性
-- **快速初始化**：支持从 0-1 快速构建项目
-- **标准化流程**：基于工程最佳实践
+- 🤖 **多 Agent 协同**：通过专业化的 Agent 分工，实现复杂任务的协同处理
+- 📋 **标准化流程**：28 步标准化开发流程，覆盖从需求到交付的全生命周期
+- 🔄 **TDD 开发**：测试驱动的开发方法，确保代码质量和测试覆盖率
+- 📚 **渐进式披露**：基于 Skill 的按需加载机制，减少 Token 消耗
+- 🛡️ **Harness Engineering**：完善的约束和治理机制，确保 Agent 行为可控
 
-### 五大核心原则
+---
 
-1. **数据模型优先** - 数据模型设计先于API设计，保证稳定性
-2. **合同优先** - 架构师先设计API合同，再并行开发
-3. **MVP冒烟** - 最小可用系统先跑通环境，再大规模开发
-4. **技术栈锁定** - 确定后不随意引入新技术
-5. **领地划分** - 每个Agent独占特定目录，避免冲突
+## 快速开始
 
-## 目录结构
+### 1. 安装 TRAE IDE
+
+1. 访问 [TRAE 官网](https://www.trae.ai/)
+2. 下载并安装 TRAE IDE
+3. 使用 Google 账号或海外邮箱登录
+
+### 2. 导入 AliceGo 项目
+
+1. 打开 TRAE IDE
+2. 选择 `打开文件夹` 或 `克隆仓库`
+3. 将 AliceGo 项目导入到 TRAE
+
+### 3. 配置 SOLO Agent
+
+1. 在 TRAE 界面左上角切换到 **SOLO 模式**
+2. 点击 AI 对话输入框左下角的 `@` 符号
+3. 选择 **SOLO Agent**
+4. 在 SOLO Agent 配置中，添加项目中的自定义 Agent：
+   - `@architect`
+   - `@backend-dev`
+   - `@frontend-dev`
+   - `@team-lead`
+   - `@qa`
+   - `@dba`
+   - `@test-reviewer`
+   - `@req-reviewer`
+   - `@design-reviewer`
+   - `@code-reviewer`
+   - `@devops`
+   - `@feature-analyst`
+   - `@frontend-designer`
+
+### 4. 开始使用
+
+1. 在 SOLO 对话框中输入项目需求
+2. SOLO Agent 会自动分析需求并规划任务
+3. 根据规划，SOLO Agent 会调用相应的 Agent 完成开发任务
+4. 你可以通过对话与 SOLO Agent 交互，监控系统进度
+
+---
+
+## 核心概念
+
+### Agent（智能体）
+
+Agent 是具有特定角色和职责的 AI 助手。AliceGo 包含以下 Agent：
+
+#### 设计 Agent
+
+| Agent | 职责 | 输出 |
+|-------|------|------|
+| `@architect` | 后端架构设计、API 设计 | `backend_architecture.md` |
+| `@frontend-designer` | 前端架构设计 | `frontend_architecture.md` |
+| `@dba` | 数据库设计 | `data_model.md` |
+| `@feature-analyst` | 特性需求分析 | `features/*/requirements.md` |
+
+#### 开发 Agent
+
+| Agent | 职责 | 输出 |
+|-------|------|------|
+| `@backend-dev` | 后端业务代码实现 | `src/server/` |
+| `@frontend-dev` | 前端业务代码实现 | `src/client/` |
+
+#### 评审 Agent
+
+| Agent | 职责 | 输出 |
+|-------|------|------|
+| `@code-reviewer` | 代码质量评审 | 评审报告 |
+| `@design-reviewer` | 架构设计评审 | 评审报告 |
+| `@test-reviewer` | 测试用例评审 | 评审报告 |
+| `@req-reviewer` | 需求文档评审 | 评审报告 |
+
+#### 支撑 Agent
+
+| Agent | 职责 | 输出 |
+|-------|------|------|
+| `@team-lead` | 流程指导、质量把关 | 咨询建议 |
+| `@qa` | 测试用例设计、测试执行 | `features/*/test-cases.md` |
+| `@devops` | 环境配置、CI/CD | 部署配置 |
+
+### Skill（技能）
+
+Skill 是封装了特定任务流程的技能包。AliceGo 包含以下核心 Skill：
+
+| Skill | 用途 | 触发场景 |
+|-------|------|----------|
+| `architecture-planner` | 架构设计 | "架构设计"、"系统设计" |
+| `code-generator` | 代码生成 | "编写代码"、"实现功能" |
+| `test-case-design` | 测试用例设计 | "测试用例"、"生成测试" |
+| `test-review` | 测试评审 | "测试评审"、"评审测试" |
+| `task-decomposition` | 任务拆解 | "任务拆解"、"分解任务" |
+| `file-operation` | 文件操作 | 任何需要创建/修改文件的场景 |
+| `api-designer` | API 设计 | "API 设计"、"接口文档" |
+| `database-designer` | 数据库设计 | "数据库设计"、"数据模型" |
+| `frontend-design` | 前端设计 | "前端设计"、"界面设计" |
+
+详细调用规范请参考：[Skill 调用规范](./.trae/docs/reference/skill-invocation.md)
+
+### MCP Server（MCP 服务器）
+
+MCP（Model Context Protocol）扩展 Agent 的能力。推荐配置：
+
+| Server | 用途 | 配置难度 |
+|--------|------|---------|
+| mcp_Memory | 记忆系统，持久化项目状态 | ⭐ 简单 |
+| mcp_Playwright | 浏览器自动化测试 | ⭐⭐ 中等 |
+| mcp_Excel | Excel 文件操作 | ⭐⭐ 中等 |
+
+详细配置请参考：[MCP Server 配置指南](./.trae/docs/getting-started/mcp-server-config.md)
+
+### 示例项目
+
+学习 AliceGo 最好的方式是参考示例项目：
+
+| 项目 | 复杂度 | 说明 |
+|------|--------|------|
+| [简单待办事项应用](./.trae/examples/01_simple_todo/) | 简单 | 完整的需求、设计、测试示例 |
+
+详细示例请参考：[示例项目列表](./.trae/examples/README.md)
+
+### Rules（规则）
+
+Rules 是全量加载的行为约束规范，定义了 Agent 的底线行为。AliceGo 包含以下 Rules：
+
+| Rules | 描述 |
+|-------|------|
+| `01_security-constraints.md` | 安全约束规则 |
+| `02_standards.md` | 标准规范（编码、质量、状态管理等） |
+| `06_workflow.md` | 流程调度规则 |
+
+---
+
+## 开发流程
+
+### 四大阶段
+
+```
+┌─────────────────────────────────────────┐
+│ Phase 1: 项目初始化与需求分析            │
+│   步骤 1-5                             │
+│   产出：需求文档、特性清单              │
+└─────────────────────────────────────────┘
+                    ↓
+┌─────────────────────────────────────────┐
+│ Phase 2: 系统设计                        │
+│   步骤 6-14                            │
+│   产出：架构设计、API、数据模型          │
+└─────────────────────────────────────────┘
+                    ↓
+┌─────────────────────────────────────────┐
+│ Phase 3: 任务规划与开发（TDD）          │
+│   步骤 15-23                           │
+│   产出：代码、测试报告                  │
+└─────────────────────────────────────────┘
+                    ↓
+┌─────────────────────────────────────────┐
+│ Phase 4: 验收与交付                     │
+│   步骤 24-26                           │
+│   产出：部署记录、项目总结              │
+└─────────────────────────────────────────┘
+```
+
+### 评审环节
+
+| 评审类型 | 执行者 | 评审范围 | 迭代次数 |
+|---------|-------|---------|---------|
+| 需求评审 | @req-reviewer | 需求文档、特性需求 | 最多 3 次 |
+| 设计评审 | @design-reviewer | 架构、数据模型、API | 最多 3 次 |
+| 测试评审 | @test-reviewer | 测试用例 | 最多 3 次 |
+| 代码评审 | @code-reviewer | 开发代码 | 最多 3 次 |
+
+---
+
+## 项目结构
 
 ```
 AliceGo/
 ├── .trae/
-│   ├── team-config.json          # 团队配置
-│   ├── rules/                    # 规则体系（7个文件）
-│   │   ├── 01_security-constraints.md   # 安全约束
-│   │   ├── 02_agent-territory.md        # Agent领地
-│   │   ├── 03_coding-conventions.md     # 编码规范
-│   │   ├── 04_quality-standards.md      # 质量标准
-│   │   ├── 05_mandatory-behaviors.md    # 强制行为
-│   │   ├── 06_code-quality.md            # 代码质量
-│   │   └── 07_workflow-standards.md     # 工作流程
-│   ├── agents/                  # Agent配置（14个）
-│   │   ├── team-lead.md         # 项目总协调
-│   │   ├── architect.md          # 系统架构师
-│   │   ├── dba.md               # 数据库设计师
-│   │   ├── feature-analyst.md   # 特性需求分析师
-│   │   ├── frontend-designer.md  # 前端设计师
-│   │   ├── frontend-dev.md      # 前端开发
-│   │   ├── backend-dev.md        # 后端开发
-│   │   ├── devops.md            # 运维工程师
-│   │   ├── qa.md                # 质量保证
-│   │   ├── req-reviewer.md      # 需求评审
-│   │   ├── design-reviewer.md   # 设计评审
-│   │   ├── test-reviewer.md     # 测试评审
-│   │   └── code-reviewer.md     # 代码评审
-│   ├── skills/                  # 技能定义（13个）
-│   │   ├── requirement-analyzer/
-│   │   ├── project-planner/
+│   ├── agents/           # Agent 提示词定义
+│   │   ├── architect.md
+│   │   ├── backend-dev.md
+│   │   ├── frontend-dev.md
+│   │   └── ...（13个Agent）
+│   ├── skills/          # Skill 技能包
 │   │   ├── architecture-planner/
-│   │   ├── api-designer/
-│   │   ├── database-designer/
-│   │   ├── frontend-design/
-│   │   ├── test-generator/
-│   │   ├── test-executor/
 │   │   ├── code-generator/
-│   │   ├── code-review/
-│   │   ├── sql-optimizer/
-│   │   ├── dependency-manager/
-│   │   ├── devops-automation/
-│   │   └── file-operation/
-│   ├── docs/                    # 规范文档
-│   │   ├── skill-invocation.md   # Skill调用规范
-│   │   ├── review-feedback.md    # 评审反馈机制
-│   │   ├── memory-usage.md       # 记忆系统使用
-│   │   ├── file-ownership.md     # 文件所有权
-│   │   └── project-initialization.md  # 项目初始化
-│   ├── specs/                   # 分析文档
-│   │   └── workflow-end-to-end-analysis/
-│   ├── mcps/                    # MCP配置
-│   └── documents/               # 文档
-├── database/                    # 数据库文件
-├── src/                        # 源代码
-├── tests/                      # 测试代码
-└── infra/                      # 基础设施
+│   │   ├── test-case-design/
+│   │   └── ...（19个Skill）
+│   ├── rules/           # Rules 规则
+│   │   ├── 01_security-constraints.md
+│   │   ├── 02_standards.md
+│   │   ├── 06_workflow.md
+│   │   └── 00_index.md
+│   ├── AGENTS.md        # Agent 知识地图
+│   └── documents/       # 项目文档
+├── design/              # 设计文档输出目录
+│   ├── project_overview/
+│   └── features/
+├── src/                 # 源代码目录
+│   ├── server/         # 后端代码
+│   └── client/         # 前端代码
+├── tests/               # 测试代码目录
+└── infra/              # 部署配置目录
 ```
 
-## Agent角色配置
+---
 
-| Agent | 职责 | 领地 |
-|-------|------|------|
-| **Team Lead** | 需求分析、任务拆解、全局协调 | 全局协调 |
-| **Feature Analyst** | 特性需求分析、文档编写 | design/features/ |
-| **Architect** | 系统设计、API合同、技术选型 | design/ |
-| **Frontend Designer** | 前端界面设计 | design/ |
-| **DBA** | 数据模型设计、数据库管理 | database/ |
-| **QA** | 测试策略、测试用例、质量把控 | tests/ |
-| **Frontend Dev** | 前端业务逻辑开发 | src/client/ |
-| **Backend Dev** | 后端业务逻辑开发 | src/server/ |
-| **DevOps** | 环境搭建、CI/CD、依赖管理 | infra/ |
-| **req-reviewer** | 需求文档评审 | 评审 |
-| **design-reviewer** | 设计文档评审 | 评审 |
-| **test-reviewer** | 测试文档评审 | 评审 |
-| **code-reviewer** | 代码评审 | 评审 |
+## 文件操作规范
 
-## 规则体系
+**必须使用** `file-operation` **Skill** 进行所有文件操作
 
-TRAE框架会自动加载 `.trae/rules/` 目录下的所有规则文件，这些规则对所有Agent生效。
+### 常用操作
 
-### 规则分层
+| 场景 | 操作 | Skill调用 |
+|------|------|-----------|
+| 创建文档 | 创建新文件 | `file-operation.createFile()` |
+| 修改文档 | 修改已有文件 | `file-operation.modifyFile()` |
+| 删除文件 | 删除文件 | `file-operation.deleteFile()` |
+| 创建目录 | 创建新目录 | `file-operation.createDirectory()` |
+| 读取文件 | 读取文件内容 | `file-operation.readFile()` |
 
-| 层级 | 文件 | 内容 |
+### 操作示例
+
+```
+[文件操作]
+- 操作：创建
+- 文件：design/project_overview/requirements_spec.md
+- 调用：file-operation.createFile({
+    filePath: "design/project_overview/requirements_spec.md",
+    content: "# 需求规约\n\n..."
+  })
+```
+
+---
+
+## 命名规范
+
+| 类型 | 规范 | 示例 |
 |------|------|------|
-| L1 | 01_security-constraints.md | 安全红线、禁止操作、输入验证 |
-| L1 | 05_mandatory-behaviors.md | 确认机制、迭代控制、响应规范 |
-| L2 | 02_agent-territory.md | Agent领地划分、权限边界 |
-| L3 | 03_coding-conventions.md | 命名规范、长度规范、注释规范 |
-| L3 | 04_quality-standards.md | 测试策略、覆盖率目标、CI/CD |
-| L3 | 06_code-quality.md | 类型安全、错误处理、性能标准 |
-| L3 | 07_workflow-standards.md | 开发流程、环境配置、分支策略 |
+| 文件夹 | kebab-case | `test-cases`、`api-contracts` |
+| 文件 | kebab-case | `requirements-spec.md` |
+| 类/组件 | PascalCase | `UserService`、`LoginForm` |
+| 变量/函数 | camelCase | `userName`、`getUserInfo` |
+| 常量 | UPPER_SNAKE_CASE | `MAX_RETRY`、`API_BASE_URL` |
 
-## 系统要求
+---
 
-- Node.js 18.x 或更高版本
-- npm 或 yarn 包管理器
-- Git 版本控制
+## TDD 开发规范
 
-## 初始化项目
+### 流程
 
-```bash
-# 创建项目目录
-mkdir my-project
-cd my-project
+1. **阅读测试用例**：仔细阅读 `test-cases.md`，理解所有测试场景
+2. **编写失败测试**：编写单元测试，确保测试初始状态为失败
+3. **实现业务逻辑**：编写业务代码，使所有测试通过
+4. **执行自测**：运行所有单元测试，确保 100% 通过
+5. **代码重构**：优化代码结构，保持所有测试通过
 
-# 初始化 TRAE
-node .trae/init/init.js
-```
+### 测试覆盖率目标
 
-## 核心流程
+- 核心业务逻辑：≥ 80%
+- 公共 API：100%
+- 数据模型：100%
+- 安全相关代码：100%
 
-### Phase 1: 架构与MVP设计（串行）
-
-```
-1. [Team Lead] 分析需求
-       ↓
-2. [Architect] 技术选型 + 架构设计
-       ↓
-3. [DBA] 数据模型设计
-       ↓
-4. [DevOps] 搭建MVP运行环境
-       ↓
-5. [Architect] 设计API合同
-       ↓
-[检查点1] MVP环境冒烟 → 用户确认
-```
-
-### Phase 2: 并行开发（合同锁定后）
-
-```
-6. [Frontend] ←→ [Backend] 基于合同并行开发
-       ↓
-7. [DevOps] 完善CI/CD流程
-       ↓
-[检查点2] 集成测试通过 → 用户确认
-```
-
-### Phase 3: 测试与验收
-
-```
-8. [QA] 全面测试
-       ↓
-9. [Team Lead] 最终验收
-       ↓
-[检查点3] 上线准备就绪
-```
+---
 
 ## 常见问题
 
-### 1. 对话轮次限制
-TRAE 在 50 轮对话后建议新建对话，导致上下文丢失。
-**解决方案**：使用记忆系统，在新对话开始时加载项目状态。
+### Q1: 如何让 Agent 调用特定的 Skill？
 
-### 2. Agent 冲突
-多个 Agent 同时操作同一文件。
-**解决方案**：遵循领地划分，使用任务分配机制。
+在 Agent 的提示词中，已经定义了 Skill 调用指引。当需要使用 Skill 时，Agent 会自动调用。
 
-### 3. 技术栈变更
-需要引入新的技术栈。
-**解决方案**：通过 mailbox/to-devops.md 申请，经 Team Lead 审批。
+### Q2: 如何跳过评审环节？
 
-### 4. 初始化失败
-**解决方案**：
-- 检查 Node.js 版本
-- 确保目录权限正确
-- 检查网络连接
+评审环节是强制性的，不能跳过。迭代次数最多 3 次，达到上限后系统会升级给用户决策。
 
-### 5. 依赖安装失败
-**解决方案**：
-- 清理 npm 缓存：`npm cache clean --force`
-- 更换 npm 源：`npm config set registry https://registry.npmmirror.com`
+### Q3: 如何恢复中断的项目？
 
-## 最佳实践
+系统使用 `mcp_Memory` 记录项目状态。重新打开项目后，SOLO Agent 会自动读取状态并继续执行。
 
-- **数据模型优先**：先设计数据模型，再设计API
-- **合同锁定**：API合同一旦确定，变更需审批
-- **MVP冒烟**：环境先跑通，再大规模开发
-- **领地划分**：各Agent只操作自己的领地
-- **强制约束**：通过熔断机制防止越权操作
-- **Git快照**：每个检查点自动创建快照，支持回滚
+### Q4: 如何添加新的 Agent？
+
+1. 在 `.trae/agents/` 目录创建新的 `.md` 文件
+2. 定义 Agent 的角色、职责和能力边界
+3. 在 SOLO Agent 配置中添加该 Agent
+
+### Q5: 如何添加新的 Skill？
+
+1. 在 `.trae/skills/` 目录创建新的 Skill 文件夹
+2. 创建 `SKILL.md` 文件，定义 Skill 的触发条件和执行流程
+3. 可选：创建 `scripts/` 目录，添加可执行脚本
+
+---
+
+## 参考文档
+
+- [TRAE IDE 官方文档](https://docs.trae.cn/)
+- [SOLO Agent 使用指南](https://docs.trae.cn/ide/solo-coder)
+- [Model Context Protocol (MCP)](https://docs.trae.cn/ide/model-context-protocol)
+- [AliceGo 优化计划](./.trae/documents/trae_harness_optimization_plan.md)
+- [Agent 知识地图](./.trae/AGENTS.md)
+- [SOLO Agent 配置指南](./.trae/docs/getting-started/solo-agent-config.md)
+- [MCP Server 配置指南](./.trae/docs/getting-started/mcp-server-config.md)
+- [Skill 结构规范](./.trae/skills/SKILL_STRUCTURE.md)
+- [Skill 协作网络](./.trae/skills/SKILL_NETWORK.md)
+- [示例项目列表](./.trae/examples/README.md)
+
+---
+
+## 贡献指南
+
+欢迎提交 Issue 和 Pull Request！
+
+1. Fork 本仓库
+2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 创建 Pull Request
+
+---
+
+## 许可证
+
+本项目采用 MIT 许可证 - 详见 [LICENSE](LICENSE) 文件
+
+---
+
+*最后更新：2026-05-17*

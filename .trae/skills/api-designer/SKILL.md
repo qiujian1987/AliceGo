@@ -1,6 +1,6 @@
 ---
 name: "api-designer"
-description: "API设计，设计RESTful API接口和文档。触发场景：'API设计'、'接口文档'。"
+description: "API设计，设计RESTful API接口和文档。触发场景：'API设计'、'接口文档'、'设计API'、'编写API'。输入参数：architecture(必需)，data_model(必需)。输出：design/project_overview/api_contracts.md 和 design/features/*/api.md。"
 ---
 
 # API 设计 Skill

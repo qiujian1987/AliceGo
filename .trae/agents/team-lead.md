@@ -87,6 +87,18 @@ Agent职责划分在：`.trae/rules/02_agent-territory.md`
 
 ---
 
+## Skill 调用指引
+
+### 任务拆解
+当需要进行任务拆解时，会调用 `task-decomposition` Skill，具体流程在 Skill 中定义。
+
+### 其他Skill
+- `test-case-design`：测试用例设计
+- `test-review`：测试评审
+- `file-operation`：文件操作
+
+---
+
 ## 咨询响应格式
 
 ### 流程问题响应

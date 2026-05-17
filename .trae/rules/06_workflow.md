@@ -209,8 +209,6 @@
 
 ---
 
-### 第三阶段：任务规划与开发
-
 **步骤15：任务拆解**
 - **执行者**：@team-lead
 - **触发条件**：设计确认完成
@@ -223,6 +221,7 @@
   1. `design/project_overview/project_plan.md` - 项目总体计划
   2. `design/project_overview/tasks/{task-id}.md` - 每个任务一个文件（项目级任务）
   3. `design/features/{feature-id}/tasks/{task-id}.md` - **每个特性下的任务文件**（特性级任务）
+- **Skill调用**：`task-decomposition` - 任务拆解Skill，执行具体的任务拆解流程
 - **文件操作要求**：必须通过 `file-operation.createFile()` 创建文档，通过 `file-operation.createDirectory()` 创建目录
 - **完整性检查（必须全部通过）**：
   1. ✅ `project_plan.md` 存在且内容不为空
@@ -230,7 +229,7 @@
   3. ✅ **每个特性目录下都存在 `tasks/` 子目录**
   4. ✅ **每个特性的 `tasks/` 目录下至少有一个任务文件**
   5. ✅ 任务数量与特性需求相匹配
-- **SOLO Coder操作**：调用 @team-lead，并验证任务完整性
+- **SOLO Coder操作**：调用 `task-decomposition` Skill，由 @team-lead 执行，并验证任务完整性
 
 ---
 
@@ -241,6 +240,7 @@
 - **输出**：
   - `design/features/*/test-cases.md`（**每个特性的测试用例，缺一不可**）
   - `design/project_overview/test-coverage-checklist.md`（测试用例完整性检查清单）
+- **Skill调用**：`test-case-design` - 测试用例设计Skill，执行具体的测试用例生成流程
 - **文件操作要求**：必须通过 `file-operation.createFile()` 创建所有文档
 - **完整性验证要求**：
   1. QA Agent 必须先列出所有特性
@@ -248,7 +248,7 @@
   3. 生成完整性检查清单并保存
   4. **SOLO Coder必须验证**所有特性都有对应的 `test-cases.md` 文件
 - **SOLO Coder操作**：
-  1. 调用 @qa 生成测试用例
+  1. 调用 `test-case-design` Skill，由 @qa 执行
   2. 读取 `test-coverage-checklist.md` 验证完整性
   3. 如果有特性缺少测试用例，必须让 QA 补充生成
   4. 确认所有测试用例文件都存在后，再进入下一步
@@ -272,14 +272,15 @@
   - 评审报告：`design/project_overview/reviews/test-{timestamp}.md`
   - 反馈JSON：`design/project_overview/feedback/test-review-{timestamp}.json`
   - 步骤状态更新（mcp_Memory）
+- **Skill调用**：`test-review` - 测试评审Skill，执行具体的评审流程
 - **迭代控制**：最多3次，通过mcp_Memory记录
 - **强制规则**：
-  1. 必须调用 @test-reviewer，SOLO Coder不得自行执行评审
+  1. 必须调用 `test-review` Skill，由 @test-reviewer 执行，SOLO Coder不得自行执行评审
   2. @test-reviewer 必须**首先检查完整性**，如果有特性缺少测试用例，必须标记为"不通过"
 - **验证机制**：
   1. 评审完成后检查`verified_by`字段是否为`@test-reviewer`
   2. 检查评审报告第一部分是否包含完整性检查结果
-- **SOLO Coder操作**：调用 @test-reviewer 进行测试评审
+- **SOLO Coder操作**：调用 `test-review` Skill，由 @test-reviewer 执行测试评审
 
 ---
 

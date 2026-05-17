@@ -1,6 +1,6 @@
 ---
 name: "database-designer"
-description: "数据库设计，设计数据库表结构和关系。触发场景：'数据库设计'、'表结构设计'。"
+description: "数据库设计，设计数据库表结构和关系。触发场景：'数据库设计'、'表结构设计'、'数据模型'、'设计表'。输入参数：data_model(必需)。输出：design/project_overview/data_model.md 和 database/schema/schema.sql。"
 ---
 
 # 数据库设计 Skill

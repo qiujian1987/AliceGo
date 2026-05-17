@@ -1,6 +1,6 @@
 ---
 name: "code-generator"
-description: "后端代码生成，生成Express服务和API实现。触发场景：'生成服务'、'后端代码'。"
+description: "后端代码生成，生成Express服务和API实现。触发场景：'生成服务'、'后端代码'、'编写代码'、'实现功能'、'代码生成'。输入参数：api_spec(必需)，language(可选)。输出：src/server/ 下的代码文件。"
 ---
 
 # 后端代码生成 Skill

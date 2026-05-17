@@ -1,6 +1,6 @@
 ---
 name: "requirement-analyzer"
-description: "需求分析，将用户需求转换为明确的规约文档。触发场景：'分析需求'、'需求规约'。"
+description: "需求分析，将用户需求转换为明确的规约文档。触发场景：'分析需求'、'需求规约'、'生成需求文档'、'编写需求'。输入参数：user_input(必需)，context(可选)，priority(可选)。输出：design/project_overview/requirements_spec.md。"
 ---
 
 # 需求分析 Skill
