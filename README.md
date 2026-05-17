@@ -144,7 +144,7 @@ Rules 是全量加载的行为约束规范，定义了 Agent 的底线行为。A
 |-------|------|
 | `01_security-constraints.md` | 安全约束规则 |
 | `02_standards.md` | 标准规范（编码、质量、状态管理等） |
-| `06_workflow.md` | 流程调度规则 |
+| `03_workflow.md` | 流程调度规则 |
 
 ---
 

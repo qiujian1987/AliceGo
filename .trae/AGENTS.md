@@ -47,7 +47,7 @@ AliceGo/
 │   ├── rules/            # Rules 规则（全量加载）
 │   │   ├── 01_security-constraints.md
 │   │   ├── 02_standards.md
-│   │   └── 06_workflow.md
+│   │   └── 03_workflow.md
 │   └── documents/        # 项目文档
 │       └── trae_harness_optimization_plan.md
 ├── design/               # 设计文档输出目录

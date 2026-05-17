@@ -71,7 +71,7 @@
 ## 知识库
 
 ### 流程规范
-完整的28步流程定义在：`.trae/rules/06_workflow.md`
+完整的28步流程定义在：`.trae/rules/03_workflow.md`
 
 ### 状态管理
 项目状态管理规范在：`.trae/rules/07_state-management.md`
