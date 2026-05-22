@@ -391,24 +391,40 @@ SOLO Coder → 调用专业Agent（如@team-lead、@qa）→ Agent使用Skill执
 - **SOLO Coder职责**：调用开发Agent（@backend-dev 或 @frontend-dev）执行TDD开发
 - **专业Agent职责**：开发Agent调用 `code-generator` Skill 执行TDD开发
 - **触发条件**：任务分配完成
+- **前置检查**（强制）：
+  1. 查询任务文档，确认是否有前端任务被遗漏
+  2. **每个特性必须至少有1个前端任务和1个后端任务**
+  3. 如果缺少前端任务，返回步骤15重新拆解
 - **输入**：
   - 任务文档：`design/project_overview/tasks/{task-id}.md`
+  - 任务文档：`design/features/{feature-id}/tasks/{task-id}.md`
   - 测试用例：`design/features/*/test-cases.md`
   - API文档：`design/features/*/api.md`
+  - 前端架构：`design/project_overview/frontend_architecture.md`
 - **输出**：
-  - 代码文件：`src/server/*` 或 `src/client/*`
+  - 后端代码文件：`src/server/*`
+  - 前端代码文件：`src/client/*`
   - 测试结果：`tests/*`
 - **TDD流程**：
   1. 读取测试用例
   2. 编写测试代码（初始状态为失败）
   3. 实现业务代码使测试通过
-  4. 验证测试覆盖率
+  4. 验证测试覆盖率达到95%以上
 - **Skill调用**：`code-generator` - 代码生成Skill，**由开发Agent调用**
-- **SOLO Coder操作**：
-  1. **调用 @backend-dev 或 @frontend-dev Agent**（必须）
-  2. 等待开发Agent完成任务开发
-  3. 验证输出文件存在
-  4. 进入代码评审
+- **SOLO Coder操作**（详细流程）：
+  1. **任务分组**：按负责人将任务分为后端任务组和前端任务组
+  2. **后端任务执行**：
+     - 调用 @backend-dev Agent
+     - 等待完成后验证 `src/server/` 目录下的文件
+     - 进入步骤21代码评审
+  3. **前端任务执行**：
+     - 调用 @frontend-dev Agent
+     - 等待完成后验证 `src/client/` 目录下的文件
+     - 进入步骤21代码评审
+  4. **完整性验证**：
+     - 确认所有后端任务都有对应的代码
+     - 确认所有前端任务都有对应的代码
+     - 确认没有遗漏的特性
 
 ---
 

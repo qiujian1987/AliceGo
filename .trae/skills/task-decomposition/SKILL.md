@@ -50,6 +50,7 @@ SOLO Coder → 调用 @team-lead Agent → @team-lead Agent调用此Skill
   - 所有特性需求文档 `design/features/*/requirements.md`
 - **读取架构文档**：
   - `design/project_overview/backend_architecture.md`
+  - `design/project_overview/frontend_architecture.md` （**新增：读取前端架构**）
   - `design/project_overview/data_model.md`
   - `design/project_overview/api_contracts.md`
 
@@ -104,7 +105,17 @@ SOLO Coder → 调用 @team-lead Agent → @team-lead Agent调用此Skill
   - `design/features/{feature-id}/tasks/`
 
 #### 3.3 生成特性任务
-基于特性需求，生成该特性的开发任务：
+基于特性需求，生成该特性的开发任务，**必须同时包含后端和前端任务**：
+
+**后端任务示例：**
+- 服务/接口开发（负责人：Backend Dev）
+- 数据库操作（负责人：Backend Dev）
+- API 集成（负责人：Backend Dev）
+
+**前端任务示例：**
+- 页面/组件开发（负责人：Frontend Dev）
+- API 调用与数据绑定（负责人：Frontend Dev）
+- UI 交互实现（负责人：Frontend Dev）
 
 ```markdown
 # 任务详情
@@ -251,6 +262,11 @@ SOLO Coder → 调用 @team-lead Agent → @team-lead Agent调用此Skill
 
 ### 任务分配原则
 - 设计阶段任务 → Architect / Frontend Designer / DBA
-- 开发阶段任务 → Backend Dev / Frontend Dev
+- **后端开发阶段任务 → Backend Dev
+- **前端开发阶段任务 → Frontend Dev（新增）
 - 测试阶段任务 → QA
 - 部署阶段任务 → DevOps
+
+### 重要提醒
+- **每个特性必须至少包含1个前端任务和1个后端任务**
+- 确保任务分配平衡，前后端开发并行推进

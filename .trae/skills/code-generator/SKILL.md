@@ -162,7 +162,7 @@ SOLO Coder → 调用 @backend-dev 或 @frontend-dev Agent → Agent调用此Ski
 }
 ```
 
-### 输出
+### 输出（后端示例）
 ```json
 {
   "status": "success",
@@ -187,6 +187,64 @@ SOLO Coder → 调用 @backend-dev 或 @frontend-dev Agent → Agent调用此Ski
           "name": "api.test.ts",
           "content": "import request from 'supertest';\nimport app from '../src/app';\n\ndescribe('API Tests', () => {\n  it('should get user by id', async () => {\n    const res = await request(app).get('/api/users/1');\n    expect(res.status).toBe(200);\n  });\n});",
           "path": "tests/integration/api.test.ts"
+        }
+      ]
+    },
+    "files": [...],
+    "coverage": { "target": 95, "actual": 96 }
+  },
+  "message": "TDD代码生成完成"
+}
+```
+
+### 输入（前端TDD开发）
+```json
+{
+  "service_type": "component",
+  "name": "UserList",
+  "test_cases": [
+    {
+      "name": "渲染用户列表",
+      "type": "unit",
+      "input": { "users": [{ "id": 1, "name": "John" }] },
+      "expected": { "displayed": true, "itemCount": 1 }
+    },
+    {
+      "name": "点击用户跳转详情",
+      "type": "integration",
+      "input": { "userId": "1" },
+      "expected": { "navigated": true, "url": "/users/1" }
+    }
+  ],
+  "framework": "react",
+  "ui_library": "antd"
+}
+```
+
+### 输出（前端示例）
+```json
+{
+  "status": "success",
+  "data": {
+    "code": {
+      "component": "...",
+      "hooks": "...",
+      "types": "...",
+      "path": "src/client/"
+    },
+    "tests": {
+      "unit": [
+        {
+          "name": "UserList.test.tsx",
+          "content": "import { render, screen, fireEvent } from '@testing-library/react';\nimport { UserList } from './UserList';\n\ndescribe('UserList', () => {\n  it('should render user list', () => {\n    render(<UserList users={[{ id: 1, name: 'John' }]} />);\n    expect(screen.getByText('John')).toBeInTheDocument();\n  });\n});",
+          "path": "tests/unit/UserList.test.tsx"
+        }
+      ],
+      "integration": [
+        {
+          "name": "UserList.integration.test.tsx",
+          "content": "...",
+          "path": "tests/integration/UserList.integration.test.tsx"
         }
       ]
     },
