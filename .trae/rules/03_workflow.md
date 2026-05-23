@@ -71,13 +71,23 @@ SOLO Coder → 调用专业Agent（如@team-lead、@qa）→ Agent使用Skill执
 - **触发条件**：需求分析完成
 - **输入**：`design/project_overview/requirements_spec.md`
 - **输出**：
-  - `design/features/{feature-id}/requirements.md`（每个特性一个文件）
+  - `design/features/feature-{序号}/requirements.md`（每个特性一个文件，**命名规范强制**）
   - 特性列表：`design/project_overview/features_list.md`
+- **命名规范（强制执行）**：
+  - 特性ID格式：`feature-{序号}`（序号3位数字，如 feature-001）
+  - 目录命名：`design/features/feature-{序号}/`
+  - 文件命名：`requirements.md`（固定名称）
+- **文档要素规范（强制执行）**：
+  - 必须包含9个章节：特性基本信息、用户故事、功能需求、数据需求、界面需求、验收标准、技术约束、依赖关系、风险与假设
+  - 功能需求编号：`FR-{feature-id}-{序号}`
+  - 验收标准编号：`AC-{feature-id}-{序号}`
 - **文件操作要求**：必须通过 `file-operation.createFile()` 创建文档
 - **SOLO Coder操作**：
   1. **调用 @feature-analyst Agent**（必须）
   2. 等待@feature-analyst Agent完成特性需求分析
   3. 验证输出文件存在
+  4. **验证命名规范**：检查特性ID、目录名、文件名是否符合规范
+  5. **验证文档要素**：检查是否包含所有必需章节
 
 ---
 
@@ -92,6 +102,14 @@ SOLO Coder → 调用专业Agent（如@team-lead、@qa）→ Agent使用Skill执
   2. 验证输入文档存在
   3. 确认@req-reviewer Agent可用
 - **输入**：`design/project_overview/requirements_spec.md` + `design/features/*/requirements.md`
+- **评审内容（强制执行）**：
+  1. **规范性检查（第一优先级）**：
+     - 命名规范：特性ID格式、目录命名、文件命名
+     - 文档要素完整性：9个必需章节
+     - 编号规范：功能需求编号、验收标准编号
+     - **规范性检查不通过，直接判定评审不通过**
+  2. **内容质量检查（第二优先级）**：
+     - 完整性、准确性、可测试性、可行性、依赖关系
 - **输出**：
   - 评审报告：`design/project_overview/reviews/requirements-{timestamp}.md`
   - 反馈JSON：`design/project_overview/feedback/req-review-{timestamp}.json`
@@ -102,6 +120,7 @@ SOLO Coder → 调用专业Agent（如@team-lead、@qa）→ Agent使用Skill执
   1. **必须调用 @req-reviewer Agent**（强制）
   2. SOLO Coder不得自行执行评审
   3. 必须等待@req-reviewer Agent完成评审
+  4. **评审报告必须包含规范性检查结果**
 - **验证机制**：评审完成后检查`verified_by`字段是否为`@req-reviewer`
 - **SOLO Coder操作**：
   1. **调用 @req-reviewer Agent**（必须）
