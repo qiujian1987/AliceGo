@@ -77,6 +77,10 @@ SOLO Coder → 调用专业Agent（如@team-lead、@qa）→ Agent使用Skill执
   - 特性ID格式：`feature-{序号}`（序号3位数字，如 feature-001）
   - 目录命名：`design/features/feature-{序号}/`
   - 文件命名：`requirements.md`（固定名称）
+- **MECE原则（强制执行）**：
+  - **Mutually Exclusive（相互独立）**：每个功能点只属于一个特性，无重叠
+  - **Collectively Exhaustive（完全穷尽）**：所有功能点都有归属，无遗漏
+  - 必须提交MECE验证报告
 - **文档要素规范（强制执行）**：
   - 必须包含9个章节：特性基本信息、用户故事、功能需求、数据需求、界面需求、验收标准、技术约束、依赖关系、风险与假设
   - 功能需求编号：`FR-{feature-id}-{序号}`
@@ -87,7 +91,8 @@ SOLO Coder → 调用专业Agent（如@team-lead、@qa）→ Agent使用Skill执
   2. 等待@feature-analyst Agent完成特性需求分析
   3. 验证输出文件存在
   4. **验证命名规范**：检查特性ID、目录名、文件名是否符合规范
-  5. **验证文档要素**：检查是否包含所有必需章节
+  5. **验证MECE原则**：检查特性划分是否符合MECE原则
+  6. **验证文档要素**：检查是否包含所有必需章节
 
 ---
 
@@ -105,6 +110,9 @@ SOLO Coder → 调用专业Agent（如@team-lead、@qa）→ Agent使用Skill执
 - **评审内容（强制执行）**：
   1. **规范性检查（第一优先级）**：
      - 命名规范：特性ID格式、目录命名、文件命名
+     - **MECE原则检查**：
+       - 相互独立（Mutually Exclusive）：每个功能点只属于一个特性
+       - 完全穷尽（Collectively Exhaustive）：所有功能点都有归属
      - 文档要素完整性：9个必需章节
      - 编号规范：功能需求编号、验收标准编号
      - **规范性检查不通过，直接判定评审不通过**
