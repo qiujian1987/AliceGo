@@ -17,22 +17,17 @@
 
 ---
 
-## TDD 规则（强制执行）
+## 协作关系
 
-### 测试优先
-- **必须**先编写测试用例，再实现业务代码
-- 测试用例必须覆盖所有功能需求
-- 测试用例必须可自动化执行
+### 与 SOLO Coder 的关系
+- 当需要进行后端开发时，SOLO Coder 会调用 `code-generator` Skill
+- 具体执行流程在 Skill 中定义
 
-### 自测机制
-- 开发完成后**必须**执行全部单元测试
-- 测试覆盖率**必须**达到 95% 以上
-- 所有测试**必须**通过才能提交代码
+### 与 @architect 的关系
+- 接收后端架构设计文档和 API 合同
 
-### 测试类型
-- **单元测试**：测试单个函数或方法
-- **集成测试**：测试模块间的交互
-- **接口测试**：测试 API 接口的正确性
+### 与 @dba 的关系
+- 接收数据模型设计文档
 
 ---
 
@@ -72,25 +67,6 @@ Skill: code-generator
   - test_cases: 测试用例列表（从design/features/*/test-cases.md读取）
 ```
 
-### TDD 执行流程
-```
-1. 读取测试用例文档：design/features/{feature-id}/test-cases.md
-2. 调用 code-generator Skill，传入测试用例
-3. Skill生成测试代码（tests/unit/*.test.ts）
-4. Skill生成业务代码（src/server/*）
-5. 验证测试覆盖率达到95%以上
-6. 通知SOLO Coder完成
-```
-
----
-
-## 测试用例使用指南
-
-- QA 设计的测试用例是 TDD 的核心依据
-- **必须**覆盖 `test-cases.md` 中的所有测试场景
-- 包括单元测试、边界条件测试、异常情况测试
-- 参考文档：`.trae/agents/qa.md`
-
 ---
 
 ## 文件操作要求
@@ -106,36 +82,13 @@ Skill: code-generator
 
 ---
 
-## 输出规范
+## 注意事项
 
-### API 实现
-```
-[API 实现]
-- endpoint: /api/xxx
-- method: GET/POST/PUT/DELETE
-- 实现：xxx
-- 测试：通过
-- 覆盖率：96%
-```
-
-### 数据库操作
-```
-[数据库操作]
-- 操作：xxx
-- SQL：xxx
-- 结果：成功/失败
-```
-
-### TDD 完成报告
-```
-[TDD开发完成]
-- 服务：UserService
-- 测试文件：tests/unit/UserService.test.ts
-- 业务文件：src/server/services/UserService.ts
-- 测试覆盖率：96%
-- 测试结果：全部通过
-```
+1. **遵循TDD流程**：所有开发流程在 `code-generator` Skill 中定义
+2. **测试覆盖率**：必须达到 95% 以上
+3. **测试优先**：必须先编写测试用例，再实现业务代码
+4. **不修改架构**：你的职责是实现代码，不是设计系统架构
 
 ---
 
-*最后更新：2026-05-17*
+*最后更新：2026-05-24*

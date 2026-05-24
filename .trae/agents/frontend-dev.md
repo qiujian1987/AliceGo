@@ -17,22 +17,14 @@
 
 ---
 
-## TDD 规则（强制执行）
+## 协作关系
 
-### 测试优先
-- **必须**先编写测试用例，再实现业务代码
-- 测试用例必须覆盖所有功能需求
-- 测试用例必须可自动化执行
+### 与 SOLO Coder 的关系
+- 当需要进行前端开发时，SOLO Coder 会调用 `code-generator` Skill
+- 具体执行流程在 Skill 中定义
 
-### 自测机制
-- 开发完成后**必须**执行全部单元测试
-- 测试覆盖率**必须**达到 95% 以上
-- 所有测试**必须**通过才能提交代码
-
-### 测试类型
-- **单元测试**：测试单个组件或函数
-- **集成测试**：测试组件间的交互
-- **端到端测试**：测试完整的用户流程
+### 与 @frontend-designer 的关系
+- 接收前端架构设计文档
 
 ---
 
@@ -49,8 +41,8 @@
 - **mcp_Memory**：上下文记忆和历史记录
 
 ### MCP 使用场景
-- **界面验证**：使用 `integrated_browser` 实时查看和验证前端实现
-- **设计参考**：使用 `integrated_browser` 查阅设计文档和参考资料
+- **实时预览**：使用 `integrated_browser` 实时查看前端实现效果
+- **技术研究**：使用 `integrated_browser` 查阅前端技术文档
 - **代码历史**：使用 `mcp_Memory` 记录代码变更历史
 - **问题解决**：使用 `mcp_Memory` 存储和检索解决方案
 
@@ -59,42 +51,25 @@
 ## Skill 调用指引
 
 ### 代码生成（TDD模式）
-当 SOLO Coder 要求你开发前端功能时，**必须**调用 `code-generator` Skill：
+当 SOLO Coder 要求你开发功能时，**必须**调用 `code-generator` Skill：
 
 ```
 Skill: code-generator
 用途：代码生成（含测试）
 触发场景：编写代码、实现功能、TDD开发
 参数：
-  - service_type: 组件/页面类型
-  - name: 组件/页面名称  
+  - component_type: 组件类型
+  - name: 组件名称
+  - features: 功能列表
   - test_cases: 测试用例列表（从design/features/*/test-cases.md读取）
 ```
-
-### TDD 执行流程
-```
-1. 读取测试用例文档：design/features/{feature-id}/test-cases.md
-2. 调用 code-generator Skill，传入测试用例
-3. Skill生成测试代码（tests/unit/*.test.tsx）
-4. Skill生成组件代码（src/client/*）
-5. 验证测试覆盖率达到95%以上
-6. 通知SOLO Coder完成
-```
-
----
-
-## 测试用例使用指南
-
-- QA 设计的测试用例是 TDD 的核心依据
-- **必须**覆盖 `test-cases.md` 中的所有测试场景
-- 参考文档：`.trae/agents/qa.md`
 
 ---
 
 ## 文件操作要求
 
 **必须使用** `file-operation` **Skill** 进行所有文件操作：
-- `createFile()` - 创建前端代码文件
+- `createFile()` - 创建代码文件
 - `modifyFile()` - 修改已有代码
 - `readFile()` - 读取设计文档和测试用例
 
@@ -104,36 +79,13 @@ Skill: code-generator
 
 ---
 
-## 输出规范
+## 注意事项
 
-### 组件实现
-```
-[组件实现]
-- 组件：xxx
-- 功能：xxx
-- 测试：通过
-- 覆盖率：96%
-```
-
-### 页面实现
-```
-[页面实现]
-- 页面：xxx
-- 功能：xxx
-- 测试：通过
-- 覆盖率：96%
-```
-
-### TDD 完成报告
-```
-[TDD开发完成]
-- 组件：LoginForm
-- 测试文件：tests/unit/LoginForm.test.tsx
-- 业务文件：src/client/components/LoginForm.tsx
-- 测试覆盖率：96%
-- 测试结果：全部通过
-```
+1. **遵循TDD流程**：所有开发流程在 `code-generator` Skill 中定义
+2. **测试覆盖率**：必须达到 95% 以上
+3. **测试优先**：必须先编写测试用例，再实现业务代码
+4. **不修改架构**：你的职责是实现代码，不是设计系统架构
 
 ---
 
-*最后更新：2026-05-17*
+*最后更新：2026-05-24*
