@@ -167,6 +167,53 @@ SOLO Coder → 调用专业Agent（如@team-lead、@qa）→ Agent使用Skill执
 
 ---
 
+## 项目清理机制（强制执行）
+
+### 清理时机
+
+**在以下时机必须执行清理检查**：
+1. **步骤开始前**：在执行任何步骤之前，清理该步骤相关的临时文件
+2. **纠正偏差后**：用户纠正偏差后，清理错误文件
+3. **评审不通过后**：评审不通过需要修改时，清理待修改的文件
+4. **迭代重试前**：重新执行步骤前，清理上一次的输出
+5. **项目恢复时**：断点续传恢复项目时，清理中断时的临时文件
+
+### 清理检查流程
+
+**每个步骤开始前必须执行**：
+
+```
+[清理检查]
+1. 检查当前步骤的输出目录
+2. 识别临时文件（*.tmp, *.temp, *.bak）
+3. 识别错误文件（*_error.md, *_failed.md）
+4. 列出需要清理的文件清单
+5. 确认清理范围（是否影响其他步骤）
+6. 执行清理
+7. 记录清理结果到 mcp_Memory
+```
+
+### 清理命令
+
+```bash
+# 清理临时文件
+find design/ -name "*.tmp" -type f -delete
+find src/ -name "*.tmp" -type f -delete
+find tests/ -name "*.tmp" -type f -delete
+
+# 清理错误文件
+find design/ -name "*_error.md" -type f -delete
+find design/ -name "*_failed.md" -type f -delete
+```
+
+### 清理确认
+
+- 清理文件数量 > 5 个时，需要用户确认
+- 清理文件包含 `.md` 文档时，需要用户确认
+- 清理整个目录时，需要用户确认
+
+---
+
 ## 验证机制
 
 ### 文件验证
@@ -207,6 +254,7 @@ SOLO Coder → 调用专业Agent（如@team-lead、@qa）→ Agent使用Skill执
 
 - **状态管理规范**：`.trae/docs/state-management.md`
 - **28 步流程定义**：`.trae/rules/03_workflow.md`
+- **项目清理机制**：`.trae/rules/02_standards.md` 第9章
 - **Agent 知识地图**：`.trae/AGENTS.md`
 - **专业 Agent 提示词**：`.trae/agents/*.md`
 
@@ -244,6 +292,14 @@ A: **自动恢复机制：**
 2. 显示项目状态和恢复选项
 3. 用户输入 `/continue` 继续
 4. 用户输入 `/status` 查看详情
+
+### Q: 如何确保项目干净？
+
+A: **清理机制：**
+1. 每个步骤开始前执行清理检查
+2. 清理临时文件、错误文件、废弃文件
+3. 记录清理日志到 mcp_Memory
+4. 清理文件数量 > 5 个时需要用户确认
 
 ---
 
