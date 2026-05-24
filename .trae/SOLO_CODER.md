@@ -169,6 +169,27 @@ SOLO Coder → 调用专业Agent（如@team-lead、@qa）→ Agent使用Skill执
 
 ## 项目清理机制（强制执行）
 
+### 临时目录结构
+
+**项目初始化时创建的临时目录**：
+
+```
+.trae/
+├── temp/                      # 临时文件根目录
+│   ├── specs/                 # 大模型临时spec规划文件
+│   ├── tests/                 # 临时测试文件
+│   ├── drafts/                # 草稿文件
+│   ├── cache/                 # 缓存文件
+│   └── errors/                # 错误文件
+├── backups/                   # 备份文件
+└── memory/                    # 状态持久化
+```
+
+**临时目录使用规则**：
+1. **所有临时文件必须存放在 `.trae/temp/` 目录下**
+2. **禁止在项目根目录或其他目录创建临时文件**
+3. **正式文件生成后，必须删除对应的临时文件**
+
 ### 清理时机
 
 **在以下时机必须执行清理检查**：
@@ -196,14 +217,17 @@ SOLO Coder → 调用专业Agent（如@team-lead、@qa）→ Agent使用Skill执
 ### 清理命令
 
 ```bash
-# 清理临时文件
-find design/ -name "*.tmp" -type f -delete
-find src/ -name "*.tmp" -type f -delete
-find tests/ -name "*.tmp" -type f -delete
+# 清理所有临时文件
+rm -rf .trae/temp/*
 
-# 清理错误文件
-find design/ -name "*_error.md" -type f -delete
-find design/ -name "*_failed.md" -type f -delete
+# 清理特定目录
+rm -rf .trae/temp/specs/*
+rm -rf .trae/temp/tests/*
+rm -rf .trae/temp/drafts/*
+rm -rf .trae/temp/errors/*
+
+# 清理过期备份（7天前）
+find .trae/backups/ -type d -mtime +7 -exec rm -rf {} +
 ```
 
 ### 清理确认

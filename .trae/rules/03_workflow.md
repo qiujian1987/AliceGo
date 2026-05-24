@@ -46,6 +46,14 @@ SOLO Coder → 调用专业Agent（如@team-lead、@qa）→ Agent使用Skill执
   - 项目目录结构
   - `.git` 初始化
   - `mcp_Memory` 初始化项目状态
+  - **临时目录结构**（强制创建）：
+    - `.trae/temp/specs/` - 大模型临时spec规划文件
+    - `.trae/temp/tests/` - 临时测试文件
+    - `.trae/temp/drafts/` - 草稿文件
+    - `.trae/temp/cache/` - 缓存文件
+    - `.trae/temp/errors/` - 错误文件
+    - `.trae/backups/` - 备份文件
+    - `.trae/memory/` - 状态持久化
 - **命令**：`/start` 或 `@devops`
 
 ---
