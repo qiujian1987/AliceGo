@@ -21,13 +21,13 @@
 ## 命名规范（强制执行）
 
 ### 特性ID命名规范
-- **格式**：`feature-{序号}`，序号为3位数字，从001开始
-- **示例**：`feature-001`, `feature-002`, `feature-003`
-- **禁止**：`user-auth`, `f1`, `feature1`, `auth_feature` 等不规范命名
+- **格式**：`feature-{序号}-{特性名称}`，序号为3位数字，从001开始，特性名称用kebab-case
+- **示例**：`feature-001-user-authentication`, `feature-002-order-management`, `feature-003-product-catalog`
+- **禁止**：`user-auth`, `f1`, `feature1`, `auth_feature`, `feature-001`（无特性名称）等不规范命名
 
 ### 目录命名规范
 - **格式**：`design/features/{feature-id}/`
-- **示例**：`design/features/feature-001/`
+- **示例**：`design/features/feature-001-user-authentication/`
 
 ### 文件命名规范
 | 文件类型 | 文件名 | 说明 |

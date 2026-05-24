@@ -24,8 +24,8 @@
 #### 1.1 命名规范检查
 | 检查项 | 规范要求 | 不合规示例 |
 |--------|---------|-----------|
-| 特性ID格式 | `feature-{序号}`（序号3位数字） | user-auth, f1, feature1 |
-| 目录命名 | `design/features/feature-{序号}/` | design/features/auth/ |
+| 特性ID格式 | `feature-{序号}-{特性名称}`（序号3位数字，特性名称kebab-case） | user-auth, f1, feature1, feature-001（无名称） |
+| 目录命名 | `design/features/feature-{序号}-{特性名称}/` | design/features/auth/, design/features/feature-001/ |
 | 需求文件名 | `requirements.md` | requirement.md, spec.md |
 | API文件名 | `api.md` | apis.md, interface.md |
 | 测试文件名 | `test-cases.md` | tests.md, testcase.md |

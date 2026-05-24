@@ -563,8 +563,8 @@ find src/ -empty -type f -delete
   "trigger": "步骤开始前清理",
   "step": "步骤3：特性需求分析",
   "files_cleaned": [
-    "design/features/feature-001/requirements.md.tmp",
-    "design/features/feature-002/requirements.md.tmp"
+    "design/features/feature-001-user-authentication/requirements.md.tmp",
+    "design/features/feature-002-order-management/requirements.md.tmp"
   ],
   "files_count": 2,
   "status": "success"
