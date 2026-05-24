@@ -71,10 +71,11 @@ description: "需求分析，将用户需求转换为明确的规约文档。触
 ## 命名规范（强制执行）
 
 ### 特性ID命名规范
-- **格式**：`feature-{序号}`
+- **格式**：`feature-{序号}-{特性名称}`
 - **序号**：3位数字，从001开始
-- **示例**：`feature-001`, `feature-002`, `feature-003`
-- **禁止**：`feature-001-user-authentication`（包含描述性文字）
+- **特性名称**：kebab-case（小写字母，连字符分隔）
+- **示例**：`feature-001-user-authentication`, `feature-002-order-management`
+- **禁止**：`feature-001`（无特性名称）、`user-auth`（无序号）
 
 ### 目录结构规范
 ```
@@ -83,11 +84,11 @@ design/
 │   ├── requirements_spec.md
 │   └── features_list.md
 └── features/
-    ├── feature-001/
+    ├── feature-001-user-authentication/
     │   └── requirements.md
-    ├── feature-002/
+    ├── feature-002-order-management/
     │   └── requirements.md
-    └── feature-003/
+    └── feature-003-product-catalog/
         └── requirements.md
 ```
 
