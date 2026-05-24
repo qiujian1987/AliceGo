@@ -2,6 +2,43 @@
 
 这是 AliceGo 项目的 Agent 知识地图，为所有 AI Agent 提供统一的项目上下文和协作规范。
 
+---
+
+## 第一优先级：对话启动检测流程（SOLO Coder 必须首先执行）
+
+### 启动任何操作前，必须先执行以下检测：
+
+```
+1. 检查是否存在状态文件：.trae/memory/project_state.json
+2. 如果文件存在 → 进入断点恢复流程
+3. 如果文件不存在 → 进入新项目流程
+```
+
+### 断点恢复流程
+如果检测到状态文件：
+```
+📊 检测到进行中的项目！
+
+[项目状态]
+- 项目：[项目名称]
+- 当前：步骤[X]（[步骤名称]）
+- 进度：[X]%
+- 最后更新：[时间]
+
+💡 请选择：
+- /continue - 从断点继续
+- /status - 查看完整状态
+- /restart [步骤号] - 重新执行某步骤
+- /new - 强制开始新项目
+```
+
+**重要：显示此状态后，必须等待用户命令，不要自动继续！**
+
+### 新项目流程
+如果没有检测到状态文件，显示欢迎信息。
+
+---
+
 ## 项目概述
 
 ### 项目名称
@@ -27,33 +64,182 @@ Skills 层（按需加载）
 MCP 工具层
 ```
 
-### Agent 调用链路（强制规范）
+---
 
-**SOLO Coder 的核心职责**：
-- **必须**通过调用专业 Agent 来执行任务
-- **禁止**直接调用 Skill 而不经过专业 Agent
-- **必须**等待专业 Agent 完成后再进入下一步
+## SOLO Coder 核心职责
 
-**调用链路**（强制执行）：
+### 1. 流程协调
+
+- **主导项目流程**：按照 28 步标准流程推进项目
+- **步骤状态管理**：使用 mcp_Memory 记录每个步骤的状态
+- **流程验证**：在进入下一步之前，必须验证前置步骤已完成
+
+### 2. Agent 调用（强制要求）
+
+**SOLO Coder 必须通过调用专业 Agent 来执行任务，禁止直接调用 Skill。**
+
+#### 调用链路
 ```
 SOLO Coder → 调用专业Agent（如@team-lead、@qa）→ Agent使用Skill执行任务
 ```
 
-**违规示例**：
+#### 调用规范
+
+| 步骤类型 | 必须调用的 Agent | Skill 调用者 |
+|---------|----------------|------------|
+| 需求分析 | @team-lead | @team-lead |
+| 特性分析 | @feature-analyst | @feature-analyst |
+| 需求评审 | @req-reviewer | @req-reviewer |
+| 后端架构设计 | @architect | @architect |
+| 前端架构设计 | @frontend-designer | @frontend-designer |
+| 数据模型设计 | @dba | @dba |
+| API 设计 | @architect | @architect |
+| 设计评审 | @design-reviewer | @design-reviewer |
+| 任务拆解 | @team-lead | @team-lead |
+| 测试用例设计 | @qa | @qa |
+| 测试评审 | @test-reviewer | @test-reviewer |
+| TDD 开发 | @backend-dev / @frontend-dev | 开发 Agent |
+| 代码评审 | @code-reviewer | @code-reviewer |
+| 测试执行 | @qa | @qa |
+| 项目初始化 | @devops | @devops |
+| 部署上线 | @devops | @devops |
+
+#### 错误示例
+
 ```
 ❌ SOLO Coder直接调用task-decomposition Skill
-✅ SOLO Coder调用@team-lead → @team-lead调用task-decomposition Skill
+✅ SOLO Coder调用@team-lead Agent → @team-lead Agent调用task-decomposition Skill
+
+❌ SOLO Coder直接调用test-case-design Skill
+✅ SOLO Coder调用@qa Agent → @qa Agent调用test-case-design Skill
+
+❌ SOLO Coder自己执行代码评审
+✅ SOLO Coder调用@code-reviewer Agent → @code-reviewer Agent执行代码评审
 ```
 
-**正确示例**：
+#### 正确流程示例
+
 ```
 步骤15（任务拆解）：
-1. SOLO Coder识别需要任务拆解
-2. SOLO Coder调用@team-lead Agent
-3. @team-lead Agent调用task-decomposition Skill
+1. SOLO Coder识别需要进行任务拆解
+2. SOLO Coder调用@team-lead Agent，并提供任务参数
+3. 等待@team-lead Agent完成任务拆解
 4. @team-lead Agent返回任务拆解结果
-5. SOLO Coder验证输出文件
+5. SOLO Coder验证输出文件存在且完整
+6. 进入下一步
 ```
+
+---
+
+## 评审环节处理
+
+### 评审流程
+
+1. **调用评审 Agent**：
+   - 需求评审 → @req-reviewer
+   - 设计评审 → @design-reviewer
+   - 测试评审 → @test-reviewer
+   - 代码评审 → @code-reviewer
+
+2. **等待评审完成**：
+   - 不执行评审
+   - 等待评审 Agent 返回结果
+
+3. **处理评审结果**：
+   - 如果通过：进入下一步
+   - 如果不通过且迭代<3次：反馈给相关 Agent 优化
+   - 如果不通过且迭代=3次：升级给用户决策
+
+### 迭代控制
+
+- 每个评审环节最多迭代 3 次
+- 通过 mcp_Memory 记录迭代次数
+- 达到 3 次仍未通过时，必须升级给用户决策
+
+---
+
+## 状态管理
+
+### 项目状态
+
+使用 mcp_Memory 记录：
+- 当前步骤
+- 各步骤状态（pending/in_progress/completed/skipped）
+- 迭代次数
+- 输出文件路径
+
+### 状态查询
+
+在进入任何步骤之前：
+1. 查询 mcp_Memory 确认前置步骤状态
+2. 验证输入文档存在且完整
+3. 只有前置步骤都完成才能继续
+
+### 状态持久化（重要！）
+
+**在以下时机必须保存状态：**
+- 步骤开始执行前
+- Agent调用完成后
+- 步骤完成后
+- 评审提交后
+- 用户中断前
+
+**保存位置：** .trae/memory/project_state.json
+
+---
+
+## 项目清理机制（强制执行）
+
+### 临时目录结构
+
+**项目初始化时创建的临时目录**：
+
+```
+.trae/
+├── temp/                      # 临时文件根目录
+│   ├── specs/                 # 大模型临时spec规划文件
+│   ├── tests/                 # 临时测试文件
+│   ├── drafts/                # 草稿文件
+│   ├── cache/                 # 缓存文件
+│   └── errors/                # 错误文件
+├── backups/                   # 备份文件
+└── memory/                    # 状态持久化
+```
+
+**临时目录使用规则**：
+1. **所有临时文件必须存放在 `.trae/temp/` 目录下**
+2. **禁止在项目根目录或其他目录创建临时文件**
+3. **正式文件生成后，必须删除对应的临时文件**
+
+### 清理时机
+
+**在以下时机必须执行清理检查**：
+1. **步骤开始前**：在执行任何步骤之前，清理该步骤相关的临时文件
+2. **纠正偏差后**：用户纠正偏差后，清理错误文件
+3. **评审不通过后**：评审不通过需要修改时，清理待修改的文件
+4. **迭代重试前**：重新执行步骤前，清理上一次的输出
+5. **项目恢复时**：断点续传恢复项目时，清理中断时的临时文件
+
+### 清理检查流程
+
+**每个步骤开始前必须执行**：
+
+```
+[清理检查]
+1. 检查当前步骤的输出目录
+2. 识别临时文件（*.tmp, *.temp, *.bak）
+3. 识别错误文件（*_error.md, *_failed.md）
+4. 列出需要清理的文件清单
+5. 确认清理范围（是否影响其他步骤）
+6. 执行清理
+7. 记录清理结果到 mcp_Memory
+```
+
+### 清理确认
+
+- 清理文件数量 > 5 个时，需要用户确认
+- 清理文件包含 `.md` 文档时，需要用户确认
+- 清理整个目录时，需要用户确认
 
 ---
 
@@ -76,8 +262,14 @@ AliceGo/
 │   │   ├── 01_security-constraints.md
 │   │   ├── 02_standards.md
 │   │   └── 03_workflow.md
-│   └── documents/        # 项目文档
-│       └── trae_harness_optimization_plan.md
+│   ├── temp/             # 临时文件目录
+│   │   ├── specs/        # 大模型临时spec规划文件
+│   │   ├── tests/        # 临时测试文件
+│   │   ├── drafts/       # 草稿文件
+│   │   ├── cache/        # 缓存文件
+│   │   └── errors/       # 错误文件
+│   ├── backups/          # 备份文件
+│   └── memory/           # 状态持久化
 ├── design/               # 设计文档输出目录
 │   ├── project_overview/
 │   └── features/
@@ -273,6 +465,7 @@ DEADLINE: [截止时间]
 - 源代码 → `src/`
 - 测试代码 → `tests/`
 - 部署配置 → `infra/`
+- 临时文件 → `.trae/temp/`
 
 ### 3. 命名规范
 - 文件夹：kebab-case（示例：`test-cases`）
@@ -293,7 +486,10 @@ DEADLINE: [截止时间]
 - **Rules 规则**：`.trae/rules/`
 - **Skills 技能**：`.trae/skills/`
 - **设计文档**：`design/`
+- **状态管理规范**：`.trae/docs/state-management.md`
+- **28 步流程定义**：`.trae/rules/03_workflow.md`
+- **项目清理机制**：`.trae/rules/02_standards.md` 第9章
 
 ---
 
-*最后更新：2026-05-16*
+*最后更新：2026-05-20*
