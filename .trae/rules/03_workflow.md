@@ -250,8 +250,12 @@ SOLO Coder → 调用专业Agent（如@team-lead、@qa）→ Agent使用Skill执
 ---
 
 **步骤12：设计评审**
-- **SOLO Coder职责**：调用 @design-reviewer Agent执行设计评审
-- **专业Agent职责**：@design-reviewer 执行设计评审
+
+**设计评审分为两个部分，必须全部完成：**
+
+#### 12.1 架构设计评审
+- **SOLO Coder职责**：调用 @design-reviewer Agent执行架构设计评审
+- **专业Agent职责**：@design-reviewer 执行架构设计评审
 - **触发条件**：
   1. 步骤8完成（状态=completed）
   2. 步骤9完成（状态=completed）
@@ -265,31 +269,53 @@ SOLO Coder → 调用专业Agent（如@team-lead、@qa）→ Agent使用Skill执
   4. 确认@design-reviewer Agent可用
 - **输入**：
   - `design/project_overview/backend_architecture.md`
-  - `design/project_overview/frontend_architecture.md`
   - `design/project_overview/data_model.md`
   - `design/project_overview/api_contracts.md`
   - `design/project_overview/api_checklist.md`
 - **评审范围**：
   - 后端架构设计（技术选型、模块划分、数据流）
-  - 前端架构设计（组件设计、交互流程、页面结构）
   - 数据模型设计（表结构、关系设计、索引设计）
   - API设计（接口定义、CRUD完整性、文档完整性）
 - **输出**：
-  - 评审报告：`design/project_overview/reviews/design-{timestamp}.md`
-  - 反馈JSON：`design/project_overview/feedback/design-review-{timestamp}.json`
-  - 步骤状态更新（mcp_Memory）
-- **迭代控制**：最多3次，通过mcp_Memory记录
+  - 评审报告：`design/project_overview/reviews/architecture-{timestamp}.md`
+  - 反馈JSON：`design/project_overview/feedback/architecture-review-{timestamp}.json`
+
+#### 12.2 UI/UX设计评审
+- **SOLO Coder职责**：调用 @ui-ux-reviewer Agent执行UI/UX设计评审
+- **专业Agent职责**：@ui-ux-reviewer 执行UI/UX设计评审
+- **触发条件**：12.1 架构设计评审通过
+- **前置检查**：
+  1. 查询mcp_Memory确认12.1状态为approved
+  2. 验证前端架构文档存在
+  3. 确认@ui-ux-reviewer Agent可用
+- **输入**：
+  - `design/project_overview/frontend_architecture.md`
+  - `src/client/` 下的前端代码（如果有）
+- **评审范围**：
+  - **界面布局**：页面结构、视觉层级、留白、对齐
+  - **交互设计**：操作反馈、交互流程、错误处理
+  - **用户体验**：信息架构、可用性、响应式设计
+  - **设计一致性**：风格一致性、组件库一致性
+- **输出**：
+  - 评审报告：`design/project_overview/reviews/ui-ux-{timestamp}.md`
+  - 反馈JSON：`design/project_overview/feedback/ui-ux-review-{timestamp}.json`
+
+**步骤12整体要求**：
+- **通过条件**：12.1 架构设计评审通过 AND 12.2 UI/UX设计评审通过
+- **迭代控制**：两部分评审各自的迭代次数<3
 - **强制规则**：
-  1. **必须调用 @design-reviewer Agent**（强制）
+  1. **必须分别调用 @design-reviewer 和 @ui-ux-reviewer Agent**（强制）
   2. SOLO Coder不得自行执行评审
-  3. 必须等待@design-reviewer Agent完成评审
-- **验证机制**：评审完成后检查`verified_by`字段是否为`@design-reviewer`
+  3. 两部分评审必须全部完成
 - **SOLO Coder操作**：
   1. **调用 @design-reviewer Agent**（必须）
-  2. 等待@design-reviewer Agent完成评审
-  3. 检查评审结果
-  4. 如果不通过且迭代<3次，反馈给相关设计Agent优化
-  5. 如果不通过且迭代=3次，升级给用户决策
+  2. 等待@design-reviewer Agent完成架构评审
+  3. 检查架构评审结果
+  4. **如果架构评审通过，调用 @ui-ux-reviewer Agent**（必须）
+  5. 等待@ui-ux-reviewer Agent完成UI/UX评审
+  6. 检查UI/UX评审结果
+  7. 如果任一部分不通过且迭代<3次，反馈给相关Agent优化
+  8. 如果任一部分不通过且迭代=3次，升级给用户决策
 
 ---
 
