@@ -25,21 +25,54 @@ SOLO Coder → 调用 @backend-dev 或 @frontend-dev Agent → Agent调用此Ski
 
 ## TDD 流程支持（核心功能）
 
-### TDD 执行步骤
+### TDD 执行步骤（强制执行）
 ```
 1. 读取测试用例文档（design/features/*/test-cases.md）
-2. 生成测试代码（tests/**/*.test.ts）
-3. 运行测试（初始状态应为失败）
-4. 生成业务代码使测试通过
-5. 验证测试覆盖率达到95%以上
+2. 【强制】生成测试代码（tests/**/*.test.ts）
+3. 【强制】运行测试并验证初始状态为失败（RED阶段）
+4. 【强制】记录测试失败证据（如输出日志）
+5. 【强制】生成业务代码使测试通过
+6. 【强制】重新运行测试并验证全部通过（GREEN阶段）
+7. 【强制】验证测试覆盖率达到95%以上
+8. 【强制】生成TDD执行验证报告
 ```
 
+### TDD 三阶段（强制流程）
+
+#### RED 阶段（测试失败）
+- **目标**：验证测试能正确捕获功能缺失
+- **步骤**：
+  1. 生成测试代码
+  2. 运行测试：`npm test`
+  3. 验证测试状态为 `FAILED`
+  4. 记录失败证据（如：测试输出截屏或日志）
+- **通过条件**：测试运行且失败原因为"功能未实现"
+
+#### GREEN 阶段（测试通过）
+- **目标**：验证业务代码实现了功能需求
+- **步骤**：
+  1. 基于测试要求实现业务代码
+  2. 运行测试：`npm test`
+  3. 验证测试状态为 `PASSED`
+  4. 记录通过证据（如：测试输出截屏或日志）
+- **通过条件**：所有测试通过
+
+#### REFACTOR 阶段（代码重构）
+- **目标**：优化代码质量，保持功能不变
+- **步骤**：
+  1. 检查代码质量
+  2. 重构代码
+  3. 运行测试验证功能未受影响
+- **通过条件**：测试仍然全部通过
+
 ### TDD 输出
-| 输出类型 | 路径 | 说明 |
-|---------|------|------|
-| 测试代码 | tests/unit/*.test.ts | 单元测试 |
-| 测试代码 | tests/integration/*.test.ts | 集成测试 |
-| 业务代码 | src/server/* 或 src/client/* | 业务实现 |
+| 输出类型 | 路径 | 说明 | 验证要求 |
+|---------|------|------|---------|
+| 测试代码 | tests/unit/*.test.ts | 单元测试 | 必须生成 |
+| 测试代码 | tests/integration/*.test.ts | 集成测试 | 必须生成 |
+| 测试失败证据 | tests/run-results/initial-fail.log | RED阶段证据 | 必须记录 |
+| 测试通过证据 | tests/run-results/pass.log | GREEN阶段证据 | 必须记录 |
+| 业务代码 | src/server/* 或 src/client/* | 业务实现 | 必须生成 |
 
 ---
 
@@ -62,6 +95,22 @@ SOLO Coder → 调用 @backend-dev 或 @frontend-dev Agent → Agent调用此Ski
 {
   "status": "success",
   "data": {
+    "tdd_execution": {
+      "red_phase": {
+        "test_files_generated": true,
+        "test_ran": true,
+        "initial_status": "FAILED",
+        "evidence_saved": true,
+        "evidence_path": "tests/run-results/initial-fail.log"
+      },
+      "green_phase": {
+        "business_code_generated": true,
+        "test_ran": true,
+        "final_status": "PASSED",
+        "evidence_saved": true,
+        "evidence_path": "tests/run-results/pass.log"
+      }
+    },
     "code": {
       "controller": "...",
       "service": "...",
@@ -93,34 +142,49 @@ SOLO Coder → 调用 @backend-dev 或 @frontend-dev Agent → Agent调用此Ski
     ],
     "coverage": {
       "target": 95,
-      "actual": 96
+      "actual": 96,
+      "meets_requirement": true,
+      "evidence_saved": true,
+      "evidence_path": "tests/run-results/coverage-report.txt"
     }
   },
-  "message": "TDD代码生成完成"
+  "message": "TDD代码生成完成，所有阶段验证通过"
 }
 ```
 
 ---
 
-## 执行流程（TDD模式）
+## 执行流程（TDD模式 - 强制执行）
 
-### Step 1: 分析测试用例
+### Step 1: 分析测试用例（必须）
 - 读取 `design/features/*/test-cases.md`
 - 提取测试场景和验收标准
+- 识别核心业务逻辑测试用例
 
-### Step 2: 生成测试代码
+### Step 2: RED阶段 - 生成测试代码（必须）
 - 根据测试用例生成单元测试
 - 根据API设计生成集成测试
-- 输出到 `tests/` 目录
+- 输出到 `tests/unit/` 和 `tests/integration/` 目录
+- **【强制】运行测试并验证初始状态为失败**
+- **【强制】保存测试失败证据到 `tests/run-results/initial-fail.log`**
 
-### Step 3: 生成业务代码
+### Step 3: GREEN阶段 - 生成业务代码（必须）
 - 根据API合同生成控制器
 - 根据业务逻辑生成服务层
 - 根据数据模型生成实体
+- **【强制】运行测试并验证全部通过**
+- **【强制】保存测试通过证据到 `tests/run-results/pass.log`**
 
-### Step 4: 验证测试
-- 检查测试文件是否生成
-- 验证测试覆盖率目标
+### Step 4: 验证覆盖率（必须）
+- 运行覆盖率检查：`npm run test:coverage`
+- **【强制】验证覆盖率≥95%**
+- **【强制】记录覆盖率证据**
+- 如果覆盖率不足，补充测试用例
+
+### Step 5: 生成TDD执行验证报告（必须）
+- 生成TDD流程执行报告
+- 汇总RED和GREEN阶段证据
+- 输出覆盖率统计
 
 ---
 
@@ -269,12 +333,16 @@ SOLO Coder → 调用 @backend-dev 或 @frontend-dev Agent → Agent调用此Ski
 
 ## 错误处理
 
-| 错误类型 | 处理方式 |
-|---------|---------|
-| 服务类型不支持 | 提示支持的服务类型列表 |
-| 测试用例缺失 | 提示必须提供测试用例 |
-| 框架选择错误 | 提示支持的框架列表 |
-| 测试覆盖率不足 | 提供优化建议 |
+| 错误类型 | 处理方式 | 严重程度 |
+|---------|---------|---------|
+| 服务类型不支持 | 提示支持的服务类型列表 | 中 |
+| 测试用例缺失 | 提示必须提供测试用例 | 高 |
+| 框架选择错误 | 提示支持的框架列表 | 中 |
+| 测试覆盖率不足 | 提供优化建议 | 高 |
+| **RED阶段测试未失败** | **标记为TDD流程错误，要求重新生成测试** | **严重** |
+| **GREEN阶段测试未通过** | **标记为实现错误，要求修改业务代码** | **严重** |
+| **未运行测试** | **标记为TDD流程缺失，要求执行测试** | **严重** |
+| **未保存测试证据** | **标记为验证缺失，要求补充证据** | **高** |
 
 ---
 

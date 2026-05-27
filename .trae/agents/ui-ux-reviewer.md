@@ -116,6 +116,19 @@
 
 ---
 
+## Skill 调用指引
+
+当 SOLO Coder 要求你进行UI/UX评审时，会调用相关的评审Skill，你需要：
+1. 从 SOLO Coder 接收评审任务参数
+2. 调用相应的评审Skill执行：
+   - `ui-layout-review`：界面布局评审
+   - `ui-interaction-review`：交互设计评审
+   - `ui-consistency-review`：设计一致性评审
+3. 按照各Skill中的流程执行
+4. 返回评审报告和反馈
+
+---
+
 ## 评审流程
 
 ### Step 1: 收集评审材料
@@ -146,4 +159,4 @@
 
 ---
 
-*最后更新：2026-05-24*
+*最后更新：2026-05-27*

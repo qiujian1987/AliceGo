@@ -106,7 +106,10 @@ SOLO Coder → 调用专业Agent（如@team-lead、@qa）→ Agent使用Skill执
 
 **步骤4：需求评审**
 - **SOLO Coder职责**：调用 @req-reviewer Agent执行需求评审
-- **专业Agent职责**：@req-reviewer 执行需求评审
+- **专业Agent职责**：@req-reviewer 调用细分评审Skill执行需求评审：
+  - `req-completeness-review`：需求完整性评审（功能覆盖、边界条件、异常场景、数据需求）
+  - `req-clarity-review`：需求清晰度评审（描述明确性、无歧义、可验证性、优先级）
+  - `req-feasibility-review`：需求可行性评审（技术可行性、资源估算、时间估算、风险评估）
 - **触发条件**：
   1. 步骤3完成（状态=completed）
   2. 迭代次数<3
@@ -255,7 +258,11 @@ SOLO Coder → 调用专业Agent（如@team-lead、@qa）→ Agent使用Skill执
 
 #### 12.1 架构设计评审
 - **SOLO Coder职责**：调用 @design-reviewer Agent执行架构设计评审
-- **专业Agent职责**：@design-reviewer 执行架构设计评审
+- **专业Agent职责**：@design-reviewer 调用细分评审Skill执行架构设计评审：
+  - `design-business-logic-review`：业务逻辑设计评审（需求匹配、业务流程、状态转换、业务规则）
+  - `design-dfx-review`：DFX设计评审（可维护性、可扩展性、可测试性、可部署性）
+  - `design-impact-analysis`：关联影响分析（模块依赖、接口影响、数据影响、变更范围）
+  - `design-security-review`：设计安全评审（认证授权、数据安全、访问控制、合规性）
 - **触发条件**：
   1. 步骤8完成（状态=completed）
   2. 步骤9完成（状态=completed）
@@ -282,7 +289,10 @@ SOLO Coder → 调用专业Agent（如@team-lead、@qa）→ Agent使用Skill执
 
 #### 12.2 UI/UX设计评审
 - **SOLO Coder职责**：调用 @ui-ux-reviewer Agent执行UI/UX设计评审
-- **专业Agent职责**：@ui-ux-reviewer 执行UI/UX设计评审
+- **专业Agent职责**：@ui-ux-reviewer 调用细分评审Skill执行UI/UX设计评审：
+  - `ui-layout-review`：界面布局评审（页面结构、视觉层级、留白、响应式设计）
+  - `ui-interaction-review`：交互设计评审（用户流程、操作反馈、错误处理、可用性）
+  - `ui-consistency-review`：设计一致性评审（风格统一、组件复用、设计系统遵循）
 - **触发条件**：12.1 架构设计评审通过
 - **前置检查**：
   1. 查询mcp_Memory确认12.1状态为approved
@@ -491,7 +501,13 @@ SOLO Coder → 调用专业Agent（如@team-lead、@qa）→ Agent使用Skill执
 
 **步骤21：代码评审（按任务）**
 - **SOLO Coder职责**：调用 @code-reviewer Agent执行代码评审
-- **专业Agent职责**：@code-reviewer 调用 `code-review` Skill 执行代码评审
+- **专业Agent职责**：@code-reviewer 调用细分评审Skill执行代码评审：
+  - `code-style-review`：代码规范评审（命名规范、代码格式、注释规范、架构模式）
+  - `code-performance-review`：代码性能评审（算法复杂度、资源使用、缓存策略、并发处理）
+  - `code-security-review`：代码安全评审（输入验证、SQL注入防护、XSS防护、敏感信息处理）
+  - `code-usability-review`：代码可用性评审（错误处理、日志记录、监控指标、可观测性）
+  - `design-consistency-review`：设计与开发实现一致性评审（架构设计、API设计、数据模型设计一致性）
+  - `business-logic-review`：业务逻辑正确性评审（业务流程、业务规则、状态转换、验收标准覆盖）
 - **触发条件**：
   1. 单个任务开发完成（状态=done）
   2. 迭代次数<3
@@ -504,7 +520,7 @@ SOLO Coder → 调用专业Agent（如@team-lead、@qa）→ Agent使用Skill执
   - 评审报告：`design/project_overview/reviews/code-{task-id}-{timestamp}.md`
   - 反馈JSON：`design/project_overview/feedback/code-review-{task-id}-{timestamp}.json`
   - 步骤状态更新（mcp_Memory）
-- **Skill调用**：`code-review` - 代码评审Skill，**由@code-reviewer Agent调用**
+- **Skill调用**：`code-review`、`code-style-review`、`code-performance-review`、`code-security-review`、`code-usability-review`、`design-consistency-review`、`business-logic-review` - 代码评审Skill，**由@code-reviewer Agent调用**
 - **迭代控制**：最多3次，通过mcp_Memory记录
 - **通过条件**：所有测试通过，代码符合规范
 - **强制规则**：

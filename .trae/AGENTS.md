@@ -591,17 +591,17 @@ AliceGo/
 #### @code-reviewer
 - **职责**：代码质量评审
 - **输出**：评审报告、反馈 JSON
-- **调用 Skill**：`code-review`
+- **调用 Skill**：`code-review`、`code-style-review`、`code-performance-review`、`code-security-review`、`code-usability-review`、`design-consistency-review`、`business-logic-review`
 
 #### @design-reviewer
 - **职责**：架构设计评审（后端架构、数据模型、API）
 - **输出**：设计评审报告
-- **调用 Skill**：无
+- **调用 Skill**：`design-business-logic-review`、`design-dfx-review`、`design-impact-analysis`、`design-security-review`
 
 #### @ui-ux-reviewer
 - **职责**：UI/UX设计评审（界面布局、交互设计、用户体验）
 - **输出**：UI/UX评审报告
-- **调用 Skill**：无
+- **调用 Skill**：`ui-layout-review`、`ui-interaction-review`、`ui-consistency-review`
 - **评审范围**：
   - 界面布局：页面结构、视觉层级、留白、对齐
   - 交互设计：操作反馈、交互流程、错误处理
@@ -616,7 +616,7 @@ AliceGo/
 #### @req-reviewer
 - **职责**：需求文档评审
 - **输出**：需求评审报告
-- **调用 Skill**：无
+- **调用 Skill**：`req-completeness-review`、`req-clarity-review`、`req-feasibility-review`
 
 ### 支撑 Agent
 
