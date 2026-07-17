@@ -18,6 +18,8 @@
 | QA | tests/ | 测试代码、测试用例、质量评估 |
 | Team Lead | 全局协调 | 任务分配、进度追踪、流程控制 |
 | Feature Analyst | design/features/ | 特性需求分析、文档编写 |
+| frontend-designer | design/ | 前端架构设计、UI设计、交互设计 |
+| ui-ux-reviewer | 评审 | UI/UX设计评审、界面布局评审、交互设计评审 |
 | req-reviewer | 评审 | 需求文档评审 |
 | design-reviewer | 评审 | 设计文档评审 |
 | test-reviewer | 评审 | 测试文档评审 |

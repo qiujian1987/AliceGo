@@ -41,9 +41,9 @@ Loop 模式（人→系统→Agent）：
 |------|------|-------------|---------|
 | **Automations** | 定时发现与分诊 | 文件变更触发测试、测试失败触发修复、评审通过自动进入下一步、预算预警自动通知（auto-001~auto-005） | [06_loop-automations.md](file:///c:/Users/12345678/Documents/trae_projects/AliceGo/.trae/rules/06_loop-automations.md) |
 | **Worktrees** | 并行隔离 | 前后端任务并行开发、多特性并行开发、Git Worktree隔离机制、冲突检测与解决 | [07_loop-worktrees.md](file:///c:/Users/12345678/Documents/trae_projects/AliceGo/.trae/rules/07_loop-worktrees.md) |
-| **Skills** | 固化项目知识 | 35个专业 Skill，封装最佳实践（需求分析、架构设计、代码生成、测试执行等） | `.trae/skills/` |
+| **Skills** | 固化项目知识 | 38个专业 Skill，封装最佳实践（需求分析、架构设计、代码生成、测试执行、回环执行、预算管理、回环监控等） | `.trae/skills/` |
 | **Connectors** | 连接外部工具 | MCP Server（Memory、Playwright、Excel）+ Git Connector + CI Connector | MCP Server |
-| **Sub-agents** | 制作与审查分离 | 14个专业 Agent，职责清晰（设计、开发、评审、支撑四类） | `.trae/agents/` |
+| **Sub-agents** | 制作与审查分离 | 17个专业 Agent，职责清晰（设计、开发、评审、支撑、Loop协调五类） | `.trae/agents/` |
 | **State** | 跨会话记忆 | mcp_Memory + 四层记忆架构 + Loop状态机 + 回退状态记录 + 预算状态追踪 | [04_experience-knowledge.md](file:///c:/Users/12345678/Documents/trae_projects/AliceGo/.trae/rules/04_experience-knowledge.md) |
 | **Budget** | Token 预算控制 | 项目级总预算（1,000,000 token）、阶段级预算分配、步骤级预算上限、三级预警机制（normal/warning/critical）、四级降级策略 | [05_loop-budget.md](file:///c:/Users/12345678/Documents/trae_projects/AliceGo/.trae/rules/05_loop-budget.md) |
 
@@ -92,6 +92,11 @@ Loop 模式（人→系统→Agent）：
   @team-lead          # 流程指导、质量把关
   @qa                 # 测试用例设计、测试执行
   @devops             # 环境配置、CI/CD
+
+Loop 协调 Agent：
+  @loop-coordinator   # 回环流程协调与调度
+  @loop-monitor       # 回环状态监控与预警
+  @budget-manager     # 预算管理与降级策略
 ```
 
 ### 4. 启动 Loop
@@ -218,16 +223,22 @@ Loop 模式（人→系统→Agent）：
 ```
 AliceGo/
 ├── .trae/
-│   ├── agents/           # Sub-agents：专业角色定义（14个）
+│   ├── agents/           # Sub-agents：专业角色定义（17个）
 │   │   ├── architect.md
 │   │   ├── backend-dev.md
 │   │   ├── frontend-dev.md
+│   │   ├── loop-coordinator.md
+│   │   ├── loop-monitor.md
+│   │   ├── budget-manager.md
 │   │   └── ...
-│   ├── skills/          # Skills：固化的工作流程（35个）
+│   ├── skills/          # Skills：固化的工作流程（38个）
 │   │   ├── architecture-planner/
 │   │   ├── code-generator/
 │   │   ├── test-case-design/
 │   │   ├── dependency-checker/
+│   │   ├── loop-executor/
+│   │   ├── budget-manager/
+│   │   ├── loop-monitor/
 │   │   └── ...
 │   ├── rules/           # Harness：行为约束（7个核心规则）
 │   │   ├── 01_security-constraints.md
@@ -280,6 +291,9 @@ Agent 是 Loop 中的专业角色，负责特定领域的任务：
 | **支撑** | @team-lead | 流程指导、质量把关、任务拆解 |
 | | @qa | 测试用例设计、测试执行 |
 | | @devops | 环境配置、CI/CD、依赖管理 |
+| **Loop协调** | @loop-coordinator | 回环流程协调、回退路径执行、迭代次数控制 |
+| | @loop-monitor | 回环状态监控、异常检测、状态报告 |
+| | @budget-manager | 预算追踪、预警触发、降级策略执行 |
 
 ### Skill（技能）
 
@@ -298,6 +312,9 @@ Skill 是固化的工作流程，将项目知识写入磁盘：
 | `frontend-design` | 前端设计 | "前端设计"、"界面设计" |
 | `dependency-checker` | 依赖检查 | 代码生成后自动检查 |
 | `tdd-execution-verifier` | TDD 验证 | 验证 TDD 流程执行 |
+| `loop-executor` | 回环执行 | 管理回环状态转换、执行回退路径、管理迭代次数 |
+| `budget-manager` | 预算管理 | 追踪Token消耗、检查预算预警、触发降级策略 |
+| `loop-monitor` | 回环监控 | 监控回环状态、收集执行数据、生成状态报告 |
 
 ### Rules（规则）
 
@@ -418,4 +435,4 @@ RED（失败）→ GREEN（通过）→ REFACTOR（重构）
 
 ---
 
-*最后更新：2026-07-11*
+*最后更新：2026-07-18*

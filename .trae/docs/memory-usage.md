@@ -14,16 +14,37 @@
   "name": "项目名称",
   "status": "planning|designing|developing|testing|deploying|completed",
   "current_phase": "需求分析",
-  "started_at": "2026-05-10T10:00:00Z",
-  "last_updated": "2026-05-10T10:30:00Z",
+  "started_at": "2026-07-12T10:00:00Z",
+  "last_updated": "2026-07-12T10:30:00Z",
   "progress": 15,
   "milestones": [
     {
       "name": "需求分析",
       "status": "completed",
-      "completed_at": "2026-05-10T10:30:00Z"
+      "completed_at": "2026-07-12T10:30:00Z"
     }
-  ]
+  ],
+  "fallback_state": {
+    "last_success_step": 0,
+    "fail_reason": null,
+    "retry_count": 0,
+    "max_retry_count": 3,
+    "last_fallback_time": null
+  },
+  "budget": {
+    "total_budget": 1000000,
+    "consumed_tokens": 0,
+    "remaining_tokens": 1000000,
+    "alert_status": "normal",
+    "last_budget_update": "2026-07-12T10:00:00Z"
+  },
+  "loop_state": {
+    "current_loop": null,
+    "loop_iteration": 0,
+    "max_loop_iteration": 3,
+    "fallback_path": [],
+    "success_path": []
+  }
 }
 ```
 
@@ -135,6 +156,19 @@
 - `review_iteration:requirements`
 - `task_state:T001`
 - `important_decision:D001`
+- `loop_state:main`
+- `knowledge_index`
+
+### 实体命名规范
+
+| 类型 | 命名格式 | 示例 |
+|------|---------|------|
+| 项目状态 | `project_state:{project_id}` | `project_state:main` |
+| 任务状态 | `task_state:{task_id}` | `task_state:T001` |
+| Loop状态 | `loop_state:{loop_id}` | `loop_state:main` |
+| 评审迭代 | `review_iteration:{review_type}` | `review_iteration:requirements` |
+| 重要决策 | `important_decision:{decision_id}` | `important_decision:D001` |
+| 知识索引 | `knowledge_index` | `knowledge_index` |
 
 ## 记忆系统使用场景
 
@@ -236,9 +270,30 @@ const featureTasks = await memory.query({
     "name": "新项目",
     "status": "planning",
     "current_phase": "初始化",
-    "started_at": "2026-05-10T10:00:00Z",
-    "last_updated": "2026-05-10T10:00:00Z",
-    "progress": 0
+    "started_at": "2026-07-12T10:00:00Z",
+    "last_updated": "2026-07-12T10:00:00Z",
+    "progress": 0,
+    "fallback_state": {
+      "last_success_step": 0,
+      "fail_reason": null,
+      "retry_count": 0,
+      "max_retry_count": 3,
+      "last_fallback_time": null
+    },
+    "budget": {
+      "total_budget": 1000000,
+      "consumed_tokens": 0,
+      "remaining_tokens": 1000000,
+      "alert_status": "normal",
+      "last_budget_update": "2026-07-12T10:00:00Z"
+    },
+    "loop_state": {
+      "current_loop": null,
+      "loop_iteration": 0,
+      "max_loop_iteration": 3,
+      "fallback_path": [],
+      "success_path": []
+    }
   }
 }
 ```

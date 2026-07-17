@@ -40,28 +40,28 @@
 ### 2.2 project_state.json 结构
 ```json
 {
-  "version": "1.0",
+  "version": "1.1",
   "project_name": "电商网站",
   "workflow_status": "in_progress",
   "current_step": 4,
   "current_step_name": "需求评审",
-  "last_updated": "2026-05-17T14:30:00Z",
+  "last_updated": "2026-07-12T14:30:00Z",
   "steps": {
     "1": {
       "status": "completed",
       "name": "项目初始化",
-      "completed_at": "2026-05-17T10:00:00Z"
+      "completed_at": "2026-07-12T10:00:00Z"
     },
     "2": {
       "status": "completed",
       "name": "需求分析",
-      "completed_at": "2026-05-17T11:00:00Z",
+      "completed_at": "2026-07-12T11:00:00Z",
       "output_file": "design/project_overview/requirements_spec.md"
     },
     "3": {
       "status": "completed",
       "name": "特性需求分析",
-      "completed_at": "2026-05-17T12:00:00Z",
+      "completed_at": "2026-07-12T12:00:00Z",
       "output_files": [
         "design/features/feature-001/requirements.md",
         "design/features/feature-002/requirements.md"
@@ -70,7 +70,7 @@
     "4": {
       "status": "in_progress",
       "name": "需求评审",
-      "started_at": "2026-05-17T14:00:00Z",
+      "started_at": "2026-07-12T14:00:00Z",
       "iteration": 1,
       "max_iterations": 3
     }
@@ -79,6 +79,27 @@
     "last_agent_called": "@req-reviewer",
     "in_progress_file": null,
     "pending_user_confirmation": false
+  },
+  "fallback_state": {
+    "last_success_step": 3,
+    "fail_reason": null,
+    "retry_count": 0,
+    "max_retry_count": 3,
+    "last_fallback_time": null
+  },
+  "budget": {
+    "total_budget": 1000000,
+    "consumed_tokens": 150000,
+    "remaining_tokens": 850000,
+    "alert_status": "normal",
+    "last_budget_update": "2026-07-12T14:00:00Z"
+  },
+  "loop_state": {
+    "current_loop": "requirements",
+    "loop_iteration": 1,
+    "max_loop_iteration": 3,
+    "fallback_path": [3],
+    "success_path": [5]
   }
 }
 ```
@@ -124,6 +145,9 @@
 - ✅ 当前步骤编号在1-26范围内
 - ✅ 前置步骤状态为completed
 - ✅ 关键输出文件存在
+- ✅ fallback_state字段完整（如存在）
+- ✅ budget字段完整（如存在）
+- ✅ loop_state字段完整（如存在）
 
 ### 3.3 项目恢复提示
 ```
@@ -254,4 +278,4 @@
 
 ---
 
-*最后更新：2026-05-17*
+*最后更新：2026-07-12*
