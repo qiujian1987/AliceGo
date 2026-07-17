@@ -58,9 +58,12 @@
 14. ✅ README更新（Loop Engineering脚手架定位）
 15. ✅ Loop相关Skill实现（loop-executor、budget-manager、loop-monitor）
 16. ✅ Loop协作者Agent实现（loop-coordinator、loop-monitor、budget-manager）
+17. ✅ Git MCP服务器实现（git-mcp，支持分支管理、提交、推送、合并、冲突检测）
+18. ✅ Database MCP服务器实现（database-mcp，支持数据库连接、CRUD操作、查询优化）
+19. ✅ MCP配置文件更新（mcp.json）
 
 ### 待完善
-1. 🔄 Git MCP和Database MCP实现（未来方向）
+1. 🔄 CI/CD MCP服务器（未来方向）
 
 ### 关键决策记录
 1. 框架与项目文件分离：框架代码放在 `.trae/`，项目代码放在项目根目录

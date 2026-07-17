@@ -8,18 +8,40 @@
 | mcp_Excel | excel_copy_sheet, excel_create_table, excel_describe_sheets, excel_format_range, excel_read_sheet, excel_screen_capture, excel_write_to_sheet | 数据管理和分析 |
 | integrated_browser | browser_navigate, browser_navigate_back, browser_tabs, browser_snapshot, browser_take_screenshot, browser_click, browser_hover, browser_type, browser_select_option, browser_press_key, browser_get_attribute, browser_scroll, browser_console_messages, browser_network_requests, browser_wait_for | 浏览器操作和验证 |
 | **mcp_Memory** | create_entities, create_relations, add_observations, delete_entities, delete_observations, delete_relations, read_graph, search_nodes, open_nodes | 记忆持久化和上下文管理 |
+| **git-mcp** | git_create_branch, git_checkout_branch, git_list_branches, git_commit, git_push, git_pull, git_merge, git_check_conflict, git_log, git_status | Git版本控制和分支管理 |
+| **database-mcp** | db_connect, db_disconnect, db_execute_query, db_execute, db_insert, db_update, db_delete, db_get_schema, db_list_tables, db_optimize_query, db_ping, db_get_connection_info | 数据库操作和查询 |
 
-## 推荐的 MCP 服务器
+### Git MCP 详细工具列表
 
-### Git MCP
-- **用途**：代码版本控制、分支管理、提交历史分析、合并请求处理
-- **适用 Agent**：devops, team-lead
-- **推荐工具**：git_clone, git_commit, git_push, git_pull, git_branch, git_merge, git_log, git_status
+| 工具 | 描述 | 参数 |
+|------|------|------|
+| git_create_branch | 创建新分支 | branch_name (必需), base_branch (可选) |
+| git_checkout_branch | 切换分支 | branch_name (必需) |
+| git_list_branches | 列出所有分支 | 无 |
+| git_commit | 提交代码 | message (必需), files (可选) |
+| git_push | 推送分支 | branch (可选) |
+| git_pull | 拉取代码 | branch (可选) |
+| git_merge | 合并分支 | source_branch (必需), target_branch (可选) |
+| git_check_conflict | 检查合并冲突 | source_branch (必需), target_branch (可选) |
+| git_log | 查看提交历史 | limit (可选, 默认10) |
+| git_status | 查看工作区状态 | 无 |
 
-### Database MCP
-- **用途**：数据库连接和查询、模式管理、数据迁移、SQL 执行和优化
-- **适用 Agent**：dba, backend-dev
-- **推荐工具**：db_connect, db_query, db_execute, db_schema, db_migrate, db_optimize
+### Database MCP 详细工具列表
+
+| 工具 | 描述 | 参数 |
+|------|------|------|
+| db_connect | 连接到数据库 | database_url (必需), connection_name (可选) |
+| db_disconnect | 断开数据库连接 | connection_name (可选) |
+| db_execute_query | 执行SQL查询（只读） | query (必需), params (可选), connection_name (可选) |
+| db_execute | 执行SQL命令（写操作） | command (必需), params (可选), connection_name (可选) |
+| db_insert | 插入数据 | table (必需), data (必需), connection_name (可选) |
+| db_update | 更新数据 | table (必需), data (必需), where (必需), connection_name (可选) |
+| db_delete | 删除数据 | table (必需), where (必需), connection_name (可选) |
+| db_get_schema | 获取表schema信息 | table (可选), connection_name (可选) |
+| db_list_tables | 列出所有表 | connection_name (可选) |
+| db_optimize_query | 分析和优化SQL查询 | query (必需), connection_name (可选) |
+| db_ping | 检查数据库连接状态 | connection_name (可选) |
+| db_get_connection_info | 获取连接信息 | connection_name (可选) |
 
 ## MCP 与 Agent 配合
 

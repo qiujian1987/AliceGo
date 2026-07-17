@@ -42,7 +42,7 @@ Loop 模式（人→系统→Agent）：
 | **Automations** | 定时发现与分诊 | 文件变更触发测试、测试失败触发修复、评审通过自动进入下一步、预算预警自动通知（auto-001~auto-005） | [06_loop-automations.md](file:///c:/Users/12345678/Documents/trae_projects/AliceGo/.trae/rules/06_loop-automations.md) |
 | **Worktrees** | 并行隔离 | 前后端任务并行开发、多特性并行开发、Git Worktree隔离机制、冲突检测与解决 | [07_loop-worktrees.md](file:///c:/Users/12345678/Documents/trae_projects/AliceGo/.trae/rules/07_loop-worktrees.md) |
 | **Skills** | 固化项目知识 | 38个专业 Skill，封装最佳实践（需求分析、架构设计、代码生成、测试执行、回环执行、预算管理、回环监控等） | `.trae/skills/` |
-| **Connectors** | 连接外部工具 | MCP Server（Memory、Playwright、Excel）+ Git Connector + CI Connector | MCP Server |
+| **Connectors** | 连接外部工具 | MCP Server（Memory、Playwright、Excel、Git、Database）+ CI Connector | `.trae/mcps/` |
 | **Sub-agents** | 制作与审查分离 | 17个专业 Agent，职责清晰（设计、开发、评审、支撑、Loop协调五类） | `.trae/agents/` |
 | **State** | 跨会话记忆 | mcp_Memory + 四层记忆架构 + Loop状态机 + 回退状态记录 + 预算状态追踪 | [04_experience-knowledge.md](file:///c:/Users/12345678/Documents/trae_projects/AliceGo/.trae/rules/04_experience-knowledge.md) |
 | **Budget** | Token 预算控制 | 项目级总预算（1,000,000 token）、阶段级预算分配、步骤级预算上限、三级预警机制（normal/warning/critical）、四级降级策略 | [05_loop-budget.md](file:///c:/Users/12345678/Documents/trae_projects/AliceGo/.trae/rules/05_loop-budget.md) |

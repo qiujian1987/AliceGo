@@ -1,0 +1,24 @@
+{
+  "mcpServers": {
+    "mcp_Memory": {
+      "command": "node",
+      "args": ["path/to/mcp-memory-server.js"]
+    },
+    "mcp_Excel": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-excel"]
+    },
+    "mcp_Playwright": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-playwright"]
+    },
+    "git-mcp": {
+      "url": "http://localhost:8001/mcp",
+      "type": "sse"
+    },
+    "database-mcp": {
+      "url": "http://localhost:8002/mcp",
+      "type": "sse"
+    }
+  }
+}
