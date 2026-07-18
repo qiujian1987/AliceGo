@@ -110,6 +110,9 @@ TRAE IDE 启动时会自动加载所有规则文件：
 6. **06_loop-automations.md** - 自动触发，智能修复，自动推进
 7. **07_loop-worktrees.md** - 并行开发，Git Worktree隔离
 
+**项目摘要文件**（建议在新会话中引用）：
+- **project-summary.md** - 项目关键信息和对话历史摘要，位于 `.trae/docs/project-summary.md`
+
 ### 经验知识库使用说明
 
 **自动加载**：每次对话开始时，自动加载以下经验知识：
